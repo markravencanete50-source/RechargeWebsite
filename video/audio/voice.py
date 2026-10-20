@@ -1,7 +1,7 @@
-"""Recharge film voiceover: Kokoro text-to-speech (open model, runs locally), voice am_onyx.
+"""Recharge film voiceover: Kokoro text-to-speech (open model, runs locally), voice bm_lewis.
 
-am_onyx was picked because it matches the client's reference film: a deep, calm male voice
-(about 90 Hz, the reference was 88 Hz). For a British accent, try bm_lewis.
+bm_lewis is a deep, calm British male voice, chosen for a UK client. The closest match to the
+client's American reference film was am_onyx (lang "en-us"), if that is ever wanted instead.
 
 Each phrase is its own clip so it can land on the beat. A clip starts on a beat (15 frames)
 at or after its planned frame and after the previous clip plus a breath. This script writes
@@ -21,7 +21,7 @@ from kokoro_onnx import Kokoro
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODELS = os.path.join(ROOT, "audio", "models")
 BASE = "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/"
-VOICE, SPEED, FPS = "am_onyx", 0.95, 30
+VOICE, LANG, SPEED, FPS = "bm_lewis", "en-gb", 0.95, 30
 
 CLIPS = [
     ("messy", "Running a short let gets messy.", 12),
@@ -48,7 +48,7 @@ k = Kokoro(os.path.join(MODELS, "kokoro-v1.0.onnx"), os.path.join(MODELS, "voice
 clips, t = {}, 0
 for entry in CLIPS:
     key, text, plan = (entry + (0,))[:3]
-    a, sr = k.create(text, voice=VOICE, speed=SPEED, lang="en-us")
+    a, sr = k.create(text, voice=VOICE, speed=SPEED, lang=LANG)
     on = np.abs(a) > 0.01
     i, j = np.argmax(on), len(a) - np.argmax(on[::-1])
     a = a[max(0, i - int(0.015 * sr)): j + int(0.04 * sr)]

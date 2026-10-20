@@ -2,22 +2,22 @@
  "fps": 30,
  "bpm": 120,
  "beat": 15,
- "duration": 1215,
+ "duration": 1260,
  "clips": {
   "messy": {
    "text": "Running a short let gets messy.",
    "start": 12,
-   "frames": 61
+   "frames": 64
   },
   "what": {
    "text": "What if it didn't have to be?",
    "start": 90,
-   "frames": 50
+   "frames": 56
   },
   "g1": {
    "text": "Guests.",
    "start": 165,
-   "frames": 23
+   "frames": 21
   },
   "g2": {
    "text": "Cleans.",
@@ -27,66 +27,66 @@
   "g3": {
    "text": "Repairs.",
    "start": 225,
-   "frames": 24
+   "frames": 25
   },
   "g4": {
    "text": "Owners.",
-   "start": 255,
-   "frames": 21
+   "start": 270,
+   "frames": 22
   },
   "one": {
    "text": "All in one place.",
-   "start": 300,
-   "frames": 43
+   "start": 315,
+   "frames": 37
   },
   "meet": {
    "text": "Meet Recharge.",
-   "start": 390,
-   "frames": 35
+   "start": 405,
+   "frames": 38
   },
   "runs": {
    "text": "One app that runs every home.",
-   "start": 435,
-   "frames": 60
+   "start": 450,
+   "frames": 59
   },
   "job": {
    "text": "Every job has an owner, a status, and a record.",
-   "start": 555,
-   "frames": 87
+   "start": 570,
+   "frames": 104
   },
   "s1": {
    "text": "Owners see their payouts.",
-   "start": 690,
-   "frames": 51
+   "start": 720,
+   "frames": 48
   },
   "s2": {
    "text": "Cleaners see their schedule.",
-   "start": 750,
-   "frames": 53
+   "start": 780,
+   "frames": 47
   },
   "s3": {
    "text": "Guests get answers.",
-   "start": 810,
-   "frames": 37
+   "start": 840,
+   "frames": 39
   },
   "conn": {
    "text": "All connected.",
-   "start": 885,
-   "frames": 35
+   "start": 915,
+   "frames": 30
   },
   "real": {
    "text": "With real people on hand, twenty four seven.",
-   "start": 930,
-   "frames": 83
+   "start": 960,
+   "frames": 89
   },
   "end1": {
    "text": "Recharge.",
-   "start": 1050,
+   "start": 1095,
    "frames": 28
   },
   "end2": {
    "text": "Short stays, run properly.",
-   "start": 1095,
+   "start": 1140,
    "frames": 54
   }
  },
@@ -94,29 +94,29 @@
   "hook": 0,
   "parts": 165,
   "one": 300,
-  "dash": 375,
-  "see": 675,
-  "connected": 870,
-  "end": 1035
+  "dash": 390,
+  "see": 690,
+  "connected": 900,
+  "end": 1065
  },
  "dash": {
-  "cursor": 490,
-  "click": 525,
-  "swap": 528
+  "cursor": 505,
+  "click": 540,
+  "swap": 543
  },
  "one": {
-  "cursor": 335,
-  "click": 358
+  "cursor": 345,
+  "click": 368
  },
  "clicks": [
-  358,
-  525
+  368,
+  540
  ],
  "pops": [
-  57,
-  63,
-  69,
-  75
+  58,
+  64,
+  70,
+  76
  ],
  "desk": {
   "w": 1440,

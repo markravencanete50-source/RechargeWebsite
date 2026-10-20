@@ -105,11 +105,11 @@ function Hook() {
   return (
     <Page>
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
-        <Line clip="messy" until={80} accent={[5]} />
-        <Bubble until={80} at={TL.pops[0]} icon={<Phone size={40} />} x={1290} y={420} jitter={4} />
-        <Bubble until={80} at={TL.pops[1]} icon={<Mail size={40} />} x={1430} y={560} jitter={4} />
-        <Bubble until={80} at={TL.pops[2]} icon={<FileSpreadsheet size={40} />} x={1250} y={680} jitter={4} />
-        <Bubble until={80} at={TL.pops[3]} icon={<KeyRound size={40} />} x={1120} y={380} size={80} jitter={4} />
+        <Line clip="messy" until={84} accent={[5]} />
+        <Bubble until={84} at={TL.pops[0]} icon={<Phone size={40} />} x={1250} y={390} jitter={4} />
+        <Bubble until={84} at={TL.pops[1]} icon={<Mail size={40} />} x={1500} y={430} jitter={4} />
+        <Bubble until={84} at={TL.pops[2]} icon={<FileSpreadsheet size={40} />} x={1430} y={690} jitter={4} />
+        <Bubble until={84} at={TL.pops[3]} icon={<KeyRound size={40} />} x={1130} y={700} size={80} jitter={4} />
       </AbsoluteFill>
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
         <Line clip="what" until={156} accent={[5, 6]} />
@@ -122,7 +122,7 @@ function Hook() {
 function Parts() {
   const f = useCurrentFrame();
   const words = ["g1", "g2", "g3", "g4"];
-  const out = 286;
+  const out = S.one - 10;
   const gone = interpolate(f, [out, out + 8], [0, 1], clamp);
   return (
     <Page>
