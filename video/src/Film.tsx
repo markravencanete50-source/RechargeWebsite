@@ -105,14 +105,14 @@ function Hook() {
   return (
     <Page>
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
-        <Line clip="messy" until={84} accent={[5]} />
-        <Bubble until={84} at={TL.pops[0]} icon={<Phone size={40} />} x={1250} y={390} jitter={4} />
-        <Bubble until={84} at={TL.pops[1]} icon={<Mail size={40} />} x={1500} y={430} jitter={4} />
-        <Bubble until={84} at={TL.pops[2]} icon={<FileSpreadsheet size={40} />} x={1430} y={690} jitter={4} />
-        <Bubble until={84} at={TL.pops[3]} icon={<KeyRound size={40} />} x={1130} y={700} size={80} jitter={4} />
+        <Line clip="messy" until={clips.messy.start + clips.messy.frames + 8} accent={[5]} />
+        <Bubble until={clips.messy.start + clips.messy.frames + 8} at={TL.pops[0]} icon={<Phone size={40} />} x={1250} y={390} jitter={4} />
+        <Bubble until={clips.messy.start + clips.messy.frames + 8} at={TL.pops[1]} icon={<Mail size={40} />} x={1500} y={430} jitter={4} />
+        <Bubble until={clips.messy.start + clips.messy.frames + 8} at={TL.pops[2]} icon={<FileSpreadsheet size={40} />} x={1430} y={690} jitter={4} />
+        <Bubble until={clips.messy.start + clips.messy.frames + 8} at={TL.pops[3]} icon={<KeyRound size={40} />} x={1130} y={700} size={80} jitter={4} />
       </AbsoluteFill>
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
-        <Line clip="what" until={156} accent={[5, 6]} />
+        <Line clip="what" until={S.parts - 9} accent={[5, 6]} />
       </AbsoluteFill>
     </Page>
   );
@@ -177,9 +177,13 @@ const CAM: Cam[] = [
   { f: 116, rx: 10, ry: -6, rz: 2, s: 1.2, x: 420, y: -60 },
   { f: 160, rx: 10, ry: -6, rz: 2, s: 1.2, x: 420, y: -60 },
   { f: 176, rx: 16, ry: 14, rz: -4, s: 0.9, x: 40, y: -30 },
-  { f: 280, rx: 16, ry: 14, rz: -4, s: 0.9, x: 40, y: -30 },
-  { f: 300, rx: 30, ry: 22, rz: -8, s: 0.75, x: 0, y: 200 },
+  { f: 1e6 - 20, rx: 16, ry: 14, rz: -4, s: 0.9, x: 40, y: -30 },
+  { f: 1e6, rx: 30, ry: 22, rz: -8, s: 0.75, x: 0, y: 200 },
 ];
+// The last two moves (hold, then leave) are timed from the end of the scene, which follows the voice.
+const DASH_LEN = S.see - S.dash;
+CAM[CAM.length - 2].f = DASH_LEN - 20;
+CAM[CAM.length - 1].f = DASH_LEN;
 function cam(f: number) {
   let i = 0;
   while (i < CAM.length - 2 && f >= CAM[i + 1].f) i++;
@@ -198,7 +202,7 @@ function Dash() {
   const px = (720 + (TL.desk.cleans.x - 720) * move) * k;
   const py = (450 + (TL.desk.cleans.y - 450) * move) * k;
   const show = interpolate(f, [swap, swap + 6], [0, 1], clamp);
-  const exit = interpolate(local, [282, 300], [0, 1], clamp);
+  const exit = interpolate(local, [DASH_LEN - 18, DASH_LEN], [0, 1], clamp);
   return (
     <Page>
       <AbsoluteFill style={{ perspective: 2600, alignItems: "center", justifyContent: "center", opacity: 1 - exit, filter: `blur(${exit * 12}px)` }}>
