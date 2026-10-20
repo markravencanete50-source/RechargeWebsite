@@ -38,7 +38,7 @@ export function Header() {
         </nav>
         <div className="header-actions">
           <a className="header-phone" href={site.phone.href}>{site.phone.display}</a>
-          <a className="btn btn-primary" href={site.bookingUrl} target="_blank" rel="noopener">Book a stay</a>
+          <Link className="btn btn-primary" href="/properties">Book a stay</Link>
           <button className="menu-toggle" aria-label="Open menu" aria-expanded={open} onClick={() => setOpen(true)}>
             <Menu size={22} />
           </button>
@@ -56,10 +56,9 @@ export function Header() {
             {nav.map((item) => (
               <Link key={item.href} href={item.href} onClick={() => setOpen(false)}>{item.label}</Link>
             ))}
-            <Link href="/#contact" onClick={() => setOpen(false)}>Contact</Link>
           </nav>
           <div className="mobile-menu-foot">
-            <a className="btn btn-mint" href={site.bookingUrl} target="_blank" rel="noopener">Book a stay</a>
+            <Link className="btn btn-mint" href="/properties" onClick={() => setOpen(false)}>Book a stay</Link>
             <a className="btn btn-line-light" href={site.phone.href}><Phone size={18} /> {site.phone.display}</a>
           </div>
         </div>

@@ -108,7 +108,6 @@ export function AppShowcase() {
         }}
         onPointerLeave={() => { px.set(0); py.set(0); }}
       >
-        <div className="halo" />
         <motion.div style={{ rotateY: rotY, rotateX: rotX, transformStyle: "preserve-3d" }}>
           <AnimatePresence mode="wait">
             <motion.div

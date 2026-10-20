@@ -16,13 +16,14 @@ export const site = {
   company: { legalName: "", number: "", registeredOffice: "" },
   // CONFIRM: the old home page offers 10% off for booking direct.
   directDiscount: "10%",
-  areas: ["Glasgow", "Edinburgh", "Paisley", "Livingston"],
+  areas: ["Glasgow", "Edinburgh", "Paisley", "Livingston", "Tranent"],
 } as const;
 
 export const nav = [
-  { href: "/#stay", label: "Stay" },
-  { href: "/#owners", label: "Owners" },
-  { href: "/#app", label: "The app" },
-  { href: "/#support", label: "Support" },
-  { href: "/#faq", label: "FAQ" },
+  { href: "/properties", label: "Properties" },
+  { href: "/stay", label: "Stays" },
+  { href: "/owners", label: "Owners" },
+  { href: "/app", label: "The app" },
+  { href: "/support", label: "Support" },
+  { href: "/faq", label: "FAQ" },
 ] as const;

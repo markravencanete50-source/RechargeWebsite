@@ -22,18 +22,19 @@ export async function Footer() {
           <div>
             <h3>Guests</h3>
             <ul>
-              <li><a href={site.bookingUrl} target="_blank" rel="noopener">Book a stay</a></li>
-              <li><Link href="/#support">24/7 support</Link></li>
-              <li><Link href="/#faq">FAQ</Link></li>
+              <li><Link href="/properties">Properties</Link></li>
+              <li><Link href="/stay">Stays</Link></li>
+              <li><Link href="/support">24/7 support</Link></li>
+              <li><Link href="/faq">FAQ</Link></li>
             </ul>
           </div>
           <div>
             <h3>Owners</h3>
             <ul>
-              <li><Link href="/#owners">Guaranteed rent</Link></li>
-              <li><Link href="/#owners">Full management</Link></li>
-              <li><Link href="/#app">The Recharge app</Link></li>
-              <li><Link href="/#contact">Get an estimate</Link></li>
+              <li><Link href="/owners">Guaranteed rent</Link></li>
+              <li><Link href="/owners">Full management</Link></li>
+              <li><Link href="/app">The Recharge app</Link></li>
+              <li><Link href="/owners#contact">Get an estimate</Link></li>
             </ul>
           </div>
           <div>
