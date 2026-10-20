@@ -29,6 +29,6 @@ if (!process.argv.includes("--poster-only")) {
   // Level the music to -16 LUFS (calm, web level) with peaks under -1.5 dBTP, and let the file start playing early.
   execFileSync("ffmpeg", ["-y", "-hide_banner", "-loglevel", "error", "-i", raw, "-c:v", "copy", "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-ar", "48000", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", path.join(outDir, "recharge-different.mp4")]);
 }
-// The poster is a frame from the first role scene: the owner app after the tap.
-await renderStill({ composition, serveUrl, browserExecutable, frame: 270, imageFormat: "jpeg", jpegQuality: 82, output: path.join(outDir, "recharge-different-poster.jpg") });
+// The poster is a frame of the real app in 3D.
+await renderStill({ composition, serveUrl, browserExecutable, frame: 450, imageFormat: "jpeg", jpegQuality: 82, output: path.join(outDir, "recharge-different-poster.jpg") });
 console.log("done", outDir);

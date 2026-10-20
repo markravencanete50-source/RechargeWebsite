@@ -1,14 +1,15 @@
 """Recharge film score: original, synthesised, locked to src/timeline.json. No samples, nothing to license.
 
-120 bpm in D major, so one beat is 15 frames at 30 fps and every hit lands on a cut:
+A calm bed in D major at 120 bpm (one beat is 15 frames at 30 fps) that sits under the voiceover:
 
-  0-4 s    Hook       a soft kick and a pluck on each word, a short riser into the turn
-  4 s      Turn       impact and the first full chord as the logo lands
-  6-26 s   App tour   calm groove: kick, soft clap, quiet hats, bass, marimba and pad
-                      (D, Bm, G, A). A click on every tap, a whoosh on every transition
-  26-30 s  Support    drums drop out, a clock tick on the eighths, riser into the end
-  30 s     End        punchy stab on the tonic with sub and crash, a second stab, then a clean
-                      ring-out that finishes before the picture does
+  Hook and parts   pad and soft plucks, a pop for every icon and card
+  One              a click on the app, a riser and a soft impact into the app
+  App and roles    a light groove (kick, clap, hats, bass, marimba), whooshes on camera moves
+  Connected        drums drop out, pad and shimmer, pops as the roles arrive
+  End              riser, then two punchy stabs on "Recharge" and on the tagline, and a clean
+                   ring-out that finishes with the picture
+
+The bed ducks about 8 dB under every voice clip, so the voice always sits on top.
 
 Run: python3 audio/score.py   (needs numpy, scipy, soundfile)
 Writes public/audio/score.wav (48 kHz stereo). The render step levels it to -16 LUFS.
@@ -177,83 +178,86 @@ def reverb(sig, seconds=1.6, mix=0.18):
 # Harmony: D, Bm, G, A (I vi IV V). MIDI roots and chord tones.
 CHORDS = [(50, [62, 66, 69, 74]), (47, [62, 66, 71, 74]), (43, [62, 67, 71, 74]), (45, [61, 64, 69, 73])]
 ARP = [[74, 78, 81, 78], [74, 78, 83, 78], [74, 79, 83, 79], [73, 76, 81, 76]]
+S, clips = TL["scenes"], TL["clips"]
 
-hook, turn, roles, role = TL["hook"], TL["turn"], TL["roles"], TL["role"]
-support, end = TL["support"], TL["end"]
 
-# 0-4 s: hook. A kick and a pluck on every word, quieter kicks under the line, riser into the turn.
-for i, f in enumerate(hook["words"]):
-    add(sec(f), kick(0.8), 0.9)
-    add(sec(f), pluck([74, 78, 81, 86][i], 0.35))
-for f in hook["line"]:
-    add(sec(f), pluck(69, 0.18, 0.3), pan=0.2)
-for k in range(4):
-    add(sec(hook["line"][0]) + k * BEAT, kick(0.6), 0.7)
-    add(sec(hook["line"][0]) + k * BEAT, bass(50, BEAT * 0.9), 0.8)
-add(sec(hook["line"][0]), pad([62, 66, 69], 2.0, 0.05, 0.3))
-add(sec(turn["start"]) - 1.0, riser(1.0, 0.2))
+def popsnd(level=0.22, m=86):
+    x = t(0.18)
+    f = hz(m) * (1 + 0.5 * np.exp(-x * 60))
+    return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-x * 26) * level
 
-# 4 s: the turn.
-add(sec(turn["start"]), impact(0.9))
-add(sec(turn["start"]), pad([62, 66, 69, 74], 2.2, 0.09, 0.02))
-add(sec(turn["start"]), pluck(86, 0.25, 0.8), pan=-0.2)
 
-# 6-26 s: the groove under the app tour.
-groove_start, groove_end = sec(roles[0]), sec(support["start"])
-bars = int(round((groove_end - groove_start) / BAR))
-G = 0.7  # bed level
+bars = int(LENGTH / BAR) + 1
+groove = (sec(S["dash"]), sec(S["connected"]))
 for b in range(bars):
-    t0 = groove_start + b * BAR
+    t0 = b * BAR
     root, tones = CHORDS[b % 4]
-    add(t0, pad(tones, BAR + 0.3, 0.06, 0.25), G)
+    if t0 >= sec(S["end"]):
+        break
+    add(t0, pad(tones, BAR + 0.3, 0.07, 0.3))
     for beat in range(4):
         tb = t0 + beat * BEAT
-        if beat % 2 == 0:
-            add(tb, kick(0.7), 0.75 * G)
-        else:
-            add(tb, clap(), 0.6 * G)
-        add(tb, hat(), 0.5 * G, pan=0.3)
-        add(tb + BEAT / 2, hat(), 0.35 * G, pan=0.3)
-        add(tb, bass(root if beat != 3 else root + 7, BEAT * 0.9), G)
+        add(tb, bass(root if beat != 3 else root + 7, BEAT * 0.9), 0.55 if groove[0] <= tb < groove[1] else 0.3)
         for k in range(2):
             m = ARP[b % 4][(beat * 2 + k) % 4]
-            add(tb + k * BEAT / 2, marimba(m, 0.13 if k else 0.16), G, pan=-0.25 + 0.5 * k)
+            add(tb + k * BEAT / 2, marimba(m, 0.11 if k else 0.13), pan=-0.25 + 0.5 * k)
+        if groove[0] <= tb < groove[1]:
+            if beat % 2 == 0:
+                add(tb, kick(0.6), 0.6)
+            else:
+                add(tb, clap(), 0.4)
+            add(tb, hat(), 0.35, pan=0.3)
+            add(tb + BEAT / 2, hat(), 0.25, pan=0.3)
 
-# A click on every tap, a whoosh into every new scene.
-for r in roles:
-    add(sec(r + role["tap"]), click(0.3))
-    add(sec(r) - 0.18, whoosh(0.36, 0.14))
-add(sec(support["start"]) - 0.18, whoosh(0.36, 0.14))
+# Hook and parts: a pop for every icon, a pluck and a card pop for every word.
+for i, f in enumerate(TL["pops"]):
+    add(sec(f), popsnd(0.2, [86, 90, 93, 98][i]), pan=0.3)
+for i, k in enumerate(["g1", "g2", "g3", "g4"]):
+    add(sec(clips[k]["start"]), pluck([74, 78, 81, 86][i], 0.3, 0.5))
+    add(sec(clips[k]["start"]) + 0.05, popsnd(0.14, 93), pan=(-0.4, 0.4, -0.4, 0.4)[i])
 
-# 26-30 s: support. Pad and a ticking clock, a lift on the 24/7 slam, riser into the end.
-for b in range(2):
-    t0 = sec(support["start"]) + b * BAR
-    add(t0, pad(CHORDS[(b + 2) % 4][1], BAR + 0.3, 0.07, 0.2))
-    for e in range(8):
-        add(t0 + e * BEAT / 2, tick(0.14 if e % 2 == 0 else 0.08), pan=0.15)
-    for beat in (0, 2):
-        add(t0 + beat * BEAT, kick(0.5), 0.6)
-        add(t0 + beat * BEAT, bass(CHORDS[(b + 2) % 4][0], BEAT * 1.8), 0.8)
-add(sec(support["slam"]), kick(0.7), 0.8)
-add(sec(support["slam"]), pluck(81, 0.3, 0.6))
-add(sec(end["start"]) - 1.5, riser(1.5, 0.24))
+# One: click, riser, impact into the app.
+for f in TL["clicks"]:
+    add(sec(f), click(0.32))
+add(sec(S["dash"]) - 1.0, riser(1.0, 0.2))
+add(sec(S["dash"]), impact(0.55))
+add(sec(S["dash"]), whoosh(0.4, 0.16))
+for f in (S["dash"] + 100, S["dash"] + 160, S["see"]):
+    add(sec(f) - 0.05, whoosh(0.36, 0.13))
+for k in ("s2", "s3"):
+    add(sec(clips[k]["start"]) - 0.15, whoosh(0.3, 0.1))
 
-# 30 s: the end. Two punchy stabs on the tonic, then a clean ring-out.
-for k, f in enumerate([end["start"], end["line"]]):
+# Connected: shimmer and pops as the roles arrive.
+add(sec(S["connected"]), impact(0.35))
+for i in range(4):
+    add(sec(S["connected"] + 10 + i * 4), popsnd(0.16, [81, 86, 90, 93][i]), pan=(-0.5, 0.5, -0.3, 0.3)[i])
+for e in range(12):
+    add(sec(S["connected"]) + e * BEAT / 2, marimba(ARP[0][e % 4] + 12, 0.05), pan=(-0.5 if e % 2 else 0.5))
+
+# End: riser, two punchy stabs on the tonic, clean ring-out.
+add(sec(clips["end1"]["start"]) - 1.4, riser(1.4, 0.24))
+for k, f in enumerate([clips["end1"]["start"], clips["end2"]["start"]]):
     at = sec(f)
     add(at, kick(1.0), 1.0)
-    add(at, impact(0.8 if k == 0 else 0.45))
+    add(at, impact(0.8 if k == 0 else 0.5))
     for m in (50, 62, 66, 69, 74, 78):
-        add(at, pluck(m, 0.16, 1.6), pan=(m - 64) / 30)
-    add(at, pad([62, 66, 69, 74, 78], 2.9 if k else 1.0, 0.15, 0.005))
-add(sec(end["line"]), bass(38, 2.6), 1.2)
-add(sec(end["url"]), pluck(86, 0.22, 1.2))
+        add(at, pluck(m, 0.15, 1.6), pan=(m - 64) / 30)
+    add(at, pad([62, 66, 69, 74, 78], 3.2 if k else 1.2, 0.13, 0.005))
+add(sec(clips["end2"]["start"]), bass(38, 3.0), 1.1)
 
-mix = np.stack([reverb(L), reverb(R)], axis=1)
-# Finish cleanly: a short fade over the last 0.6 s so nothing is cut off mid-note.
+# Duck the bed about 8 dB under every voice clip, with a soft attack and release.
+duck = np.ones(N)
+for c in clips.values():
+    if c["start"] >= S["end"]:
+        continue  # the logo lines ride on the stabs instead
+    i0, i1 = int(sec(c["start"]) * SR), int(sec(c["start"] + c["frames"]) * SR)
+    duck[max(0, i0 - int(0.08 * SR)):min(N, i1 + int(0.25 * SR))] = 0.4
+duck = np.convolve(duck, np.ones(int(0.12 * SR)) / int(0.12 * SR), "same")
+
+mix = np.stack([reverb(L) * duck, reverb(R) * duck], axis=1)
 tail = int(0.5 * SR)
 mix[-tail:] *= np.linspace(1, 0, tail)[:, None] ** 2
-mix /= np.max(np.abs(mix)) / 0.89
+mix /= np.max(np.abs(mix)) / 0.5  # the bed peaks well under the voice
 out = os.path.join(ROOT, "public", "audio", "score.wav")
 sf.write(out, mix.astype(np.float32), SR, subtype="PCM_24")
 print(out, f"{LENGTH:.2f}s")

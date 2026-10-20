@@ -20,8 +20,11 @@ guaranteed rent or full management for property owners.
 - `cd video && npm install && npm run render`: build the score and render the "why we are
   different" film into `public/video/` (MP4 with music, and a poster). Needs Python with numpy,
   scipy and soundfile, and ffmpeg. `npm run studio` opens it in Remotion Studio for editing.
-  Picture and music share one timeline (`video/src/timeline.json`, 120 bpm, a beat is 15 frames),
-  so every cut, tap and hit lands together. The music is original and synthesised: nothing to license.
+  Picture, voice and music share one timeline (`video/src/timeline.json`, 120 bpm, a beat is 15
+  frames), so every word, click and hit lands together. The music is original and synthesised:
+  nothing to license.
+- `python3 video/audio/voice.py`: regenerate the voiceover (Kokoro, voice `am_onyx`, runs locally;
+  downloads the model once). Edit the lines in that file to change the script.
 
 ## Where things live
 

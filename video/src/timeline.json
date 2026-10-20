@@ -1,12 +1,129 @@
 {
-  "fps": 30,
-  "bpm": 120,
-  "beat": 15,
-  "hook": { "start": 0, "words": [0, 15, 30, 45], "line": [60, 68, 76, 84] },
-  "turn": { "start": 120, "line": 150 },
-  "roles": [180, 330, 480, 630],
-  "role": { "length": 150, "label1": 15, "cursor": 38, "tap": 60, "swap": 63, "label2": 75 },
-  "support": { "start": 780, "slam": 825, "line": 855 },
-  "end": { "start": 900, "line": 930, "url": 960 },
-  "duration": 1020
+ "fps": 30,
+ "bpm": 120,
+ "beat": 15,
+ "duration": 1215,
+ "clips": {
+  "messy": {
+   "text": "Running a short let gets messy.",
+   "start": 12,
+   "frames": 61
+  },
+  "what": {
+   "text": "What if it didn't have to be?",
+   "start": 90,
+   "frames": 50
+  },
+  "g1": {
+   "text": "Guests.",
+   "start": 165,
+   "frames": 23
+  },
+  "g2": {
+   "text": "Cleans.",
+   "start": 195,
+   "frames": 21
+  },
+  "g3": {
+   "text": "Repairs.",
+   "start": 225,
+   "frames": 24
+  },
+  "g4": {
+   "text": "Owners.",
+   "start": 255,
+   "frames": 21
+  },
+  "one": {
+   "text": "All in one place.",
+   "start": 300,
+   "frames": 43
+  },
+  "meet": {
+   "text": "Meet Recharge.",
+   "start": 390,
+   "frames": 35
+  },
+  "runs": {
+   "text": "One app that runs every home.",
+   "start": 435,
+   "frames": 60
+  },
+  "job": {
+   "text": "Every job has an owner, a status, and a record.",
+   "start": 555,
+   "frames": 87
+  },
+  "s1": {
+   "text": "Owners see their payouts.",
+   "start": 690,
+   "frames": 51
+  },
+  "s2": {
+   "text": "Cleaners see their schedule.",
+   "start": 750,
+   "frames": 53
+  },
+  "s3": {
+   "text": "Guests get answers.",
+   "start": 810,
+   "frames": 37
+  },
+  "conn": {
+   "text": "All connected.",
+   "start": 885,
+   "frames": 35
+  },
+  "real": {
+   "text": "With real people on hand, twenty four seven.",
+   "start": 930,
+   "frames": 83
+  },
+  "end1": {
+   "text": "Recharge.",
+   "start": 1050,
+   "frames": 28
+  },
+  "end2": {
+   "text": "Short stays, run properly.",
+   "start": 1095,
+   "frames": 54
+  }
+ },
+ "scenes": {
+  "hook": 0,
+  "parts": 165,
+  "one": 300,
+  "dash": 375,
+  "see": 675,
+  "connected": 870,
+  "end": 1035
+ },
+ "dash": {
+  "cursor": 490,
+  "click": 525,
+  "swap": 528
+ },
+ "one": {
+  "cursor": 335,
+  "click": 358
+ },
+ "clicks": [
+  358,
+  525
+ ],
+ "pops": [
+  57,
+  63,
+  69,
+  75
+ ],
+ "desk": {
+  "w": 1440,
+  "h": 900,
+  "cleans": {
+   "x": 126.5,
+   "y": 603
+  }
+ }
 }
