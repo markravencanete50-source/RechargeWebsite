@@ -145,7 +145,8 @@ a { color: inherit; }
 .video-frame { position: relative; border-radius: 32px; overflow: hidden; background: var(--forest-deep); box-shadow: var(--shadow-3), 0 0 0 1px rgb(167 217 193 / 0.18); aspect-ratio: 16 / 9; }
 .video-frame video { width: 100%; height: 100%; object-fit: cover; }
 .video-controls { position: absolute; right: 16px; bottom: 16px; display: flex; gap: 8px; }
-.video-controls button { width: 44px; height: 44px; border-radius: 999px; border: 0; background: rgb(252 250 245 / 0.9); color: var(--forest); display: grid; place-items: center; cursor: pointer; }
+.video-controls button { min-width: 44px; height: 44px; border-radius: 999px; border: 0; background: rgb(252 250 245 / 0.92); color: var(--forest); display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.video-controls .video-sound { padding: 0 16px; }
 .diff-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
 .diff { padding: 24px; border-radius: 22px; background: rgb(239 233 219 / 0.06); border: 1px solid rgb(239 233 219 / 0.12); display: grid; gap: 10px; }
 .diff .num { font-size: 13px; font-weight: 600; color: var(--mint); letter-spacing: 0.1em; }

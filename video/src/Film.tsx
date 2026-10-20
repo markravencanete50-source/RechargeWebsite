@@ -1,225 +1,210 @@
 import type { CSSProperties, ReactNode } from "react";
-import { AbsoluteFill, Easing, Img, interpolate, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Easing, Html5Audio, Img, interpolate, Sequence, staticFile, useCurrentFrame } from "remotion";
+import taps from "./taps.json";
+import TL from "./timeline.json";
 
-// "Why Recharge is different": one app for owners, guests, cleaners and maintenance, with 24/7 support.
-// 1920 x 1080, 30 fps. Brand colours from the Recharge app.
+// "Why Recharge is different": a glance at the real app for owners, guests, cleaners and maintenance,
+// with 24/7 support. 1920 x 1080, 30 fps, 120 bpm: one beat is 15 frames and every cut lands on one.
+// Timings come from timeline.json, which the score (audio/score.py) is built from too.
 
-export const FPS = 30;
-const C = { cream: "#EFE9DB", paper: "#FCFAF5", forest: "#1B3E38", deep: "#12302A", ink: "#152D28", mint: "#A7D9C1", muted: "#4E6259" };
+export const FPS = TL.fps;
+export const DURATION = TL.duration;
+const C = { cream: "#EFE9DB", paper: "#FCFAF5", forest: "#1B3E38", deep: "#12302A", ink: "#152D28", mint: "#A7D9C1", moss: "#315F50" };
 const font = "Montserrat, sans-serif";
-const ease = Easing.bezier(0.2, 0.7, 0.2, 1);
+const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
+const out = Easing.bezier(0.16, 1, 0.3, 1);
+const slamEase = Easing.out(Easing.back(2.2));
 
-const fade = (f: number, start: number, len = 18) => interpolate(f, [start, start + len], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: ease });
-const out = (f: number, start: number, len = 14) => interpolate(f, [start, start + len], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: ease });
-
-export const SCENES = { hook: 120, logo: 110, role: 150, support: 130, end: 120 } as const;
-export const ROLES = [
-  { name: "Owners", line: "See bookings, statements and payouts. Approve costs in a tap.", screen: "app/owner.webp", chip: ["Payout approved", "Statement ready to view"] },
-  { name: "Guests", line: "Every message answered, day and night.", screen: "app/stays.webp", chip: ["Guest message", "Reply sent"] },
-  { name: "Cleaners", line: "Schedules from bookings. Checklists and photo proof.", screen: "app/cleaner.webp", chip: ["Clean complete", "12 photos uploaded"] },
-  { name: "Maintenance", line: "Repairs logged, tracked and closed.", screen: "app/ready.webp", chip: ["Repair booked", "Engineer on the way"] },
-] as const;
-export const DURATION = SCENES.hook + SCENES.logo + SCENES.role * ROLES.length + SCENES.support + SCENES.end;
-
-function Words({ text, start, size, color, weight = 600, stagger = 4, style }: { text: string; start: number; size: number; color: string; weight?: number; stagger?: number; style?: CSSProperties }) {
+// A word or line that lands: from big and blurred to rest in 6 frames.
+function Slam({ at, children, size, color, weight = 600, style }: { at: number; children: ReactNode; size: number; color: string; weight?: number; style?: CSSProperties }) {
   const f = useCurrentFrame();
+  const p = interpolate(f, [at, at + 6], [0, 1], { ...clamp, easing: slamEase });
+  const o = interpolate(f, [at, at + 3], [0, 1], clamp);
+  const blur = interpolate(f, [at, at + 6], [12, 0], clamp);
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: `0 ${size * 0.26}px`, fontFamily: font, fontSize: size, fontWeight: weight, letterSpacing: "-0.03em", lineHeight: 1.08, color, ...style }}>
-      {text.split(" ").map((w, i) => {
-        const p = fade(f, start + i * stagger, 20);
-        return (
-          <span key={i} style={{ display: "inline-block", overflow: "hidden", paddingBottom: size * 0.12 }}>
-            <span style={{ display: "inline-block", transform: `translateY(${(1 - p) * 110}%)`, opacity: p }}>{w}</span>
-          </span>
-        );
-      })}
+    <div style={{ fontFamily: font, fontSize: size, fontWeight: weight, letterSpacing: "-0.035em", lineHeight: 1.04, color, opacity: o, transform: `scale(${1.4 - 0.4 * p})`, filter: `blur(${blur}px)`, transformOrigin: "left center", ...style }}>
+      {children}
     </div>
   );
 }
 
-function Orbits({ color, opacity = 0.14 }: { color: string; opacity?: number }) {
+type Enter = "cut" | "circle" | "wipe" | "push" | "zoom" | "flash";
+
+// How a scene arrives. Each is 8 frames, and no two in a row are the same.
+function Scene({ enter, bg, children }: { enter: Enter; bg: string; children: ReactNode }) {
   const f = useCurrentFrame();
+  const p = interpolate(f, [0, 8], [0, 1], { ...clamp, easing: out });
+  const style: CSSProperties = { background: bg };
+  if (enter === "circle") style.clipPath = `circle(${p * 120}% at 50% 50%)`;
+  if (enter === "wipe") style.clipPath = `inset(0 0 0 ${(1 - p) * 100}%)`;
+  if (enter === "push") style.transform = `translateY(${(1 - p) * 100}%)`;
+  if (enter === "zoom") { style.transform = `scale(${1.25 - 0.25 * p})`; style.opacity = p; }
   return (
-    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
-      {[1500, 1100, 760].map((d, i) => (
-        <div key={d} style={{ position: "absolute", width: d, height: d, borderRadius: "50%", border: `2px solid ${color}`, opacity, transform: `rotate(${f * (i % 2 ? -0.2 : 0.15)}deg)` }}>
-          <div style={{ position: "absolute", top: -7, left: "50%", width: 12, height: 12, borderRadius: "50%", background: color }} />
-        </div>
-      ))}
+    <AbsoluteFill style={style}>
+      {children}
+      {enter === "flash" && <AbsoluteFill style={{ background: C.cream, opacity: interpolate(f, [0, 5], [1, 0], clamp) }} />}
     </AbsoluteFill>
   );
 }
 
-// Scene 1: the problem.
+// Hook: the moving parts, one per beat, then the problem.
 function Hook() {
   const f = useCurrentFrame();
-  const leave = out(f, SCENES.hook - 18, 18);
+  const words = ["Guests.", "Cleans.", "Repairs.", "Owners."];
+  const i = TL.hook.words.filter((w) => f >= w).length - 1;
+  if (f < TL.hook.line[0]) {
+    const dark = i % 2 === 1;
+    return (
+      <AbsoluteFill style={{ background: dark ? C.forest : C.cream, justifyContent: "center", paddingLeft: 200 }}>
+        <div style={{ fontFamily: font, fontSize: 30, fontWeight: 600, letterSpacing: "0.16em", color: dark ? C.mint : C.moss, marginBottom: 24 }}>{`0${i + 1} / 04`}</div>
+        <Slam at={TL.hook.words[i]} size={230} color={dark ? C.cream : C.ink}>{words[i]}</Slam>
+      </AbsoluteFill>
+    );
+  }
+  const line = ["Too", "many", "moving", "parts."];
   return (
-    <AbsoluteFill style={{ background: C.cream, justifyContent: "center", padding: "0 220px", opacity: leave }}>
-      <div style={{ fontFamily: font, fontSize: 26, fontWeight: 600, letterSpacing: "0.16em", color: "#315F50", marginBottom: 36, opacity: fade(f, 0) }}>SHORT-LET MANAGEMENT IN SCOTLAND</div>
-      <Words text="Most property managers stop at the keys." start={8} size={112} color={C.ink} />
-      <div style={{ marginTop: 40, opacity: fade(f, 52) }}>
-        <Words text="Then it is calls, chasers and spreadsheets." start={52} size={46} weight={500} color={C.muted} stagger={3} />
+    <AbsoluteFill style={{ background: C.forest, justifyContent: "center", paddingLeft: 200 }}>
+      <div style={{ display: "flex", gap: 40, flexWrap: "wrap", maxWidth: 1500 }}>
+        {line.map((w, k) => <Slam key={w} at={TL.hook.line[k]} size={170} color={k === 3 ? C.mint : C.cream}>{w}</Slam>)}
       </div>
     </AbsoluteFill>
   );
 }
 
-// Scene 2: the brand.
-function Logo() {
+// Turn: one app runs it all.
+function Turn() {
   const f = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const r = interpolate(f, [0, 26], [0, 140], { extrapolateRight: "clamp", easing: ease });
-  const s = spring({ frame: f - 14, fps, config: { damping: 16 } });
-  const leave = out(f, SCENES.logo - 14);
+  const at = TL.turn.line - TL.turn.start;
+  const logo = interpolate(f, [0, 7], [0, 1], { ...clamp, easing: slamEase });
   return (
-    <AbsoluteFill style={{ background: C.cream }}>
-      <AbsoluteFill style={{ background: C.forest, clipPath: `circle(${r}% at 50% 50%)`, alignItems: "center", justifyContent: "center", opacity: leave }}>
-        <Orbits color={C.mint} opacity={0.12} />
-        <div style={{ clipPath: `inset(0 ${(1 - fade(f, 18, 30)) * 100}% 0 0)`, transform: `scale(${0.92 + s * 0.08})` }}>
-          <Img src={staticFile("brand/recharge-logo-cream.png")} style={{ width: 980 }} />
-        </div>
-        <div style={{ marginTop: 64, opacity: fade(f, 46) }}>
-          <Words text="We built one app that runs everything." start={46} size={56} weight={500} color={C.cream} stagger={3} style={{ justifyContent: "center" }} />
+    <Scene enter="circle" bg={C.cream}>
+      <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", gap: 70 }}>
+        <Img src={staticFile("brand/recharge-logo-forest.png")} style={{ width: 1000, transform: `scale(${1.3 - 0.3 * logo})`, filter: `blur(${(1 - logo) * 12}px)`, opacity: Math.min(1, logo * 2) }} />
+        <div style={{ display: "flex", gap: 24 }}>
+          {["One", "app", "runs", "it", "all."].map((w, k) => <Slam key={w} at={at + k * 3} size={84} color={k === 1 ? C.moss : C.ink} style={{ transformOrigin: "center" }}>{w}</Slam>)}
         </div>
       </AbsoluteFill>
-    </AbsoluteFill>
+    </Scene>
   );
 }
 
-function Phone({ src, style }: { src: string; style?: CSSProperties }) {
-  return (
-    <div style={{ width: 400, height: 866, borderRadius: 62, padding: 14, background: "linear-gradient(145deg,#2a4c45,#0f2621 60%,#1c3a34)", boxShadow: "0 80px 120px -50px rgba(0,0,0,.6), inset 0 0 0 2px rgba(167,217,193,.25)", position: "relative", ...style }}>
-      <div style={{ width: "100%", height: "100%", borderRadius: 50, overflow: "hidden", position: "relative", background: C.cream }}>
-        <Img src={staticFile(src)} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(120deg, rgba(255,255,255,.2), transparent 38%)" }} />
-      </div>
-      <div style={{ position: "absolute", top: 28, left: "50%", width: 130, height: 34, transform: "translateX(-50%)", borderRadius: 99, background: "#0b1714" }} />
-    </div>
-  );
-}
+const ROLES = [
+  { name: "Owners", a: "owner.webp", b: "owner-reports.webp", tap: "owner-reports", l1: "Your portfolio at a glance.", l2: "Earnings and occupancy, live.", enter: "push" as Enter },
+  { name: "Guests", a: "stays.webp", b: "stays-inbox.webp", tap: "stays-inbox", l1: "Every guest message in one inbox.", l2: "Answered day and night.", enter: "wipe" as Enter },
+  { name: "Cleaners", a: "cleaner.webp", b: "cleaner-calendar.webp", tap: "cleaner-calendar", l1: "Cleans scheduled from every booking.", l2: "The whole week on one calendar.", enter: "zoom" as Enter },
+  { name: "Maintenance", a: "ready.webp", b: "ready-work.webp", tap: "ready-work", l1: "Every repair logged.", l2: "Tracked through to the finish.", enter: "push" as Enter },
+];
+const PHONE_W = 440;
+const PAD = 10;
+const SCALE = (PHONE_W - PAD * 2) / 390;
 
-function Chip({ title, text, p }: { title: string; text: string; p: number }) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 20, padding: "22px 30px 22px 22px", borderRadius: 28, background: "rgba(252,250,245,.96)", boxShadow: "0 40px 70px -30px rgba(0,0,0,.55)", fontFamily: font, opacity: p, transform: `translateY(${(1 - p) * 30}px) scale(${0.94 + p * 0.06})` }}>
-      <div style={{ width: 60, height: 60, borderRadius: 18, background: "#E0E7D9", display: "grid", placeItems: "center" }}>
-        <div style={{ width: 22, height: 22, borderRadius: "50%", background: C.forest, boxShadow: `0 0 0 8px ${C.mint}` }} />
-      </div>
-      <div>
-        <div style={{ fontSize: 28, fontWeight: 600, color: C.ink }}>{title}</div>
-        <div style={{ fontSize: 22, fontWeight: 500, color: C.muted }}>{text}</div>
-      </div>
-    </div>
-  );
-}
-
-// Scenes 3 to 6: one app, four people.
+// One role: the real app, a tap on a real tab, and the screen it opens.
 function Role({ index }: { index: number }) {
   const f = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const role = ROLES[index];
-  const enter = spring({ frame: f, fps, config: { damping: 18, mass: 0.9 } });
-  const leave = out(f, SCENES.role - 14, 14);
-  const turn = interpolate(enter, [0, 1], [index === 0 ? -50 : -80, 0]) + interpolate(f, [0, SCENES.role], [-14, -6]) + (1 - leave) * 70;
-  const float = Math.sin(f / 22) * 10;
+  const r = ROLES[index];
+  const R = TL.role;
+  const tap = (taps as Record<string, { x: number; y: number }>)[r.tap];
+  const rise = interpolate(f, [0, 12], [1, 0], { ...clamp, easing: out });
+  const punch = interpolate(f, [R.tap, R.tap + 6], [1, 1.05], { ...clamp, easing: out });
+  const swap = interpolate(f, [R.swap, R.swap + 6], [0, 1], { ...clamp, easing: out });
+  // The pointer starts mid-screen, travels to the tab, presses, and leaves a ripple.
+  const move = interpolate(f, [R.cursor + 4, R.tap - 2], [0, 1], { ...clamp, easing: Easing.inOut(Easing.cubic) });
+  const cx = PAD + (195 + (tap.x - 195) * move) * SCALE;
+  const cy = PAD + (520 + (tap.y - 520) * move) * SCALE;
+  const cursorIn = interpolate(f, [R.cursor, R.cursor + 5, R.swap + 10, R.swap + 16], [0, 1, 1, 0], clamp);
+  const press = f >= R.tap && f < R.tap + 4 ? 0.78 : 1;
+  const ripple = interpolate(f, [R.tap, R.tap + 14], [0, 1], clamp);
+  const l1Out = interpolate(f, [R.label2 - 4, R.label2], [0, 1], { ...clamp, easing: out });
+
   return (
-    <AbsoluteFill style={{ background: C.forest }}>
-      <Orbits color={C.mint} opacity={0.1} />
-      <AbsoluteFill style={{ flexDirection: "row", alignItems: "center", padding: "0 180px", gap: 120 }}>
-        <div style={{ flex: 1, fontFamily: font, color: C.cream }}>
-          <div style={{ fontSize: 26, fontWeight: 600, letterSpacing: "0.16em", color: C.mint, opacity: fade(f, 2) * leave }}>ONE APP · {String(index + 1).padStart(2, "0")} / 04</div>
-          <div style={{ opacity: leave, marginTop: 26 }}>
-            <Words text={role.name} start={4} size={140} color={C.cream} />
+    <Scene enter={r.enter} bg={C.forest}>
+      <AbsoluteFill style={{ flexDirection: "row", alignItems: "center", padding: "0 170px", gap: 100 }}>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontFamily: font, fontSize: 28, fontWeight: 600, letterSpacing: "0.16em", color: C.mint, marginBottom: 20 }}>{`ONE APP  ·  0${index + 1}`}</div>
+          <Slam at={0} size={150} color={C.cream}>{r.name}</Slam>
+          <div style={{ position: "relative", height: 150, marginTop: 36, overflow: "hidden" }}>
+            <div style={{ position: "absolute", inset: 0, transform: `translateY(${-l1Out * 100}%)`, opacity: 1 - l1Out }}>
+              <Slam at={R.label1} size={58} weight={500} color="rgba(239,233,219,.9)">{r.l1}</Slam>
+            </div>
+            <div style={{ position: "absolute", inset: 0 }}>
+              <Slam at={R.label2} size={58} weight={500} color={C.mint}>{r.l2}</Slam>
+            </div>
           </div>
-          <div style={{ opacity: leave, marginTop: 30, maxWidth: 820 }}>
-            <Words text={role.line} start={16} size={48} weight={500} color="rgba(239,233,219,.82)" stagger={2} />
-          </div>
-          <div style={{ display: "flex", gap: 14, marginTop: 70, opacity: fade(f, 6) }}>
-            {ROLES.map((r, i) => (
-              <div key={r.name} style={{ width: 120, height: 6, borderRadius: 6, background: "rgba(239,233,219,.18)", overflow: "hidden" }}>
-                <div style={{ height: "100%", background: C.mint, width: i < index ? "100%" : i === index ? `${interpolate(f, [0, SCENES.role], [0, 100], { extrapolateRight: "clamp" })}%` : "0%" }} />
-              </div>
-            ))}
+          <div style={{ display: "flex", gap: 14, marginTop: 60 }}>
+            {ROLES.map((x, k) => <div key={x.name} style={{ width: 90, height: 6, borderRadius: 6, background: k <= index ? C.mint : "rgba(239,233,219,.2)" }} />)}
           </div>
         </div>
-        <div style={{ width: 640, height: 940, position: "relative", perspective: 2200, display: "grid", placeItems: "center" }}>
-          <div style={{ position: "absolute", width: 760, height: 760, borderRadius: "50%", background: "radial-gradient(circle, rgba(167,217,193,.38), rgba(167,217,193,0) 65%)" }} />
-          <div style={{ transform: `translateY(${float}px) rotateY(${turn}deg) rotateX(6deg)`, opacity: Math.min(enter * 1.4, 1) * leave, transformStyle: "preserve-3d" }}>
-            <Phone src={role.screen} />
+        <div style={{ position: "relative", width: PHONE_W, transform: `translateY(${rise * 140}px) scale(${punch})`, opacity: 1 - rise * 0.6 }}>
+          <div style={{ width: PHONE_W, height: (PHONE_W - PAD * 2) * (844 / 390) + PAD * 2, borderRadius: 60, padding: PAD, background: "#0f2621", boxShadow: "0 50px 90px -40px rgba(0,0,0,.6)" }}>
+            <div style={{ position: "relative", width: "100%", height: "100%", borderRadius: 50, overflow: "hidden", background: C.cream }}>
+              <Img src={staticFile(`app/${r.a}`)} style={{ position: "absolute", width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
+              <Img src={staticFile(`app/${r.b}`)} style={{ position: "absolute", width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", transform: `translateX(${(1 - swap) * 100}%)` }} />
+            </div>
           </div>
-          <div style={{ position: "absolute", left: -120, bottom: 150 }}>
-            <Chip title={role.chip[0]} text={role.chip[1]} p={fade(f, 40, 16) * leave} />
+          <div style={{ position: "absolute", left: cx, top: cy, width: 0, height: 0, opacity: cursorIn }}>
+            <div style={{ position: "absolute", left: -60, top: -60, width: 120, height: 120, borderRadius: "50%", border: `4px solid ${C.mint}`, transform: `scale(${ripple})`, opacity: f >= R.tap ? 1 - ripple : 0 }} />
+            <div style={{ position: "absolute", left: -24, top: -24, width: 48, height: 48, borderRadius: "50%", background: "rgba(252,250,245,.95)", boxShadow: `0 0 0 6px rgba(27,62,56,.35), 0 10px 20px rgba(0,0,0,.35)`, transform: `scale(${press})` }} />
           </div>
         </div>
       </AbsoluteFill>
-    </AbsoluteFill>
+    </Scene>
   );
 }
 
-// Scene 7: always on.
+// Support: the clock runs through the day, then 24/7 lands.
 function Support() {
   const f = useCurrentFrame();
-  const sweep = interpolate(f, [0, SCENES.support], [0, 420], { easing: Easing.inOut(Easing.cubic) });
-  const leave = out(f, SCENES.support - 14);
-  const ticks = Array.from({ length: 24 }, (_, i) => i);
+  const slam = TL.support.slam - TL.support.start;
+  const minutes = Math.round(interpolate(f, [4, slam - 2], [0, 24 * 60 - 1], { ...clamp, easing: Easing.in(Easing.quad) }));
+  const time = `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`;
   return (
-    <AbsoluteFill style={{ background: C.deep, flexDirection: "row", alignItems: "center", padding: "0 200px", gap: 140, opacity: leave }}>
-      <div style={{ width: 640, height: 640, position: "relative", opacity: fade(f, 0, 20), transform: `scale(${0.9 + fade(f, 0, 30) * 0.1})` }}>
-        <svg viewBox="0 0 400 400" width="640" height="640">
-          <circle cx="200" cy="200" r="160" fill="none" stroke={C.cream} strokeOpacity="0.16" strokeWidth="1.5" />
-          {ticks.map((i) => {
-            const a = (i / 24) * Math.PI * 2;
-            const major = i % 6 === 0;
-            const lit = (i / 24) * 360 <= sweep % 360 || sweep >= 360;
-            return <line key={i} x1={200 + Math.sin(a) * (major ? 138 : 148)} y1={200 - Math.cos(a) * (major ? 138 : 148)} x2={200 + Math.sin(a) * 158} y2={200 - Math.cos(a) * 158} stroke={lit ? C.mint : C.cream} strokeOpacity={lit ? 1 : 0.3} strokeWidth={major ? 3.5 : 2} strokeLinecap="round" />;
-          })}
-          <g transform={`rotate(${sweep} 200 200)`}>
-            <line x1="200" y1="200" x2="200" y2="48" stroke={C.mint} strokeWidth="4" strokeLinecap="round" />
-          </g>
-          <circle cx="200" cy="200" r="82" fill={C.forest} stroke={C.mint} strokeOpacity="0.45" />
-          <text x="200" y="212" textAnchor="middle" fill={C.cream} fontSize="50" fontWeight="600" fontFamily={font}>24/7</text>
-        </svg>
-      </div>
-      <div style={{ flex: 1, fontFamily: font }}>
-        <div style={{ fontSize: 26, fontWeight: 600, letterSpacing: "0.16em", color: C.mint, opacity: fade(f, 4) }}>24/7 SUPPORT</div>
-        <div style={{ marginTop: 26 }}><Words text="Real people. Any hour." start={8} size={120} color={C.cream} /></div>
-        <div style={{ marginTop: 34 }}><Words text="For guests, owners and our own team, every day of the year." start={30} size={44} weight={500} color="rgba(239,233,219,.8)" stagger={2} /></div>
-      </div>
-    </AbsoluteFill>
+    <Scene enter="circle" bg={C.cream}>
+      <AbsoluteFill style={{ justifyContent: "center", paddingLeft: 200 }}>
+        <div style={{ fontFamily: font, fontSize: 30, fontWeight: 600, letterSpacing: "0.16em", color: C.moss, marginBottom: 20 }}>SUPPORT</div>
+        {f < slam ? (
+          <div style={{ fontFamily: font, fontSize: 260, fontWeight: 600, letterSpacing: "-0.04em", color: C.ink, fontVariantNumeric: "tabular-nums" }}>{time}</div>
+        ) : (
+          <Slam at={slam} size={260} color={C.forest}>24/7</Slam>
+        )}
+        <div style={{ marginTop: 20 }}>
+          <Slam at={TL.support.line - TL.support.start} size={76} weight={500} color={C.ink}>Real people. Any hour.</Slam>
+        </div>
+      </AbsoluteFill>
+    </Scene>
   );
 }
 
-// Scene 8: sign-off.
+// End: the brand, the promise, the address.
 function End() {
   const f = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const s = spring({ frame: f, fps, config: { damping: 16 } });
+  const logo = interpolate(f, [0, 7], [0, 1], { ...clamp, easing: slamEase });
   return (
-    <AbsoluteFill style={{ background: C.cream, alignItems: "center", justifyContent: "center" }}>
-      <Orbits color={C.forest} opacity={0.08} />
-      <div style={{ transform: `scale(${0.94 + s * 0.06})`, opacity: s }}>
-        <Img src={staticFile("brand/recharge-logo-forest.png")} style={{ width: 900 }} />
-      </div>
-      <div style={{ marginTop: 56 }}><Words text="Short stays, run properly." start={14} size={64} color={C.ink} style={{ justifyContent: "center" }} /></div>
-      <div style={{ marginTop: 28, fontFamily: font, fontSize: 34, fontWeight: 600, color: "#315F50", opacity: fade(f, 34) }}>rechargestays.co.uk</div>
-    </AbsoluteFill>
+    <Scene enter="flash" bg={C.forest}>
+      <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
+        <Img src={staticFile("brand/recharge-logo-cream.png")} style={{ width: 1000, transform: `scale(${1.3 - 0.3 * logo})`, filter: `blur(${(1 - logo) * 12}px)`, opacity: Math.min(1, logo * 2) }} />
+        <div style={{ marginTop: 64 }}>
+          <Slam at={TL.end.line - TL.end.start} size={80} color={C.cream} style={{ transformOrigin: "center" }}>Short stays, run properly.</Slam>
+        </div>
+        <div style={{ marginTop: 26 }}>
+          <Slam at={TL.end.url - TL.end.start} size={42} weight={600} color={C.mint} style={{ transformOrigin: "center", letterSpacing: "0.02em" }}>rechargestays.co.uk</Slam>
+        </div>
+      </AbsoluteFill>
+    </Scene>
   );
-}
-
-function At({ from, len, children }: { from: number; len: number; children: ReactNode }) {
-  return <Sequence from={from} durationInFrames={len}>{children}</Sequence>;
 }
 
 export function Film() {
-  let t = 0;
-  const next = (len: number) => { const from = t; t += len; return { from, len }; };
+  const roleEnd = (i: number) => (TL.roles[i + 1] ?? TL.support.start) - TL.roles[i];
   return (
     <AbsoluteFill style={{ background: C.forest }}>
-      <At {...next(SCENES.hook)}><Hook /></At>
-      <At {...next(SCENES.logo)}><Logo /></At>
-      {ROLES.map((r, i) => <At key={r.name} {...next(SCENES.role)}><Role index={i} /></At>)}
-      <At {...next(SCENES.support)}><Support /></At>
-      <At {...next(SCENES.end)}><End /></At>
+      <Sequence durationInFrames={TL.turn.start}><Hook /></Sequence>
+      <Sequence from={TL.turn.start} durationInFrames={TL.roles[0] - TL.turn.start}><Turn /></Sequence>
+      {TL.roles.map((start, i) => (
+        <Sequence key={start} from={start} durationInFrames={roleEnd(i)}><Role index={i} /></Sequence>
+      ))}
+      <Sequence from={TL.support.start} durationInFrames={TL.end.start - TL.support.start}><Support /></Sequence>
+      <Sequence from={TL.end.start} durationInFrames={TL.duration - TL.end.start}><End /></Sequence>
+      <Html5Audio src={staticFile("audio/score.wav")} />
     </AbsoluteFill>
   );
 }

@@ -1,0 +1,12 @@
+{
+  "fps": 30,
+  "bpm": 120,
+  "beat": 15,
+  "hook": { "start": 0, "words": [0, 15, 30, 45], "line": [60, 68, 76, 84] },
+  "turn": { "start": 120, "line": 150 },
+  "roles": [180, 330, 480, 630],
+  "role": { "length": 150, "label1": 15, "cursor": 38, "tap": 60, "swap": 63, "label2": 75 },
+  "support": { "start": 780, "slam": 825, "line": 855 },
+  "end": { "start": 900, "line": 930, "url": 960 },
+  "duration": 1020
+}

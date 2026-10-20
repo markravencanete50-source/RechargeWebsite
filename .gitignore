@@ -43,3 +43,4 @@ next-env.d.ts
 # video project
 /video/node_modules
 /video/out
+/video/public/audio/*.wav

@@ -17,8 +17,11 @@ guaranteed rent or full management for property owners.
 - `npm install` then `npm run dev`: run the site at http://localhost:3000.
 - `npm run build`: production build.
 - `npm run lint`: lint.
-- `cd video && npm install && npm run render`: render the "why we are different" film into
-  `public/video/` (MP4 and poster). `npm run studio` opens it in Remotion Studio for editing.
+- `cd video && npm install && npm run render`: build the score and render the "why we are
+  different" film into `public/video/` (MP4 with music, and a poster). Needs Python with numpy,
+  scipy and soundfile, and ffmpeg. `npm run studio` opens it in Remotion Studio for editing.
+  Picture and music share one timeline (`video/src/timeline.json`, 120 bpm, a beat is 15 frames),
+  so every cut, tap and hit lands together. The music is original and synthesised: nothing to license.
 
 ## Where things live
 
