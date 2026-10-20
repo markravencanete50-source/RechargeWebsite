@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "studio": "remotion studio src/index.ts",
+    "voiceover": "python3 voiceover/voiceover.py",
+    "sound": "python3 voiceover/sound.py",
     "render": "node render.mjs"
   },
   "dependencies": {

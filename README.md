@@ -17,14 +17,16 @@ guaranteed rent or full management for property owners.
 - `npm install` then `npm run dev`: run the site at http://localhost:3000.
 - `npm run build`: production build.
 - `npm run lint`: lint.
-- `cd video && npm install && npm run render`: build the score and render the "why we are
-  different" film into `public/video/` (MP4 with music, and a poster). Needs Python with numpy,
-  scipy and soundfile, and ffmpeg. `npm run studio` opens it in Remotion Studio for editing.
-  Picture, voice and music share one timeline (`video/src/timeline.json`, 120 bpm, a beat is 15
-  frames), so every word, click and hit lands together. The music is original and synthesised:
-  nothing to license.
-- `python3 video/audio/voice.py`: regenerate the voiceover (Kokoro, voice `am_onyx`, runs locally;
-  downloads the model once). Edit the lines in that file to change the script.
+- `cd video && npm install && npm run render`: render the advertisement into `public/video/`
+  (MP4 and poster), mastered to -14 LUFS. `npm run studio` opens it in Remotion Studio.
+  It is built the same way as the Medville Diabetes ad: the voiceover leads and every scene is timed
+  against it.
+  - `npm run voiceover`: regenerate the voice (Kokoro, voice `af_heart`, runs locally, downloads the
+    model once). Edit `LINES` in `video/voiceover/voiceover.py` to change the script; scenes follow.
+  - `npm run sound`: rebuild the music bed and sound effects to the new length (synthesised, no
+    licensed audio).
+  - B-roll photos are free-to-use Pexels images, credited in `video/public/img/SOURCES.md`. App and
+    website shots are real captures of the Recharge app (sample mode) and this website.
 
 ## Where things live
 

@@ -1,0 +1,62 @@
+{
+  "voice": "af_heart",
+  "duration": 43.41,
+  "lines": [
+    {
+      "id": "hook",
+      "start": 0.5,
+      "end": 6.246,
+      "spoken": "Running a short let takes work, every single day. Guests, cleans, repairs, and owners, all at once.",
+      "caption": "Running a short let takes work, every single day. Guests, cleans, repairs, and owners, all at once."
+    },
+    {
+      "id": "brand",
+      "start": 6.696,
+      "end": 13.429,
+      "spoken": "Recharge is a serviced accommodation company, with homes across Glasgow, Edinburgh, and Scotland's Central Belt.",
+      "caption": "Recharge is a serviced accommodation company, with homes across Glasgow, Edinburgh, and Scotland's Central Belt."
+    },
+    {
+      "id": "book",
+      "start": 13.829,
+      "end": 18.96,
+      "spoken": "Here's how it works. Guests find a home on our website, and book direct to save ten percent.",
+      "caption": "Here's how it works. Guests find a home on our website, and book direct to save 10%."
+    },
+    {
+      "id": "clean",
+      "start": 19.31,
+      "end": 22.791,
+      "spoken": "Every booking creates a clean, with a checklist, and photo proof.",
+      "caption": "Every booking creates a clean, with a checklist and photo proof."
+    },
+    {
+      "id": "fix",
+      "start": 23.141,
+      "end": 27.05,
+      "spoken": "Problems are logged, assigned, and fixed, before the next guest arrives.",
+      "caption": "Problems are logged, assigned, and fixed, before the next guest arrives."
+    },
+    {
+      "id": "owners",
+      "start": 27.4,
+      "end": 31.67,
+      "spoken": "Owners follow every booking, statement, and payout, live in the Recharge app.",
+      "caption": "Owners follow every booking, statement and payout, live in the Recharge app."
+    },
+    {
+      "id": "support",
+      "start": 32.07,
+      "end": 34.684,
+      "spoken": "And real people are on hand, twenty four seven.",
+      "caption": "And real people are on hand, 24/7."
+    },
+    {
+      "id": "cta",
+      "start": 35.184,
+      "end": 40.81,
+      "spoken": "Recharge. Short stays, run properly. Book direct, at recharge stays dot co dot uk.",
+      "caption": "Recharge. Short stays, run properly. Book direct at rechargestays.co.uk."
+    }
+  ]
+}
