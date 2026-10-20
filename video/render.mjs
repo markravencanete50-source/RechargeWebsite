@@ -2,7 +2,7 @@
 // The sound is mastered like the Medville ad: -14 LUFS integrated, peaks held under -1 dBTP.
 // Usage: npm run render   (run voiceover/voiceover.py and voiceover/sound.py first if the script changed)
 import path from "node:path";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { bundle } from "@remotion/bundler";
@@ -18,18 +18,20 @@ const serveUrl = await bundle({ entryPoint: path.join(root, "src/index.ts"), pub
 const composition = await selectComposition({ serveUrl, id: "different", browserExecutable });
 const duration = JSON.parse(readFileSync(path.join(root, "src/voiceover.json"), "utf8")).duration;
 
-if (!process.argv.includes("--poster-only")) {
-  const raw = path.join(root, "out", "raw.mp4");
+const raw = path.join(root, "out", "raw.mp4");
+if (!process.argv.includes("--poster-only") && !process.argv.includes("--master-only")) {
   await renderMedia({
     composition, serveUrl, browserExecutable, codec: "h264", crf: 20, pixelFormat: "yuv420p", audioCodec: "aac", audioBitrate: "192k", outputLocation: raw,
     onProgress: ({ progress }) => process.stdout.write(`\rfilm: ${Math.round(progress * 100)}%   `),
   });
   console.log();
+}
+if (!process.argv.includes("--poster-only")) {
   // Measure the mix, set the gain that lands it on -14 LUFS, and hold peaks with a fast limiter.
-  const report = execFileSync("ffmpeg", ["-hide_banner", "-i", raw, "-af", "loudnorm=I=-14:TP=-1:LRA=11:print_format=json", "-f", "null", "-"], { stdio: ["ignore", "ignore", "pipe"] }).toString();
+  const report = spawnSync("ffmpeg", ["-hide_banner", "-i", raw, "-af", "loudnorm=I=-14:TP=-1:LRA=11:print_format=json", "-f", "null", "-"]).stderr.toString();
   const inputI = JSON.parse(report.match(/\{[^{}]*\}/)[0]).input_i;
-  const gain = (-14 - Number(inputI)).toFixed(2);
-  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", raw, "-c:v", "copy", "-af", `volume=${gain}dB,alimiter=limit=0.75:attack=0.1:release=30:level=disabled`, "-t", String(duration), "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", path.join(outDir, "recharge-different.mp4")]);
+  const gain = (-14.3 - Number(inputI)).toFixed(2);
+  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", raw, "-c:v", "copy", "-af", `volume=${gain}dB,alimiter=limit=0.66:attack=0.1:release=30:level=disabled`, "-t", String(duration), "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", path.join(outDir, "recharge-different.mp4")]);
   console.log(`mastered with ${gain} dB`);
 }
 // The poster is a frame of the real website being booked.
