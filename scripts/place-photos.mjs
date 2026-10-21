@@ -6,9 +6,10 @@
 // Writes src/content/place-photos.json, keyed "Place name|Town". Re-running keeps earlier matches.
 import fs from "node:fs";
 import { parseListing } from "../src/content/listing.ts";
-import { findPlacePhoto, wantsPhoto } from "../src/lib/place-photo.ts";
+import { findPlacePhoto, isSamePlace, wantsPhoto } from "../src/lib/place-photo.ts";
 
-const OUT = new URL("../src/content/place-photos.json", import.meta.url);
+// PLACE_PHOTOS_OUT writes somewhere else during a long run, so the repository only changes once it is checked.
+const OUT = process.env.PLACE_PHOTOS_OUT ? new URL(`file://${process.env.PLACE_PHOTOS_OUT}`) : new URL("../src/content/place-photos.json", import.meta.url);
 const homes = JSON.parse(fs.readFileSync(new URL("../src/content/properties.json", import.meta.url), "utf8"));
 const known = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, "utf8")) : {};
 const UA = { "user-agent": "RechargeWebsite/1.0 (https://rechargestays.co.uk; enquiries@rechargestays.co.uk)" };
@@ -23,6 +24,13 @@ async function get(u, tries = 6) {
     return r.json();
   }
   throw new Error("still rate limited");
+}
+
+// Earlier matches are re-checked against the current rules; any that fail are looked up again.
+for (const [key, v] of Object.entries(known)) {
+  const name = key.split("|")[0];
+  const title = v ? decodeURIComponent(v.page.split("/wiki/")[1]).replace(/_/g, " ") : "";
+  if (!wantsPhoto(name) || (v && !isSamePlace(name, title))) { console.log("drop", key, title); delete known[key]; }
 }
 
 const wanted = new Map();

@@ -10,7 +10,7 @@ const GENERIC = /^(the )?(local |nearest |nearby )?(gym|gyms|supermarkets?|train
 const STOP = new Set(["the", "and", "park", "centre", "center", "station", "shopping"]);
 
 // Shops and supermarkets match articles about the chain, not the branch nearby.
-const CHAIN = /\b(supermarkets?|superstore|tesco|aldi|lidl|asda|morrisons|sainsbury'?s|co-?op|gym group|puregym|jd gyms)\b/i;
+const CHAIN = /\b(supermarkets?|superstore|tesco|aldi|lidl|asda|morrisons|sainsbury'?s|co-?op|gym group|puregym|jd gyms|shopping centre|shopping park|retail park|outlet|business park)\b/i;
 
 export const wantsPhoto = (name: string) => name.length >= 4 && !GENERIC.test(name) && !CHAIN.test(name);
 
@@ -25,17 +25,27 @@ export const fileUrl = (file: string) => url({ action: "query", titles: `File:${
 
 type Page = { index: number; title: string; fullurl: string; pageimage?: string; thumbnail?: { source: string } };
 
-// The first result whose title clearly names the same place, and which has a photo.
-export function pickPage(data: { query?: { pages?: Page[] } }, name: string): Page | null {
+// Words that say what kind of place it is. A station must match a station, not a battle.
+const KIND = new Set(["station", "stadium", "castle", "hospital", "museum", "palace", "university"]);
+
+// True when a Wikipedia title clearly names the same place: most of the name's words are in
+// the title, the title adds at most one word of its own, and the kind of place agrees.
+export function isSamePlace(name: string, title: string) {
   const want = words(name.split("/")[0]);
-  if (!want.length) return null;
+  const have = words(title);
+  if (!want.length) return false;
+  const shared = want.filter((w) => have.includes(w)).length;
+  const extra = have.filter((w) => !want.includes(w) && w !== "railway" && w !== "scotland").length;
+  const allName = name.toLowerCase().split(/[^a-z]+/);
+  const allTitle = title.toLowerCase().split(/[^a-z]+/);
+  const kindsAgree = [...KIND].every((k) => allName.includes(k) === allTitle.includes(k));
+  return shared / want.length >= 0.6 && extra <= 1 && kindsAgree;
+}
+
+// The first result that is clearly the same place, and which has a photo.
+export function pickPage(data: { query?: { pages?: Page[] } }, name: string): Page | null {
   const pages = [...(data.query?.pages ?? [])].sort((a, b) => a.index - b.index);
-  for (const p of pages) {
-    if (!p.thumbnail || !p.pageimage) continue;
-    const have = new Set(words(p.title));
-    if (want.filter((w) => have.has(w)).length / want.length >= 0.6) return p;
-  }
-  return null;
+  return pages.find((p) => p.thumbnail && p.pageimage && isSamePlace(name, p.title)) ?? null;
 }
 
 const strip = (html = "") => html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
