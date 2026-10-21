@@ -4,7 +4,7 @@ import { Clock, ExternalLink, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { Place } from "@/content/listing";
-import { findPlacePhoto, wantsPhoto, type PlacePhoto } from "@/lib/place-photo";
+import { bare, findPlacePhoto, wantsPhoto, type PlacePhoto } from "@/lib/place-photo";
 
 export type { PlacePhoto };
 
@@ -59,7 +59,7 @@ export function NearbyMap({ area, town, places, photos }: { area: string; town: 
               <div role="listitem" key={p.name + p.time} className={`place-card${active ? " active" : ""}`}>
                 <button type="button" onClick={() => select(p.name)} aria-pressed={active} aria-label={`Show ${p.name} on the map`}>
                   <span className={`place-photo${photo ? "" : " loading"}`}>
-                    {photo && <Image src={photo.src} alt={p.name} fill sizes="240px" />}
+                    {photo && <Image src={bare(photo.src)} alt={p.name} fill sizes="240px" />}
                   </span>
                   <strong>{p.name}</strong>
                   {p.time && <em><Clock size={13} /> {p.time}</em>}

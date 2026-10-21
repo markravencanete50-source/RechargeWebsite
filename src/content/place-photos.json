@@ -1,17 +1,17 @@
 {
  "Bo’ness and Kinneil Railway|Bo'ness": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/B%26KR_NCB_No._19_at_Bo%27ness.jpg/960px-B%26KR_NCB_No._19_at_Bo%27ness.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/B%26KR_NCB_No._19_at_Bo%27ness.jpg/960px-B%26KR_NCB_No._19_at_Bo%27ness.jpg",
   "page": "https://en.wikipedia.org/wiki/Bo%27ness_and_Kinneil_Railway",
   "credit": "Aljcunni, CC BY-SA 4.0, Wikimedia Commons"
  },
  "Kinneil House and Estate|Bo'ness": {
-  "src": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Kinneil_House.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "src": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Kinneil_House.jpg",
   "page": "https://en.wikipedia.org/wiki/Kinneil_House",
   "credit": "Tom Sargent, CC BY-SA 2.0, Wikimedia Commons"
  },
  "Linlithgow Palace and Loch|Bo'ness": null,
  "Blackness Castle|Bo'ness": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/NEWScotland-2016-Aerial-Blackness_Castle_01.jpg/960px-NEWScotland-2016-Aerial-Blackness_Castle_01.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/NEWScotland-2016-Aerial-Blackness_Castle_01.jpg/960px-NEWScotland-2016-Aerial-Blackness_Castle_01.jpg",
   "page": "https://en.wikipedia.org/wiki/Blackness_Castle",
   "credit": "Godot13, CC BY-SA 4.0, Wikimedia Commons"
  },
@@ -20,13 +20,13 @@
  "Stranraer Town Centre and Castle of St John|Stranraer": null,
  "Stranraer Train Station|Stranraer": null,
  "Castle Kennedy Gardens|Stranraer": {
-  "src": "https://upload.wikimedia.org/wikipedia/commons/0/03/Castle_Kennedy_by_Francis_Grose%2C_pub._Sep.15_1789_in_Antiquities_of_Scotland_vol.2_pp.191-192.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "src": "https://upload.wikimedia.org/wikipedia/commons/0/03/Castle_Kennedy_by_Francis_Grose%2C_pub._Sep.15_1789_in_Antiquities_of_Scotland_vol.2_pp.191-192.jpg",
   "page": "https://en.wikipedia.org/wiki/Castle_Kennedy",
   "credit": "Drawing by Francis Grose., Public domain, Wikimedia Commons"
  },
  "Cairnryan Ferry Terminals|Stranraer": null,
  "Duthie Park|Aberdeen": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Duthie_Park_bandstand.jpg/960px-Duthie_Park_bandstand.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Duthie_Park_bandstand.jpg/960px-Duthie_Park_bandstand.jpg",
   "page": "https://en.wikipedia.org/wiki/Duthie_Park",
   "credit": "UltrasonicMadness, CC BY-SA 4.0, Wikimedia Commons"
  },
@@ -52,31 +52,31 @@
  "Huntly Town Centre and Gordon Square|Huntly": null,
  "Huntly Train Station|Huntly": null,
  "Huntly Castle|Huntly": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Huntly_Castle_home_of_the_Gordon%E2%80%99s_-_geograph.org.uk_-_8018379.jpg/960px-Huntly_Castle_home_of_the_Gordon%E2%80%99s_-_geograph.org.uk_-_8018379.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Huntly_Castle_home_of_the_Gordon%E2%80%99s_-_geograph.org.uk_-_8018379.jpg/960px-Huntly_Castle_home_of_the_Gordon%E2%80%99s_-_geograph.org.uk_-_8018379.jpg",
   "page": "https://en.wikipedia.org/wiki/Huntly_Castle",
   "credit": "Iain Lees, CC BY-SA 2.0, Wikimedia Commons"
  },
  "Huntly Nordic and Outdoor Centre|Huntly": null,
  "Leith Hall Garden and Estate|Huntly": null,
  "Grampian Transport Museum|Alford": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Museum_frontage_Grampian_transport_museum.jpg/960px-Museum_frontage_Grampian_transport_museum.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Museum_frontage_Grampian_transport_museum.jpg/960px-Museum_frontage_Grampian_transport_museum.jpg",
   "page": "https://en.wikipedia.org/wiki/Grampian_Transport_Museum",
   "credit": "Postie.Alford, CC BY-SA 4.0, Wikimedia Commons"
  },
  "Alford Heritage Museum|Alford": null,
  "Craigievar Castle|Alford": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Craigievar_Doocot_and_Castle_-_geograph.org.uk_-_7846018.jpg/960px-Craigievar_Doocot_and_Castle_-_geograph.org.uk_-_7846018.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Craigievar_Doocot_and_Castle_-_geograph.org.uk_-_7846018.jpg/960px-Craigievar_Doocot_and_Castle_-_geograph.org.uk_-_7846018.jpg",
   "page": "https://en.wikipedia.org/wiki/Craigievar_Castle",
   "credit": "Colin Smith, CC BY-SA 2.0, Wikimedia Commons"
  },
  "Haughton Country Park|Alford": null,
  "Alford Valley Railway|Alford": {
-  "src": "https://upload.wikimedia.org/wikipedia/commons/1/17/AlfordValleyRailway.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "src": "https://upload.wikimedia.org/wikipedia/commons/1/17/AlfordValleyRailway.jpg",
   "page": "https://en.wikipedia.org/wiki/Alford_Valley_Railway",
   "credit": "Colin Smith, CC BY-SA 2.0, Wikimedia Commons"
  },
  "Montrose Railway Station|Montrose": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Montrose_station_%28geograph_7794449%29.jpg/960px-Montrose_station_%28geograph_7794449%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Montrose_station_%28geograph_7794449%29.jpg/960px-Montrose_station_%28geograph_7794449%29.jpg",
   "page": "https://en.wikipedia.org/wiki/Montrose_railway_station",
   "credit": "Bill Harrison, CC BY-SA 2.0, Wikimedia Commons"
  },
@@ -84,7 +84,7 @@
  "Montrose Museum and Art Gallery|Montrose": null,
  "Montrose Beach and Seafront|Montrose": null,
  "Prestwick Town Station|Prestwick": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Prestwick_Town_Railway_Station%2C_with_ScotRail_380108_to_North_Berwick_sitting_at_Platform_1.jpg/960px-Prestwick_Town_Railway_Station%2C_with_ScotRail_380108_to_North_Berwick_sitting_at_Platform_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Prestwick_Town_Railway_Station%2C_with_ScotRail_380108_to_North_Berwick_sitting_at_Platform_1.jpg/960px-Prestwick_Town_Railway_Station%2C_with_ScotRail_380108_to_North_Berwick_sitting_at_Platform_1.jpg",
   "page": "https://en.wikipedia.org/wiki/Prestwick_Town_railway_station",
   "credit": "mbreckers, CC BY-SA 4.0, Wikimedia Commons"
  },
@@ -92,7 +92,7 @@
  "Prestwick Tennis and Fitness / Aspire Gym|Prestwick": null,
  "Kilmarnock|Ardrossan": null,
  "Ardrossan South Beach Train Station|Ardrossan": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Ardrossan_South_Beach_railway_station%2C_North_Ayrshire%2C_Scotland._View_east.jpg/960px-Ardrossan_South_Beach_railway_station%2C_North_Ayrshire%2C_Scotland._View_east.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Ardrossan_South_Beach_railway_station%2C_North_Ayrshire%2C_Scotland._View_east.jpg/960px-Ardrossan_South_Beach_railway_station%2C_North_Ayrshire%2C_Scotland._View_east.jpg",
   "page": "https://en.wikipedia.org/wiki/Ardrossan_South_Beach_railway_station",
   "credit": "Rosser1954, CC BY-SA 4.0, Wikimedia Commons"
  },
@@ -104,7 +104,7 @@
  "Luss Village and Loch Lomond|Helensburgh": null,
  "Loch Lomond and The Trossachs National Park|Alexandria": null,
  "Dumbarton Castle|Dumbarton": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Scotland_Dumbarton_Castle_bordercropped.jpg/960px-Scotland_Dumbarton_Castle_bordercropped.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Scotland_Dumbarton_Castle_bordercropped.jpg/960px-Scotland_Dumbarton_Castle_bordercropped.jpg",
   "page": "https://en.wikipedia.org/wiki/Dumbarton_Castle",
   "credit": "CC BY-SA 3.0, Wikimedia Commons"
  },
@@ -114,48 +114,48 @@
  "Balloch Castle Country Park|Dumbarton": null,
  "The Whangie|Dumbarton": null,
  "Kelvingrove Art Gallery and Museum|Dumbarton": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Kelvingrove_Art_Gallery_and_Museum_-_aerial_-_2025-04-17.jpg/960px-Kelvingrove_Art_Gallery_and_Museum_-_aerial_-_2025-04-17.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Kelvingrove_Art_Gallery_and_Museum_-_aerial_-_2025-04-17.jpg/960px-Kelvingrove_Art_Gallery_and_Museum_-_aerial_-_2025-04-17.jpg",
   "page": "https://en.wikipedia.org/wiki/Kelvingrove_Art_Gallery_and_Museum",
   "credit": "瑞丽江的河水, CC BY-SA 4.0, Wikimedia Commons"
  },
  "Buchanan Street|Dumbarton": null,
  "Loch Lomond Shores|Dumbarton": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Loch_Lomond_2013_2.JPG/960px-Loch_Lomond_2013_2.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Loch_Lomond_2013_2.JPG/960px-Loch_Lomond_2013_2.JPG",
   "page": "https://en.wikipedia.org/wiki/Loch_Lomond",
   "credit": "Mimihitam, CC BY-SA 3.0, Wikimedia Commons"
  },
  "Overtoun Estate|Dumbarton": null,
  "Alexandria Train Station|Alexandria": null,
  "Vale of Leven Hospital|Alexandria": {
-  "src": "https://upload.wikimedia.org/wikipedia/commons/9/92/The_Vale_of_Leven_Hospital_-_geograph.org.uk_-_273091.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "src": "https://upload.wikimedia.org/wikipedia/commons/9/92/The_Vale_of_Leven_Hospital_-_geograph.org.uk_-_273091.jpg",
   "page": "https://en.wikipedia.org/wiki/Vale_of_Leven_Hospital",
   "credit": "wfmillar, CC BY-SA 2.0, Wikimedia Commons"
  },
  "Balloch Castle Country Park|Alexandria": null,
  "Ninewells Hospital|Dundee": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Ninewells_cropped.jpg/960px-Ninewells_cropped.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Ninewells_cropped.jpg/960px-Ninewells_cropped.jpg",
   "page": "https://en.wikipedia.org/wiki/Ninewells_Hospital",
   "credit": "Ninewells Hospital.jpg: Ydam derivative work: Catfish Jim an, CC BY-SA 2.5, Wikimedia Commons"
  },
  "University of Dundee|Dundee": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Arms_of_the_University_of_Dundee.svg/960px-Arms_of_the_University_of_Dundee.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Arms_of_the_University_of_Dundee.svg/960px-Arms_of_the_University_of_Dundee.svg.png",
   "page": "https://en.wikipedia.org/wiki/University_of_Dundee",
   "credit": "ET72, CC BY-SA 4.0, Wikimedia Commons"
  },
  "V and A Dundee|Dundee": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Victoria_and_Albert_Museum_Logo.svg/960px-Victoria_and_Albert_Museum_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Victoria_and_Albert_Museum_Logo.svg/960px-Victoria_and_Albert_Museum_Logo.svg.png",
   "page": "https://en.wikipedia.org/wiki/V%26A_Dundee",
   "credit": "Alan Fletcher, Public domain, Wikimedia Commons"
  },
  "Seton Sands Beach|Port Seton": {
-  "src": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Seton_sands_west.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "src": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Seton_sands_west.jpg",
   "page": "https://en.wikipedia.org/wiki/Seton_Sands",
   "credit": "Shadercok at English Wikipedia, Public domain, Wikimedia Commons"
  },
  "Prestonpans Train Station|Port Seton": null,
  "Preston Tower|Port Seton": null,
  "Murrayfield Stadium|Edinburgh": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Scotland_v_Argentina_Rugby_Union_International_at_a_full_Murrayfield_-_geograph.org.uk_-_8195739.jpg/960px-Scotland_v_Argentina_Rugby_Union_International_at_a_full_Murrayfield_-_geograph.org.uk_-_8195739.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Scotland_v_Argentina_Rugby_Union_International_at_a_full_Murrayfield_-_geograph.org.uk_-_8195739.jpg/960px-Scotland_v_Argentina_Rugby_Union_International_at_a_full_Murrayfield_-_geograph.org.uk_-_8195739.jpg",
   "page": "https://en.wikipedia.org/wiki/Murrayfield_Stadium",
   "credit": "Iain Lees, CC BY-SA 2.0, Wikimedia Commons"
  },
@@ -165,12 +165,12 @@
  "Pentland Hills and Harlaw Reservoir|Balerno": null,
  "Royal Mile (Old Town)|Edinburgh": null,
  "Grassmarket|Edinburgh": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Grassmarket_Edinburgh_in_the_fog.JPG/960px-Grassmarket_Edinburgh_in_the_fog.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Grassmarket_Edinburgh_in_the_fog.JPG/960px-Grassmarket_Edinburgh_in_the_fog.JPG",
   "page": "https://en.wikipedia.org/wiki/Grassmarket",
   "credit": "Stephencdickson, CC BY-SA 3.0, Wikimedia Commons"
  },
  "Arthur’s Seat|Edinburgh": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Arthur%27s_Seat%2C_Edinburgh.JPG/960px-Arthur%27s_Seat%2C_Edinburgh.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Arthur%27s_Seat%2C_Edinburgh.JPG/960px-Arthur%27s_Seat%2C_Edinburgh.JPG",
   "page": "https://en.wikipedia.org/wiki/Arthur%27s_Seat",
   "credit": "Kim Traynor, CC BY-SA 3.0, Wikimedia Commons"
  },
@@ -180,14 +180,14 @@
  "Dr Neil's Garden|Edinburgh": null,
  "Duddingston Village|Edinburgh": null,
  "Holyrood Park and Arthur's Seat|Edinburgh": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Arthur%27s_Seat%2C_Edinburgh.JPG/960px-Arthur%27s_Seat%2C_Edinburgh.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Arthur%27s_Seat%2C_Edinburgh.JPG/960px-Arthur%27s_Seat%2C_Edinburgh.JPG",
   "page": "https://en.wikipedia.org/wiki/Arthur%27s_Seat",
   "credit": "Kim Traynor, CC BY-SA 3.0, Wikimedia Commons"
  },
  "Palace of Holyroodhouse|Edinburgh": null,
  "The Royal Mile and Old Town|Edinburgh": null,
  "Holyrood Palace|Edinburgh": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Holyrood_Palace_-_aerial_-_2025-04-19_01_%28cropped%29.jpg/960px-Holyrood_Palace_-_aerial_-_2025-04-19_01_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Holyrood_Palace_-_aerial_-_2025-04-19_01_%28cropped%29.jpg/960px-Holyrood_Palace_-_aerial_-_2025-04-19_01_%28cropped%29.jpg",
   "page": "https://en.wikipedia.org/wiki/Holyrood_Palace",
   "credit": "瑞丽江的河水, CC BY-SA 4.0, Wikimedia Commons"
  },
@@ -195,17 +195,17 @@
  "Alexandria Station|Alexandria": null,
  "Loch Lomond Shores|Alexandria": null,
  "Princes Street Gardens|Edinburgh": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Princes_Street_-_aerial_-_2025-04-19.jpg/960px-Princes_Street_-_aerial_-_2025-04-19.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Princes_Street_-_aerial_-_2025-04-19.jpg/960px-Princes_Street_-_aerial_-_2025-04-19.jpg",
   "page": "https://en.wikipedia.org/wiki/Princes_Street",
   "credit": "瑞丽江的河水, CC BY-SA 4.0, Wikimedia Commons"
  },
  "National Museum of Scotland|Edinburgh": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Museum_of_Scotland.jpg/960px-Museum_of_Scotland.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Museum_of_Scotland.jpg/960px-Museum_of_Scotland.jpg",
   "page": "https://en.wikipedia.org/wiki/National_Museum_of_Scotland",
   "credit": "No machine-readable author provided. Maccoinnich~commonswiki, CC BY-SA 3.0, Wikimedia Commons"
  },
  "Royal Mile|Edinburgh": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/High_Street%2C_Edinburgh.JPG/960px-High_Street%2C_Edinburgh.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/High_Street%2C_Edinburgh.JPG/960px-High_Street%2C_Edinburgh.JPG",
   "page": "https://en.wikipedia.org/wiki/Royal_Mile",
   "credit": "Kim Traynor, CC BY-SA 3.0, Wikimedia Commons"
  },
@@ -215,29 +215,29 @@
  "Murrayfield Stadium (10-minute drive)|Edinburgh": null,
  "Lauriston Castle (7-minute drive)|Edinburgh": null,
  "Craigmillar Castle|Edinburgh": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Craigmillar_Castle.jpg/960px-Craigmillar_Castle.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Craigmillar_Castle.jpg/960px-Craigmillar_Castle.jpg",
   "page": "https://en.wikipedia.org/wiki/Craigmillar_Castle",
   "credit": "Photograph by Stuart Yeates, from en:Flickr, CC BY-SA 2.0, Wikimedia Commons"
  },
  "Royal Infirmary of Edinburgh|Edinburgh": {
-  "src": "https://upload.wikimedia.org/wikipedia/commons/1/12/Main_Entrance%2C_Edinburgh_Royal_Infirmary_-_geograph.org.uk_-_432996.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "src": "https://upload.wikimedia.org/wikipedia/commons/1/12/Main_Entrance%2C_Edinburgh_Royal_Infirmary_-_geograph.org.uk_-_432996.jpg",
   "page": "https://en.wikipedia.org/wiki/Royal_Infirmary_of_Edinburgh",
   "credit": "Lisa Jarvis, CC BY-SA 2.0, Wikimedia Commons"
  },
  "Holyrood Park and Arthur’s Seat|Edinburgh": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Arthur%27s_Seat%2C_Edinburgh.JPG/960px-Arthur%27s_Seat%2C_Edinburgh.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Arthur%27s_Seat%2C_Edinburgh.JPG/960px-Arthur%27s_Seat%2C_Edinburgh.JPG",
   "page": "https://en.wikipedia.org/wiki/Arthur%27s_Seat",
   "credit": "Kim Traynor, CC BY-SA 3.0, Wikimedia Commons"
  },
  "Kirkcaldy Beach and Promenade|Kirkcaldy": null,
  "Kirkcaldy Town Centre|Kirkcaldy": null,
  "Kirkcaldy Galleries|Kirkcaldy": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Kirkcaldy_Museum_and_Art_Gallery.jpg/960px-Kirkcaldy_Museum_and_Art_Gallery.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Kirkcaldy_Museum_and_Art_Gallery.jpg/960px-Kirkcaldy_Museum_and_Art_Gallery.jpg",
   "page": "https://en.wikipedia.org/wiki/Kirkcaldy_Galleries",
   "credit": "Kilnburn (talk) 12:25, 11 November 2008 (UTC), Attribution, Wikimedia Commons"
  },
  "Ravenscraig Park and Castle|Kirkcaldy": {
-  "src": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Ravenscraig_Castle_-_geograph.org.uk_-_31491.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "src": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Ravenscraig_Castle_-_geograph.org.uk_-_31491.jpg",
   "page": "https://en.wikipedia.org/wiki/Ravenscraig_Castle",
   "credit": "Ian Mitchell, CC BY-SA 2.0, Wikimedia Commons"
  },
@@ -246,7 +246,7 @@
  "Green Spaces|Dunfermline": null,
  "Cultural Landmarks|Dunfermline": null,
  "Cathcart Station|Glasgow": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/Cathcart_station_%28geograph_4671063%29.jpg/960px-Cathcart_station_%28geograph_4671063%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/Cathcart_station_%28geograph_4671063%29.jpg/960px-Cathcart_station_%28geograph_4671063%29.jpg",
   "page": "https://en.wikipedia.org/wiki/Cathcart_railway_station",
   "credit": "Peter Whatley, CC BY-SA 2.0, Wikimedia Commons"
  },
@@ -254,21 +254,21 @@
  "Shawlands cafés, bars and restaurants|Glasgow": null,
  "Tollcross Park and Leisure Centre|Glasgow": null,
  "Celtic Park|Glasgow": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Celtic_Park_during_an_Old_Firm_derby_between_Celtic_FC_and_Rangers_FC.jpg/960px-Celtic_Park_during_an_Old_Firm_derby_between_Celtic_FC_and_Rangers_FC.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Celtic_Park_during_an_Old_Firm_derby_between_Celtic_FC_and_Rangers_FC.jpg/960px-Celtic_Park_during_an_Old_Firm_derby_between_Celtic_FC_and_Rangers_FC.jpg",
   "page": "https://en.wikipedia.org/wiki/Celtic_Park",
   "credit": "Vincenzo.togni, CC BY-SA 4.0, Wikimedia Commons"
  },
  "Emirates Arena|Glasgow": null,
  "Hogganfield Park and Loch|Glasgow": null,
  "St. Mungo Museum of Religious Life and Art|Glasgow": {
-  "src": "https://upload.wikimedia.org/wikipedia/commons/1/11/St._Mungo%27s_Museum%2C_Glasgow_-_geograph.org.uk_-_579045.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "src": "https://upload.wikimedia.org/wikipedia/commons/1/11/St._Mungo%27s_Museum%2C_Glasgow_-_geograph.org.uk_-_579045.jpg",
   "page": "https://en.wikipedia.org/wiki/St_Mungo_Museum_of_Religious_Life_and_Art",
   "credit": "wfmillar, CC BY-SA 2.0, Wikimedia Commons"
  },
  "Gartcosh Train Station|Gartcosh": null,
  "Coatbridge Town Centre|Gartcosh": null,
  "Rutherglen Railway Station|Rutherglen": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Rutherglen_Railway_Station_-_Platform_from_walkway_3_-_2016-02-28.jpg/960px-Rutherglen_Railway_Station_-_Platform_from_walkway_3_-_2016-02-28.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Rutherglen_Railway_Station_-_Platform_from_walkway_3_-_2016-02-28.jpg/960px-Rutherglen_Railway_Station_-_Platform_from_walkway_3_-_2016-02-28.jpg",
   "page": "https://en.wikipedia.org/wiki/Rutherglen_railway_station",
   "credit": "BrainiacBlink, CC BY-SA 4.0, Wikimedia Commons"
  },
@@ -278,26 +278,26 @@
  "Hampden Park|Cambuslang": null,
  "Celtic Park|Cambuslang": null,
  "Pollok Country Park|Glasgow": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Wfm_pollok_country_park.jpg/960px-Wfm_pollok_country_park.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Wfm_pollok_country_park.jpg/960px-Wfm_pollok_country_park.jpg",
   "page": "https://en.wikipedia.org/wiki/Pollok_Country_Park",
   "credit": "CC BY-SA 3.0, Wikimedia Commons"
  },
  "Ibrox Stadium|Glasgow": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Ibrox_Stadium%2C_Rangers_FC_%28cropped%29.jpg/960px-Ibrox_Stadium%2C_Rangers_FC_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Ibrox_Stadium%2C_Rangers_FC_%28cropped%29.jpg/960px-Ibrox_Stadium%2C_Rangers_FC_%28cropped%29.jpg",
   "page": "https://en.wikipedia.org/wiki/Ibrox_Stadium",
   "credit": "Lesterhobbes764, CC BY-SA 4.0, Wikimedia Commons"
  },
  "Stepps Train Station|Glasgow": null,
  "Kings Park Station|Glasgow": null,
  "Queen Elizabeth University Hospital|Glasgow": {
-  "src": "https://thumb.wikimedia.org/wikipedia/en/thumb/0/0e/NHS_Scotland_logo.svg/960px-NHS_Scotland_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/en/thumb/0/0e/NHS_Scotland_logo.svg/960px-NHS_Scotland_logo.svg.png",
   "page": "https://en.wikipedia.org/wiki/Queen_Elizabeth_University_Hospital",
   "credit": "National Health Service, PD, Wikimedia Commons"
  },
  "Hampden Park|Glasgow": null,
  "Elder Park|Glasgow": null,
  "Govan Subway Station|Glasgow": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Govan_Subway_Station%2C_Glasgow_-_geograph.org.uk_-_7260464.jpg/960px-Govan_Subway_Station%2C_Glasgow_-_geograph.org.uk_-_7260464.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Govan_Subway_Station%2C_Glasgow_-_geograph.org.uk_-_7260464.jpg/960px-Govan_Subway_Station%2C_Glasgow_-_geograph.org.uk_-_7260464.jpg",
   "page": "https://en.wikipedia.org/wiki/Govan_subway_station",
   "credit": "habiloid, CC BY-SA 2.0, Wikimedia Commons"
  },
@@ -305,22 +305,22 @@
  "Celtic Park|Hamilton": null,
  "Emirates Arena|Hamilton": null,
  "Shettleston Station|Glasgow": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/ShettlestonRailwayStation.JPG/960px-ShettlestonRailwayStation.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/ShettlestonRailwayStation.JPG/960px-ShettlestonRailwayStation.JPG",
   "page": "https://en.wikipedia.org/wiki/Shettleston_railway_station",
   "credit": "ML5 at English Wikipedia, Public domain, Wikimedia Commons"
  },
  "Tollcross International Swimming Centre|Glasgow": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Tollcross_International_Swimming_Centre_%2828921366007%29.jpg/960px-Tollcross_International_Swimming_Centre_%2828921366007%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Tollcross_International_Swimming_Centre_%2828921366007%29.jpg/960px-Tollcross_International_Swimming_Centre_%2828921366007%29.jpg",
   "page": "https://en.wikipedia.org/wiki/Tollcross_International_Swimming_Centre",
   "credit": "Daniel from Glasgow, United Kingdom, CC BY 2.0, Wikimedia Commons"
  },
  "Celtic Park / Emirates Arena|Glasgow": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Celtic_Park_during_an_Old_Firm_derby_between_Celtic_FC_and_Rangers_FC.jpg/960px-Celtic_Park_during_an_Old_Firm_derby_between_Celtic_FC_and_Rangers_FC.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Celtic_Park_during_an_Old_Firm_derby_between_Celtic_FC_and_Rangers_FC.jpg/960px-Celtic_Park_during_an_Old_Firm_derby_between_Celtic_FC_and_Rangers_FC.jpg",
   "page": "https://en.wikipedia.org/wiki/Celtic_Park",
   "credit": "Vincenzo.togni, CC BY-SA 4.0, Wikimedia Commons"
  },
  "Paisley Gilmour Street Station|Paisley": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/A_sunny_day_in_Paisley_%2851042093068%29.jpg/960px-A_sunny_day_in_Paisley_%2851042093068%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/A_sunny_day_in_Paisley_%2851042093068%29.jpg/960px-A_sunny_day_in_Paisley_%2851042093068%29.jpg",
   "page": "https://en.wikipedia.org/wiki/Paisley_Gilmour_Street_railway_station",
   "credit": "Daniel from Glasgow, United Kingdom, CC BY 2.0, Wikimedia Commons"
  },
@@ -332,7 +332,7 @@
  "Showcase Cinema, Bargeddie|Baillieston": null,
  "Celtic Park|Baillieston": null,
  "Portree|Portree, Isle of Skye": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Portree_harbour%2C_Isle_of_Skye%2C_Scotland_-_53732030830.jpg/960px-Portree_harbour%2C_Isle_of_Skye%2C_Scotland_-_53732030830.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Portree_harbour%2C_Isle_of_Skye%2C_Scotland_-_53732030830.jpg/960px-Portree_harbour%2C_Isle_of_Skye%2C_Scotland_-_53732030830.jpg",
   "page": "https://en.wikipedia.org/wiki/Portree",
   "credit": "rboed*, CC BY 2.0, Wikimedia Commons"
  },
@@ -344,13 +344,13 @@
  "David Lloyd Renfrew|Renfrew": null,
  "M8 Motorway|Renfrew": null,
  "Greenock West Train Station|Greenock": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Greenock_West_station_210708d_platform_1.jpg/960px-Greenock_West_station_210708d_platform_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Greenock_West_station_210708d_platform_1.jpg/960px-Greenock_West_station_210708d_platform_1.jpg",
   "page": "https://en.wikipedia.org/wiki/Greenock_West_railway_station",
   "credit": "dave souza, CC BY-SA 4.0, Wikimedia Commons"
  },
  "Greenock Esplanade and Waterfront|Greenock": null,
  "Beacon Arts Centre|Greenock": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fb/Beacon_Arts_Centre_from_west.jpg/960px-Beacon_Arts_Centre_from_west.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fb/Beacon_Arts_Centre_from_west.jpg/960px-Beacon_Arts_Centre_from_west.jpg",
   "page": "https://en.wikipedia.org/wiki/Beacon_Arts_Centre",
   "credit": "dave souza, CC BY-SA 4.0, Wikimedia Commons"
  },
@@ -358,7 +358,7 @@
  "Gourock Ferry Terminal|Greenock": null,
  "Royal Alexandria Hospital|Paisley": null,
  "Paisley Gilmour Street Station and Paisley Town Centre|Paisley": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/A_sunny_day_in_Paisley_%2851042093068%29.jpg/960px-A_sunny_day_in_Paisley_%2851042093068%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/A_sunny_day_in_Paisley_%2851042093068%29.jpg/960px-A_sunny_day_in_Paisley_%2851042093068%29.jpg",
   "page": "https://en.wikipedia.org/wiki/Paisley_Gilmour_Street_railway_station",
   "credit": "Daniel from Glasgow, United Kingdom, CC BY 2.0, Wikimedia Commons"
  },
@@ -368,7 +368,7 @@
  "Hawick Town Centre and High Street|Hawick": null,
  "Borders Textile Towerhouse|Hawick": null,
  "The Borders Distillery|Hawick": {
-  "src": "https://upload.wikimedia.org/wikipedia/en/9/9b/Borders_Distillery_Logo.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "src": "https://upload.wikimedia.org/wikipedia/en/9/9b/Borders_Distillery_Logo.png",
   "page": "https://en.wikipedia.org/wiki/Borders_distillery",
   "credit": "Borders distillery, PD, Wikimedia Commons"
  },
@@ -382,13 +382,13 @@
  "Borders General Hospital, Melrose|Hawick": null,
  "Hawick City Centre|Hawick": null,
  "Hawick Community Hospital|Hawick": {
-  "src": "https://upload.wikimedia.org/wikipedia/commons/2/25/The_main_entrance_at_Hawick_Community_Hospital_-_geograph.org.uk_-_254414.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "src": "https://upload.wikimedia.org/wikipedia/commons/2/25/The_main_entrance_at_Hawick_Community_Hospital_-_geograph.org.uk_-_254414.jpg",
   "page": "https://en.wikipedia.org/wiki/Hawick_Community_Hospital",
   "credit": "Walter Baxter, CC BY-SA 2.0, Wikimedia Commons"
  },
  "Tweedbank Station|Hawick": null,
  "Johnstons of Elgin|Hawick": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/Johnstons_of_Elgin_logo.svg/960px-Johnstons_of_Elgin_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/Johnstons_of_Elgin_logo.svg/960px-Johnstons_of_Elgin_logo.svg.png",
   "page": "https://en.wikipedia.org/wiki/Johnstons_of_Elgin",
   "credit": "Edward Harrison, Public domain, Wikimedia Commons"
  },
@@ -396,7 +396,7 @@
  "Hawick Business Centre|Hawick": null,
  "Think Fitness 4 Less|Hawick": null,
  "Borders Distillery|Hawick": {
-  "src": "https://upload.wikimedia.org/wikipedia/en/9/9b/Borders_Distillery_Logo.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "src": "https://upload.wikimedia.org/wikipedia/en/9/9b/Borders_Distillery_Logo.png",
   "page": "https://en.wikipedia.org/wiki/Borders_distillery",
   "credit": "Borders distillery, PD, Wikimedia Commons"
  },
@@ -407,12 +407,12 @@
  "Galashiels Town Centre|Galashiels": null,
  "Galashiels Transport Interchange|Galashiels": null,
  "Galashiels Railway Station|Galashiels": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Galashiels_railway_station_-_geograph.org.uk_-_4621047.jpg/960px-Galashiels_railway_station_-_geograph.org.uk_-_4621047.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Galashiels_railway_station_-_geograph.org.uk_-_4621047.jpg/960px-Galashiels_railway_station_-_geograph.org.uk_-_4621047.jpg",
   "page": "https://en.wikipedia.org/wiki/Galashiels_railway_station",
   "credit": "Jim Barton, CC BY-SA 2.0, Wikimedia Commons"
  },
  "The Great Tapestry of Scotland|Galashiels": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/GTOS_key_photo.jpg/960px-GTOS_key_photo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/GTOS_key_photo.jpg/960px-GTOS_key_photo.jpg",
   "page": "https://en.wikipedia.org/wiki/Great_Tapestry_of_Scotland",
   "credit": "IMF121, CC BY-SA 4.0, Wikimedia Commons"
  },
@@ -429,7 +429,7 @@
  "M8 Motorway|Livingston": null,
  "Armadale Train Station|Armadale": null,
  "Blackridge Railway Station|Blackridge": {
-  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Blackridge_Station_March_2011.jpg/960px-Blackridge_Station_March_2011.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Blackridge_Station_March_2011.jpg/960px-Blackridge_Station_March_2011.jpg",
   "page": "https://en.wikipedia.org/wiki/Blackridge_railway_station",
   "credit": "Signalhead, CC BY-SA 3.0, Wikimedia Commons"
  },

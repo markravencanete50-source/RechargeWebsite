@@ -3,6 +3,10 @@
 
 export type PlacePhoto = { src: string; page: string; credit?: string };
 
+// Wikipedia adds tracking parameters to image addresses. The site's image service refuses any address with a query
+// string, so they are dropped; the photo itself is the same without them.
+export const bare = (src: string) => src.split("?")[0];
+
 const API = "https://en.wikipedia.org/w/api.php";
 
 // Names that describe a kind of place rather than one place: no photo would be honest.
@@ -62,5 +66,5 @@ export async function findPlacePhoto(name: string, town: string, get: (u: string
   if (!page) return null;
   let by = "Wikimedia Commons";
   try { by = credit((await get(fileUrl(page.pageimage!))) as Parameters<typeof credit>[0]); } catch {}
-  return { src: page.thumbnail!.source, page: page.fullurl, credit: by };
+  return { src: bare(page.thumbnail!.source), page: page.fullurl, credit: by };
 }
