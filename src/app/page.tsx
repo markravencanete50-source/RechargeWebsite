@@ -1,17 +1,29 @@
 import { ArrowRight, Clock, KeyRound, Smartphone } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { AppShowcase } from "@/components/AppShowcase";
 import { DiffVideo } from "@/components/DiffVideo";
+import { FaqSection } from "@/components/FaqSection";
 import { HomeCard } from "@/components/HomeCard";
+import { JsonLd } from "@/components/JsonLd";
 import { OwnerPlans } from "@/components/OwnerPlans";
 import { Reveal } from "@/components/Reveal";
 import { SearchBar } from "@/components/SearchBar";
-import { featured, homes, regions } from "@/content/properties";
+import { generalFaqs } from "@/content/faqs";
+import { featured, homes, regions, regionSlug, reviewTotal } from "@/content/properties";
 import { site } from "@/content/site";
+import { allTools, toolCount } from "@/content/tools";
+import { abs, graph, organization } from "@/lib/schema";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
+
+const website = { "@type": "WebSite", "@id": abs("/#website"), url: site.url, name: site.name, inLanguage: "en-GB", publisher: { "@id": abs("/#organization") }, potentialAction: { "@type": "SearchAction", target: { "@type": "EntryPoint", urlTemplate: abs("/properties?area={area}") }, "query-input": "required name=area" } };
+const showcase = ["Client dashboard", "Owner statements", "Guest communication centre", "Daily pricing", "Clean calendar", "Repairs", "Licensing", "Damage claims"];
 
 export default function Home() {
   return (
     <>
+      <JsonLd data={graph(organization, website)} />
       <section className="home-hero dark on-dark">
         <div className="wrap">
           <div className="home-hero-copy">
@@ -31,7 +43,20 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section proof-band">
+        <div className="wrap">
+          <div className="proof">
+            {[
+              [String(homes.length), "serviced homes"],
+              [String(regions.length), "areas of Scotland"],
+              [reviewTotal.toLocaleString("en-GB"), "guest reviews"],
+              ["24/7", "support from a real person"],
+            ].map(([n, t], i) => <Reveal key={t} delay={i * 0.06}><div><strong>{n}</strong><span>{t}</span></div></Reveal>)}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap">
           <div className="section-link">
             <Reveal className="section-head">
@@ -43,6 +68,12 @@ export default function Home() {
           <div className="homes">
             {featured.slice(0, 8).map((h, i) => <Reveal key={h.slug} delay={i * 0.06}><HomeCard home={h} /></Reveal>)}
           </div>
+          <Reveal>
+            <h3 className="h3" style={{ margin: "40px 0 14px", fontSize: 20 }}>Browse by area</h3>
+            <div className="link-cloud">
+              {regions.map((r) => <Link key={r.name} href={`/properties/area/${regionSlug(r.name)}`}>{r.name} <span>{r.count}</span></Link>)}
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -95,6 +126,25 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section dark on-dark">
+        <div className="wrap">
+          <Reveal className="section-head">
+            <p className="eyebrow">Built by Recharge</p>
+            <h2 className="h2">{toolCount} tools. <span className="accent">One app.</span></h2>
+            <p className="lead">Pricing, guest messages, cleaning, repairs, licensing and owner statements all run inside the Recharge app. Here are a few of them.</p>
+          </Reveal>
+          <Reveal>
+            <div className="tool-strip">
+              {showcase.map((name) => {
+                const t = allTools.find((x) => x.name === name)!;
+                return <span key={name}><t.icon size={16} /> {t.name}</span>;
+              })}
+            </div>
+            <Link className="btn btn-mint" href="/app#tools">See all {toolCount} tools <ArrowRight size={18} /></Link>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="section paper">
         <div className="wrap">
           <div className="section-link">
@@ -107,11 +157,13 @@ export default function Home() {
           <OwnerPlans />
           <Reveal>
             <div style={{ marginTop: 32 }}>
-              <Link className="btn btn-primary" href="/owners#contact">Get your free estimate <ArrowRight size={18} /></Link>
+              <Link className="btn btn-primary" href="/owners#estimate">Get your free estimate <ArrowRight size={18} /></Link>
             </div>
           </Reveal>
         </div>
       </section>
+
+      <FaqSection items={generalFaqs} title="Recharge in short" eyebrow="Questions" lead="Quick answers about who we are and how we work." />
     </>
   );
 }

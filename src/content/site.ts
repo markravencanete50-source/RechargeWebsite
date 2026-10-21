@@ -16,6 +16,10 @@ export const site = {
   company: { legalName: "", number: "", registeredOffice: "" },
   // CONFIRM: the old home page offers 10% off for booking direct.
   directDiscount: "10%",
+  // The owner enquiry form lives in the Recharge app. Set NEXT_PUBLIC_ENQUIRY_API (for example
+  // https://app.rechargegroup.co.uk) once the app accepts submissions from this website's origin,
+  // and the form on the Owners page sends there directly instead of linking out.
+  enquiry: { formUrl: "https://app.rechargegroup.co.uk/enquiry", api: process.env.NEXT_PUBLIC_ENQUIRY_API ?? "" },
 } as const;
 
 export const nav = [

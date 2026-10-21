@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { regions, regionSlug } from "@/content/properties";
 import { site } from "@/content/site";
 
 // Worked out when the site is built, so it updates with each deploy.
@@ -34,7 +35,14 @@ export async function Footer() {
               <li><Link href="/owners">Guaranteed rent</Link></li>
               <li><Link href="/owners">Full management</Link></li>
               <li><Link href="/app">The Recharge app</Link></li>
-              <li><Link href="/owners#contact">Get an estimate</Link></li>
+              <li><Link href="/app#tools">App tools</Link></li>
+              <li><Link href="/owners#estimate">Free estimate</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Popular areas</h3>
+            <ul>
+              {regions.slice(0, 6).map((r) => <li key={r.name}><Link href={`/properties/area/${regionSlug(r.name)}`}>{r.name}</Link></li>)}
             </ul>
           </div>
           <div>

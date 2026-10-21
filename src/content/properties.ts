@@ -33,13 +33,21 @@ export type Home = {
   bookingUrl?: string;
 };
 
-export const homes = data as Home[];
+// Hostaway mixes "Hair Dryer" and "Hair dryer"; show every amenity in sentence case.
+const sentence = (a: string) =>
+  (a.charAt(0) + a.slice(1).replace(/\b[A-Z][a-z]+\b/g, (w) => w.toLowerCase())).replace(/\bwi-?fi\b/gi, "Wi-Fi").replace(/\bnetflix\b/gi, "Netflix");
+
+export const homes = (data as Home[]).map((h) => ({ ...h, amenities: [...new Set(h.amenities.map(sentence))] }));
 export const homeBySlug = (slug: string) => homes.find((h) => h.slug === slug);
 
 // Regions, biggest first, for the search and the filters.
 export const regions = Object.entries(homes.reduce<Record<string, number>>((acc, h) => ({ ...acc, [h.region]: (acc[h.region] ?? 0) + 1 }), {}))
   .sort((a, b) => b[1] - a[1])
   .map(([name, count]) => ({ name, count }));
+
+export const regionSlug = (region: string) => region.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+export const regionBySlug = (slug: string) => regions.find((r) => regionSlug(r.name) === slug);
+export const reviewTotal = homes.reduce((n, h) => n + h.reviews, 0);
 
 // The homes shown first: those with photos, then the most stayed in.
 export const featured = [...homes].sort((a, b) => Number(!!b.photos[0]?.src) - Number(!!a.photos[0]?.src) || b.reviews - a.reviews);
