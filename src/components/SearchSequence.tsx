@@ -58,16 +58,16 @@ export function SearchSequence({ place, count, children }: { place: string; coun
   );
 }
 
-// Each home after a search: rises, comes into focus, and its photo wipes into view.
+// Each home after a search: rises into place and its photo wipes into view. No blur: blurring a whole card is slow on phones.
 export function RevealCard({ index, children }: { index: number; children: ReactNode }) {
   const reduce = useReducedMotion();
   return (
     <motion.div
       className="reveal-card"
-      style={{ ["--d" as string]: `${Math.min(index, 11) * 0.07}s` }}
-      initial={reduce ? false : { opacity: 0, y: 34, scale: 0.95, filter: "blur(8px)" }}
-      animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-      transition={{ duration: 0.6, ease, delay: Math.min(index, 11) * 0.07 }}
+      style={{ ["--d" as string]: `${Math.min(index, 7) * 0.06}s` }}
+      initial={reduce ? false : { opacity: 0, y: 24, scale: 0.97 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.5, ease, delay: Math.min(index, 7) * 0.06 }}
     >
       {children}
     </motion.div>

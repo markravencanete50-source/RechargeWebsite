@@ -1306,3 +1306,41 @@ a.card:hover .ic, .tool:hover .ic, .row-item:hover .row-ic { transform: rotate(-
 .bp-ask { position: relative; }
 .bp-unread { font-style: normal; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; background: #d9534f; color: #fff; font-size: 12px; font-weight: 700; display: inline-grid; place-items: center; }
 @media (prefers-reduced-motion: reduce) { .typing-dots i { animation: none; } }
+
+/* ---------------------------------------------------------------- phone polish
+   Property page: the price calculator comes straight after the home's key facts instead of after every section, so a guest
+   can price a stay without scrolling the whole page. The main column's sections join the layout on a phone (display:
+   contents) so the calculator can sit between them; the order stays the same on a computer. The calculator's date row can
+   shrink, so the guest counter is never cut off, and the facts it repeated are left to the top of the page. */
+@media (max-width: 900px) {
+  .prop { display: flex; flex-direction: column; gap: 8px; }
+  .prop-main { display: contents; }
+  .prop-main > * { order: 2; }
+  .prop-main > .prop-facts { order: 0; }
+  .prop .book-card { order: 1; margin: 8px 0 16px; padding: 20px 18px; border-radius: 22px; box-shadow: var(--shadow-1), 0 0 0 1px var(--line); }
+  .book-card .facts, .book-card .licence { display: none; }
+  body:has(.book-bar) .footer { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+}
+.bp-dates { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.bp-dates label { min-width: 0; }
+.bp-dates input { min-width: 0; }
+.bp-guests > div { flex: none; }
+.book-bar { transition: transform 300ms var(--ease), opacity 300ms; }
+.book-bar.is-hidden { transform: translateY(110%); opacity: 0; pointer-events: none; }
+
+/* Footer on a phone: the areas list in two columns across the full width, and contact details on their own row, so long
+   names and the email address stay inside the margins. */
+.footer a { overflow-wrap: anywhere; }
+@media (max-width: 520px) {
+  .footer-grid { gap: 32px 24px; }
+  .footer-grid > div:nth-child(4), .footer-grid > div:nth-child(5) { grid-column: 1 / -1; }
+  .footer-grid > div:nth-child(4) ul { grid-template-columns: 1fr 1fr; column-gap: 24px; }
+}
+/* Phones: no backdrop blur over the slowly zooming hero photo (it is redrawn every frame); a slightly darker chip reads the same. */
+@media (max-width: 700px) {
+  .photo-hero .quick-areas a, .photo-hero-credit { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgb(18 48 42 / 0.62); }
+}
+/* Phones: a solid header once the page scrolls, so text and photos never show through it. */
+@media (max-width: 700px) {
+  .header[data-scrolled="true"] { background: var(--cream); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}

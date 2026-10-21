@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AmenityIcon } from "@/components/Amenity";
+import { BookBar } from "@/components/BookBar";
 import { BookingPanel } from "@/components/BookingPanel";
 import { FaqList } from "@/components/FaqList";
 import { Gallery } from "@/components/Gallery";
@@ -312,13 +313,13 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
           </div>
         </div>
       </section>
-      <div className="book-bar">
+      <BookBar>
         <div>
           {home.price !== undefined ? <p><strong>{money(home.price, home.currency)}</strong> a night</p> : <p><strong>Book direct</strong></p>}
           <span>Save {site.directDiscount} booking direct</span>
         </div>
         <a className="btn btn-primary" href="#book">Check dates</a>
-      </div>
+      </BookBar>
       {others.length > 0 && (
         <section className="section paper">
           <div className="wrap">
