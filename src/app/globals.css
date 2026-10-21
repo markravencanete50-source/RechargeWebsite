@@ -1169,3 +1169,27 @@ a.card:hover .ic, .tool:hover .ic, .row-item:hover .row-ic { transform: rotate(-
 /* Home cards: a second photo on hover */
 .home-photo-next { position: absolute; inset: 0; opacity: 0; transition: opacity 600ms var(--ease); }
 @media (hover: hover) { .home-card:hover .home-photo-next { opacity: 1; } }
+
+/* Search sequence: looking, found, reveal */
+.search-status { min-height: 44px; margin: -6px 0 14px; }
+.search-status-in { display: inline-flex; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; border-radius: 999px; background: var(--paper); box-shadow: 0 0 0 1px var(--line), var(--shadow-1); font-size: 15px; font-weight: 600; }
+.search-status-in.found { color: var(--forest); padding-left: 14px; }
+.search-status-in.found svg { color: var(--moss); }
+.pin-pulse { position: relative; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--forest); color: var(--mint); }
+.pin-pulse i { position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--mint); animation: ripple 1.2s ease-out infinite; }
+.pin-pulse i + i { animation-delay: 0.6s; }
+@keyframes ripple { from { transform: scale(1); opacity: 0.9; } to { transform: scale(2.2); opacity: 0; } }
+.pin-pulse svg { animation: hop 0.75s ease-in-out infinite; }
+@keyframes hop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+.search-status-bar { position: relative; width: 90px; height: 4px; border-radius: 4px; background: var(--mint-wash); overflow: hidden; }
+.search-status-bar span { position: absolute; inset: 0; background: linear-gradient(90deg, var(--mint), var(--forest)); transform-origin: left center; }
+.ghost-card { display: grid; gap: 10px; }
+.ghost-photo, .ghost-line { display: block; border-radius: 22px; background: linear-gradient(100deg, var(--sand) 30%, #f6f2e9 50%, var(--sand) 70%); background-size: 300% 100%; animation: shimmer 1.1s linear infinite; }
+.ghost-photo { aspect-ratio: 4 / 3; }
+.ghost-line { height: 14px; border-radius: 7px; }
+.ghost-line.w60 { width: 60%; } .ghost-line.w85 { width: 85%; } .ghost-line.w40 { width: 40%; }
+.reveal-card .home-photo { animation: photo-wipe 0.9s var(--ease) backwards; animation-delay: var(--d, 0s); }
+@keyframes photo-wipe { from { clip-path: inset(0 0 100% 0 round 22px); } to { clip-path: inset(0 0 0 0 round 22px); } }
+.reveal-card .home-photo img { animation: photo-settle 1.4s var(--ease) backwards; animation-delay: var(--d, 0s); }
+@keyframes photo-settle { from { transform: scale(1.18); } to { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .reveal-card .home-photo, .reveal-card .home-photo img, .pin-pulse i, .pin-pulse svg, .ghost-photo, .ghost-line { animation: none; } }

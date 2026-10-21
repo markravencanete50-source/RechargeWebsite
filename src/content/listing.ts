@@ -33,7 +33,7 @@ function cap(s: string) {
 function item(s: string) {
   let t = s
     .replace(/\bSinge\b/i, "Single")
-    .replace(/\((\d+)x? guests?\)/i, "(sleeps $1)")
+    .replace(/\((\d+)x? guests?\)/i, (m, n, _o, str) => (/towel/i.test(str) ? `(for ${n})` : `(sleeps ${n})`))
     .replace(/^(.{0,40}?),? sleeps (\d+) guests?$/i, "$1 (sleeps $2)")
     .replace(/([a-z])Bed\b/g, "$1 bed").replace(/\bDishwater\b/i, "Dishwasher").replace(/\bBreadtoaster\b/i, "Toaster")
     .replace(/\(for (\d+) guests?\)/i, "(for $1)")
@@ -176,7 +176,8 @@ export function parseListing(description = "", houseRules = ""): Listing {
         const it = item(line);
         if (mode.room!.items.includes(it)) break;
         mode.room!.items.push(it);
-        const s = it.match(/\(sleeps (\d+)\)/i);
+        // Only beds count towards how many a room sleeps; "Towels (sleeps 2)" does not.
+        const s = /bed|sofa|cot|bunk|futon/i.test(it) ? it.match(/\(sleeps (\d+)\)/i) : null;
         if (s) mode.room!.sleeps = (mode.room!.sleeps ?? 0) + Number(s[1]);
         break;
       }

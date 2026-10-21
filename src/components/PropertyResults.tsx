@@ -8,6 +8,7 @@ import { homes, money, regions } from "@/content/properties";
 import { site } from "@/content/site";
 import { HomeCard } from "./HomeCard";
 import { RollingNumber } from "./RollingNumber";
+import { RevealCard, SearchSequence } from "./SearchSequence";
 import { SearchBar } from "./SearchBar";
 
 const ease = [0.2, 0.7, 0.2, 1] as const;
@@ -81,32 +82,24 @@ export function PropertyResults() {
         </div>
       </div>
       <div className="results-stage">
-        {!reduce && <motion.span key={params.toString()} className="results-sweep" aria-hidden initial={{ scaleX: 0, opacity: 1 }} animate={{ scaleX: 1, opacity: 0 }} transition={{ duration: 0.9, ease }} />}
-        {list.length ? (
-          <motion.div className="homes" layout={!reduce}>
-            <AnimatePresence mode="popLayout" initial={false}>
+        <SearchSequence key={params.toString()} place={area ? `in ${area}` : "across Scotland"} count={list.length}>
+          {list.length ? (
+            <div className="homes">
               {list.map((h, i) => (
-                <motion.div
-                  key={h.slug}
-                  layout={!reduce}
-                  initial={reduce ? false : { opacity: 0, y: 24, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={reduce ? undefined : { opacity: 0, scale: 0.94, transition: { duration: 0.2 } }}
-                  transition={{ duration: 0.45, ease, delay: Math.min(i, 12) * 0.03 }}
-                >
+                <RevealCard key={h.slug} index={i}>
                   <HomeCard home={h} priority={i < 4} />
-                </motion.div>
+                </RevealCard>
               ))}
-            </AnimatePresence>
-          </motion.div>
-        ) : (
-          <motion.div className="empty" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease }}>
-            <motion.span className="empty-ic" animate={reduce ? undefined : { rotate: [0, -12, 10, -6, 0] }} transition={{ duration: 1.2, delay: 0.2 }}><SearchX size={28} /></motion.span>
-            <strong className="h3">No homes match that search</strong>
-            <p className="muted">Try another area or loosen a filter, or call us on {site.phone.display} and we will find you somewhere.</p>
-            <Link className="btn btn-ghost" href="/properties">See all homes</Link>
-          </motion.div>
-        )}
+            </div>
+          ) : (
+            <motion.div className="empty" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease }}>
+              <motion.span className="empty-ic" animate={reduce ? undefined : { rotate: [0, -12, 10, -6, 0] }} transition={{ duration: 1.2, delay: 0.2 }}><SearchX size={28} /></motion.span>
+              <strong className="h3">No homes match that search</strong>
+              <p className="muted">Try another area or loosen a filter, or call us on {site.phone.display} and we will find you somewhere.</p>
+              <Link className="btn btn-ghost" href="/properties">See all homes</Link>
+            </motion.div>
+          )}
+        </SearchSequence>
       </div>
     </>
   );
