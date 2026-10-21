@@ -1,0 +1,49 @@
+import { homes } from "@/content/properties";
+
+// A guest's message from a property page, with their booking details if they were pricing a stay.
+// It goes to the Recharge app's guest inbox (the Stays Communication Centre) once the app's
+// endpoint is set in RECHARGE_GUEST_MESSAGES_URL with its key in RECHARGE_WEBSITE_KEY. Until
+// then this answers 503 and the panel offers email and phone instead.
+
+const text = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
+const DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+export async function POST(request: Request) {
+  let body: Record<string, unknown>;
+  try {
+    body = await request.json();
+  } catch {
+    return Response.json({ error: "invalid" }, { status: 400 });
+  }
+  // A hidden field people never fill in; bots usually do.
+  if (text(body.website, 200)) return Response.json({ ok: true });
+
+  const home = homes.find((h) => h.slug === text(body.home, 200));
+  const booking = (body.booking ?? {}) as Record<string, unknown>;
+  const message = {
+    source: "website",
+    home: home ? { slug: home.slug, hostawayListingId: home.hostawayId, town: home.town } : null,
+    name: text(body.name, 120),
+    email: text(body.email, 200),
+    phone: text(body.phone, 40),
+    body: text(body.message, 4000),
+    booking: DATE.test(text(booking.checkin, 10)) && DATE.test(text(booking.checkout, 10))
+      ? { checkin: text(booking.checkin, 10), checkout: text(booking.checkout, 10), guests: Number(booking.guests) || undefined, total: Number(booking.total) || undefined, currency: text(booking.currency, 3) || "GBP" }
+      : null,
+    sentAt: new Date().toISOString(),
+  };
+  if (!message.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(message.email) || !message.body) {
+    return Response.json({ error: "invalid" }, { status: 400 });
+  }
+
+  const target = process.env.RECHARGE_GUEST_MESSAGES_URL;
+  const key = process.env.RECHARGE_WEBSITE_KEY;
+  if (!target || !key) return Response.json({ error: "not_connected" }, { status: 503 });
+  try {
+    const res = await fetch(target, { method: "POST", headers: { "content-type": "application/json", "x-recharge-website-key": key }, body: JSON.stringify(message), cache: "no-store" });
+    if (!res.ok) return Response.json({ error: "not_delivered" }, { status: 502 });
+    return Response.json({ ok: true });
+  } catch {
+    return Response.json({ error: "not_delivered" }, { status: 502 });
+  }
+}

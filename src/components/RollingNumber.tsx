@@ -10,5 +10,5 @@ export function RollingNumber({ value }: { value: number }) {
   const [shown, setShown] = useState(value);
   useEffect(() => { spring.set(value); }, [value, spring]);
   useMotionValueEvent(spring, "change", (v) => setShown(Math.round(v)));
-  return <span className="rolling">{reduce ? value : shown}</span>;
+  return <span className="rolling">{(reduce ? value : shown).toLocaleString("en-GB")}</span>;
 }

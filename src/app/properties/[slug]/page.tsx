@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AmenityIcon } from "@/components/Amenity";
+import { BookingPanel } from "@/components/BookingPanel";
 import { FaqList } from "@/components/FaqList";
 import { Gallery } from "@/components/Gallery";
 import { HomeCard } from "@/components/HomeCard";
@@ -296,16 +297,16 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
               )}
             </div>
             <aside className="book-card" aria-label="Book this home">
-              {home.price !== undefined && <p className="book-price">Around <strong>{money(home.price, home.currency)}</strong> a night<span>Rates change by date. Your exact total shows when you choose dates.</span></p>}
-              <strong className="h3">Book direct and save {site.directDiscount}</strong>
+              <BookingPanel
+                home={{ slug: home.slug, title: heading(home), town: home.town, price: home.price, currency: home.currency, maxGuests: home.guests, checkIn: home.checkIn, bookingUrl: home.bookingUrl ?? site.bookingUrl, longStay: l.longStay }}
+                contact={{ phone: site.phone, email: site.email, discount: site.directDiscount }}
+              />
               <ul className="facts">
                 {facts.map((f) => <li key={f.text}><f.icon size={18} /> {f.text}</li>)}
                 {home.checkIn && <li><DoorOpen size={18} /> Check in from {home.checkIn}</li>}
                 <li><Clock size={18} /> Support 24/7 during your stay</li>
                 {l.longStay && <li><Percent size={18} /> Long-stay discounts on request</li>}
               </ul>
-              <a className="btn btn-primary" href={home.bookingUrl ?? site.bookingUrl} target="_blank" rel="noopener">Check dates and book <ArrowUpRight size={18} /></a>
-              <a className="btn btn-ghost" href={site.phone.href}><Phone size={18} /> {site.phone.display}</a>
               {home.licence && <p className="licence">Short-term let licence: {home.licence}</p>}
             </aside>
           </div>
@@ -316,7 +317,7 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
           {home.price !== undefined ? <p><strong>{money(home.price, home.currency)}</strong> a night</p> : <p><strong>Book direct</strong></p>}
           <span>Save {site.directDiscount} booking direct</span>
         </div>
-        <a className="btn btn-primary" href={home.bookingUrl ?? site.bookingUrl} target="_blank" rel="noopener">Check dates</a>
+        <a className="btn btn-primary" href="#book">Check dates</a>
       </div>
       {others.length > 0 && (
         <section className="section paper">
