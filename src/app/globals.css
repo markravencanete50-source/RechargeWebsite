@@ -1092,3 +1092,27 @@ a.card:hover .ic, .tool:hover .ic, .row-item:hover .row-ic { transform: rotate(-
 .channels { grid-template-columns: 1.1fr 1.15fr 0.85fr; }
 .channel-big.small { font-size: clamp(17px, 1.45vw, 21px); }
 @media (max-width: 860px) { .channels { grid-template-columns: 1fr; } }
+
+/* Where you will sleep: compact, like a booking site */
+.sleep-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.sleep-list li { display: grid; gap: 2px; align-content: start; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--paper); }
+.sleep-list svg { color: var(--forest); margin-bottom: 6px; }
+.sleep-list strong { font-size: 15px; }
+.sleep-list span { font-size: 14px; color: var(--muted); line-height: 1.4; }
+.sleep-list em { font-style: normal; font-size: 13px; font-weight: 600; color: var(--moss); margin-top: 2px; }
+@media (max-width: 560px) { .sleep-list { grid-template-columns: 1fr 1fr; gap: 8px; } .sleep-list li { padding: 12px; } }
+.amenities svg { color: var(--forest); }
+
+/* Nearby: real photos, or a plain row */
+.place-photo.loading { background: linear-gradient(100deg, var(--sand) 30%, var(--cream) 50%, var(--sand) 70%); background-size: 300% 100%; animation: shimmer 1.4s linear infinite; }
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+.place-rows { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--line); }
+.place-rows li { display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); }
+.place-rows button { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 12px 0; border: 0; background: none; font: inherit; color: var(--ink); text-align: left; cursor: pointer; }
+.place-rows button svg { color: var(--moss); flex: none; }
+.place-rows strong { font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.place-rows em { margin-left: auto; font-style: normal; font-size: 13px; font-weight: 600; color: var(--forest); white-space: nowrap; }
+.place-rows a { color: var(--muted); display: grid; place-items: center; width: 36px; height: 36px; }
+.place-rows li.active strong { color: var(--moss); }
+@media (max-width: 560px) { .place-rows { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .place-photo.loading { animation: none; } }

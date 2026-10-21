@@ -190,20 +190,20 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
               {sleeping.length > 0 && (
                 <section className="prop-block" id="rooms">
                   <h2 className="h3">Where you will sleep</h2>
-                  <div className="rooms-scroll">
+                  <ul className="sleep-list">
                     {sleeping.map((r) => {
                       const Icon = ROOM_ICON[r.kind];
                       const beds = r.items.filter((it) => /bed|sofa|cot|bunk/i.test(it) && it.length < 70);
                       return (
-                        <div className="room" key={r.name}>
-                          <span className="ic"><Icon size={22} /></span>
+                        <li key={r.name}>
+                          <Icon size={22} strokeWidth={1.6} />
                           <strong>{r.name}</strong>
-                          <ul>{(beds.length ? beds : r.items.slice(0, 2)).map((it) => <li key={it}>{labelled(it.replace(/\s*\(sleeps \d+\)/i, ""))}</li>)}</ul>
-                          {r.sleeps && <span className="room-sleeps"><Users size={14} /> Sleeps {r.sleeps}</span>}
-                        </div>
+                          <span>{(beds.length ? beds : r.items.slice(0, 1)).map((it) => it.replace(/\s*\(sleeps \d+\)/i, "")).join(", ")}</span>
+                          {r.sleeps && <em>Sleeps {r.sleeps}</em>}
+                        </li>
                       );
                     })}
-                  </div>
+                  </ul>
                 </section>
               )}
 
@@ -228,7 +228,7 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
 
               <section className="prop-block" id="nearby">
                 <h2 className="h3">Where you will be</h2>
-                <NearbyMap area={`${home.town} ${home.district}, ${home.region}`} places={l.places.slice(0, 8)} photos={Object.fromEntries(l.places.map((p) => [p.name, placePhotos[`${p.name}|${home.town}`]]))} />
+                <NearbyMap area={`${home.town} ${home.district}, ${home.region}`} town={home.town} places={l.places.slice(0, 8)} photos={Object.fromEntries(l.places.map((p) => [p.name, placePhotos[`${p.name}|${home.town}`]]))} />
                 {(l.places.length > 8 || l.placeNotes.length > 0 || (home.nearby?.length ?? 0) > 0) && (
                   <Sheet label={<>More about the area <ChevronRight size={16} /></>} title="What is nearby">
                     {l.places.length > 0 && placeList(l.places)}

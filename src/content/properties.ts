@@ -37,7 +37,10 @@ export type Home = {
 const sentence = (a: string) =>
   (a.charAt(0) + a.slice(1).replace(/\b[A-Z][a-z]+\b/g, (w) => w.toLowerCase())).replace(/\bwi-?fi\b/gi, "Wi-Fi").replace(/\bnetflix\b/gi, "Netflix");
 
-export const homes = (data as Home[]).map((h) => ({ ...h, amenities: [...new Set(h.amenities.map(sentence))] }));
+const RENAME: Record<string, string> = { Wireless: "Wifi", "Free WiFi": "Wifi", "Free Wi-Fi": "Wifi", "Iron board": "Ironing board", Tub: "Bath", "Laptop friendly workspace": "Workspace for a laptop" };
+const label = (a: string) => RENAME[sentence(a)] ?? sentence(a);
+
+export const homes = (data as Home[]).map((h) => ({ ...h, amenities: [...new Set(h.amenities.map(label))] }));
 export const homeBySlug = (slug: string) => homes.find((h) => h.slug === slug);
 
 // Regions, biggest first, for the search and the filters.
