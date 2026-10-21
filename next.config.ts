@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   images: {
     // Property photos: Hostaway's image store, or Cloudinary.
-    remotePatterns: [new URL("https://res.cloudinary.com/**"), new URL("https://hostaway-platform.s3.us-west-2.amazonaws.com/**"), new URL("https://upload.wikimedia.org/**")],
+    remotePatterns: [new URL("https://res.cloudinary.com/**"), new URL("https://hostaway-platform.s3.us-west-2.amazonaws.com/**"), new URL("https://upload.wikimedia.org/**"), new URL("https://thumb.wikimedia.org/**")],
     formats: ["image/avif", "image/webp"],
   },
   turbopack: {
