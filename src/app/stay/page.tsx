@@ -1,20 +1,27 @@
-import { ArrowRight, BadgePercent, Briefcase, CalendarRange, Clock, HardHat, KeyRound, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { ArrowRight, Camera, Clock, KeyRound, MessageSquareText, Sparkles } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { AreaIndex } from "@/components/AreaIndex";
 import { FaqSection } from "@/components/FaqSection";
+import { FloatNotes } from "@/components/FloatNotes";
 import { JsonLd } from "@/components/JsonLd";
-import { PageHero } from "@/components/PageHero";
+import { PhotoHero } from "@/components/PhotoHero";
+import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
+import { RowList } from "@/components/RowList";
 import { SearchBar } from "@/components/SearchBar";
 import { Steps } from "@/components/Steps";
+import { TripGrid } from "@/components/TripGrid";
 import { guestFaqs } from "@/content/faqs";
-import { homes, regions, regionSlug, reviewTotal } from "@/content/properties";
+import { homes, regions, reviewTotal } from "@/content/properties";
+import { showcase } from "@/content/showcase";
 import { site } from "@/content/site";
 import { breadcrumbs, graph } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Stays",
-  description: `Serviced apartments in Scotland for city breaks, work trips and families. Book direct and save ${site.directDiscount}.`,
+  description: `Serviced apartments and homes across Scotland for city breaks, work trips, contractors and families. Book direct and save ${site.directDiscount}.`,
   alternates: { canonical: "/stay" },
 };
 
@@ -22,33 +29,53 @@ export default function StayPage() {
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Stays", path: "/stay" }]))} />
-      <PageHero eyebrow="Stays" title="A clean, well run home for your stay" lead="City breaks, work trips, contractors and families. Book direct with Recharge for the best rate.">
+      <PhotoHero shot={showcase.stayHero} eyebrow="Stays" title={<>A whole home,<br />ready when you arrive</>} lead={`${homes.length} serviced homes across Scotland for city breaks, work trips and families. Book direct and save ${site.directDiscount}.`}>
         <SearchBar />
-      </PageHero>
+      </PhotoHero>
+
+      <section className="section proof-band">
+        <div className="wrap">
+          <Proof items={[[String(homes.length), "homes to choose from"], [String(regions.length), "areas of Scotland"], [reviewTotal.toLocaleString("en-GB"), "reviews from past guests"], ["24/7", "help from a real person"]]} />
+        </div>
+      </section>
 
       <section className="section">
-        <div className="wrap">
-          <Reveal className="section-head">
+        <div className="wrap split-sticky">
+          <Reveal className="split-head">
             <p className="eyebrow">Why book direct</p>
-            <h2 className="h2">Better rate. Real support.</h2>
+            <h2 className="h2">Save <span className="big-figure">{site.directDiscount}</span> and deal with us, not a platform.</h2>
+            <p className="lead">Same home, same dates, a better rate. And the team that runs the home is the team you talk to.</p>
+            <Link className="btn btn-primary" href="/properties">Find a home <ArrowRight size={18} /></Link>
           </Reveal>
-          <div className="cards-3">
-            {[
-              { icon: <BadgePercent size={22} />, t: `Save ${site.directDiscount}`, d: "Booking direct with Recharge costs less than booking the same home elsewhere." },
-              { icon: <Sparkles size={22} />, t: "Cleaned and checked", d: "Every home is cleaned to a checklist, with photos, before you arrive." },
-              { icon: <Clock size={22} />, t: "Help at any hour", d: "Message or call us 24/7. Urgent problems go straight to our maintenance team." },
-            ].map((c, i) => (
-              <Reveal key={c.t} delay={i * 0.08} className="card"><span className="ic">{c.icon}</span><strong className="h3">{c.t}</strong><p>{c.d}</p></Reveal>
-            ))}
-          </div>
+          <RowList items={[
+            { title: `${site.directDiscount} off every direct booking`, text: "Booking with Recharge costs less than booking the same home on a platform." },
+            { title: "Cleaned to a checklist", text: "Every clean is finished with photos in the Recharge app before you arrive." },
+            { title: "Help at any hour", text: "Message or call 24/7. Urgent problems go straight to our maintenance team." },
+            { title: "Long stays welcome", text: "Most homes offer long-stay discounts on request. Ideal for contractors and relocations." },
+          ]} />
         </div>
       </section>
 
       <section className="section paper">
         <div className="wrap">
+          <div className="head-row">
+            <Reveal><p className="eyebrow">Who stays with us</p><h2 className="h2">Homes for every kind of trip</h2></Reveal>
+            <Reveal delay={0.08}><p className="lead">A home rather than a hotel room. Full kitchens, space to spread out and parking at most of our homes.</p></Reveal>
+          </div>
+          <TripGrid trips={[
+            { title: "Families and groups", text: "Homes that sleep up to 10, with room for everyone.", href: "/properties?guests=6", cta: "Homes for 6 or more", shot: showcase.families },
+            { title: "Contractors and crews", text: "Whole homes with parking and kitchens.", href: "/properties?beds=3", cta: "3 bedrooms or more", shot: showcase.contractors },
+            { title: "Business travel", text: "Quiet, central homes with support at any hour.", href: "/properties?area=Edinburgh", cta: "Homes in Edinburgh", shot: showcase.business },
+            { title: "Longer stays", text: "Relocations, renovations and insurance stays.", href: "/properties", cta: "See every home", shot: showcase.longStays },
+          ]} />
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap">
           <Reveal className="section-head">
             <p className="eyebrow">Your stay</p>
-            <h2 className="h2">How it works</h2>
+            <h2 className="h2">Four steps, no surprises</h2>
           </Reveal>
           <Steps items={[
             ["Book", "Choose your home and dates and book direct."],
@@ -59,68 +86,37 @@ export default function StayPage() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="wrap">
-          <Reveal className="section-head">
-            <p className="eyebrow">Who stays with us</p>
-            <h2 className="h2">Homes for every kind of trip</h2>
-          </Reveal>
-          <div className="promise">
-            {[
-              { icon: <HardHat size={22} />, t: "Contractors and work crews", d: "Whole homes with parking and kitchens, close to sites and transport links. Long-stay discounts on request." },
-              { icon: <Briefcase size={22} />, t: "Business travel", d: "Quiet, central homes with space to work and support at any hour." },
-              { icon: <Users size={22} />, t: "Families and groups", d: "Homes that sleep up to 10, with full kitchens, living space and room for everyone." },
-              { icon: <CalendarRange size={22} />, t: "Longer stays", d: "Relocations, renovations and insurance stays, in a home rather than a hotel room." },
-            ].map((c, i) => (
-              <Reveal key={c.t} delay={i * 0.06}><div><span className="ic">{c.icon}</span><strong>{c.t}</strong><p>{c.d}</p></div></Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="section dark on-dark">
-        <div className="wrap">
-          <Reveal className="section-head">
-            <p className="eyebrow">Every stay</p>
-            <h2 className="h2">What you can count on</h2>
+        <div className="wrap media-split">
+          <Reveal className="media-frame">
+            {showcase.checked && <Image src={showcase.checked.src} alt={showcase.checked.caption} fill sizes="(max-width: 900px) 100vw, 50vw" />}
+            <FloatNotes notes={[
+              { icon: <Camera size={16} />, text: "Clean finished, photos uploaded" },
+              { icon: <Sparkles size={16} />, text: "Fresh linen and towels" },
+              { icon: <KeyRound size={16} />, text: "Access details sent" },
+            ]} />
           </Reveal>
-          <div className="proof">
-            {[
-              [String(homes.length), "homes to choose from"],
-              [String(regions.length), "areas of Scotland"],
-              [reviewTotal.toLocaleString("en-GB"), "reviews from past guests"],
-              ["24/7", "help from a real person"],
-            ].map(([n, t], i) => <Reveal key={t} delay={i * 0.06}><div><strong>{n}</strong><span>{t}</span></div></Reveal>)}
-          </div>
-          <div className="diff-grid">
-            {[
-              [<ShieldCheck key="a" size={20} />, "Checked before you arrive", "Each clean is finished with photo evidence in the Recharge app."],
-              [<KeyRound key="b" size={20} />, "Simple arrival", "Your access details arrive before your stay."],
-              [<Clock key="c" size={20} />, "Fast replies", "Guest messages are tracked with live response timers."],
-              [<Sparkles key="d" size={20} />, "Problems fixed", "A fault you report becomes a repair job, followed to the finish."],
-            ].map(([icon, t, d], i) => (
-              <Reveal key={String(t)} delay={i * 0.08} className="diff">
-                <span className="num">{icon}</span>
-                <strong className="h3" style={{ fontSize: 20 }}>{t}</strong>
-                <p>{d}</p>
-              </Reveal>
-            ))}
+          <div>
+            <Reveal className="section-head">
+              <p className="eyebrow">Every stay</p>
+              <h2 className="h2">Checked before you arrive. Looked after while you are there.</h2>
+            </Reveal>
+            <RowList items={[
+              { icon: <Camera size={18} />, title: "Photo-checked cleans", text: "Each clean is created from your booking and finished with photo evidence." },
+              { icon: <MessageSquareText size={18} />, title: "Fast replies", text: "Guest messages are tracked with live response timers, day and night." },
+              { icon: <Clock size={18} />, title: "Problems fixed", text: "A fault you report becomes a repair job, followed to the finish." },
+            ]} />
           </div>
         </div>
       </section>
 
       <section className="section">
         <div className="wrap">
-          <div className="section-link">
-            <Reveal className="section-head">
-              <p className="eyebrow">Where to stay</p>
-              <h2 className="h2">Choose an area</h2>
-            </Reveal>
-            <Link className="text-link" href="/properties">All {homes.length} homes <ArrowRight size={18} /></Link>
+          <div className="head-row">
+            <Reveal><p className="eyebrow">Where to stay</p><h2 className="h2">{regions.length} areas, {homes.length} homes</h2></Reveal>
+            <Reveal delay={0.08}><Link className="text-link" href="/properties">Search all homes <ArrowRight size={18} /></Link></Reveal>
           </div>
-          <div className="link-cloud">
-            {regions.map((r) => <Link key={r.name} href={`/properties/area/${regionSlug(r.name)}`}>{r.name} <span>{r.count}</span></Link>)}
-          </div>
+          <AreaIndex />
         </div>
       </section>
 

@@ -11,7 +11,7 @@ export const teams: Team[] = [
     id: "owners",
     name: "For owners",
     brand: "Client portal",
-    lead: "Your property, bookings, money and repairs in one secure place.",
+    lead: "What owners see: their property, bookings, money and repairs in one secure place.",
     tools: [
       { name: "Client dashboard", does: "One secure view of your portfolio, booking calendar, property performance and onboarding progress.", icon: LayoutDashboard, for: "Owners" },
       { name: "Owner statements", does: "Booking income matched to platform payouts and bank receipts. Statements are issued from cleared funds.", icon: FileText, for: "Owners" },

@@ -6,6 +6,7 @@ import { DiffVideo } from "@/components/DiffVideo";
 import { FaqSection } from "@/components/FaqSection";
 import { HomeCard } from "@/components/HomeCard";
 import { JsonLd } from "@/components/JsonLd";
+import { Proof } from "@/components/Proof";
 import { OwnerPlans } from "@/components/OwnerPlans";
 import { Reveal } from "@/components/Reveal";
 import { SearchBar } from "@/components/SearchBar";
@@ -45,14 +46,7 @@ export default function Home() {
 
       <section className="section proof-band">
         <div className="wrap">
-          <div className="proof">
-            {[
-              [String(homes.length), "serviced homes"],
-              [String(regions.length), "areas of Scotland"],
-              [reviewTotal.toLocaleString("en-GB"), "guest reviews"],
-              ["24/7", "support from a real person"],
-            ].map(([n, t], i) => <Reveal key={t} delay={i * 0.06}><div><strong>{n}</strong><span>{t}</span></div></Reveal>)}
-          </div>
+          <Proof items={[[String(homes.length), "serviced homes"], [String(regions.length), "areas of Scotland"], [reviewTotal.toLocaleString("en-GB"), "guest reviews"], ["24/7", "support from a real person"]]} />
         </div>
       </section>
 
@@ -129,9 +123,9 @@ export default function Home() {
       <section className="section dark on-dark">
         <div className="wrap">
           <Reveal className="section-head">
-            <p className="eyebrow">Built by Recharge</p>
-            <h2 className="h2">{toolCount} tools. <span className="accent">One app.</span></h2>
-            <p className="lead">Pricing, guest messages, cleaning, repairs, licensing and owner statements all run inside the Recharge app. Here are a few of them.</p>
+            <p className="eyebrow">Behind every home</p>
+            <h2 className="h2">Our team works from {toolCount} tools. <span className="accent">In one app.</span></h2>
+            <p className="lead">Pricing, guest messages, cleaning, repairs, licensing and statements all run inside the Recharge app. Owners see their own client portal. Here are some of the tools behind it.</p>
           </Reveal>
           <Reveal>
             <div className="tool-strip">

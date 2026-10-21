@@ -71,7 +71,7 @@ export default function AppPage() {
           <Reveal className="section-head">
             <p className="eyebrow">Every tool</p>
             <h2 className="h2">{toolCount} tools across five teams</h2>
-            <p className="lead">This is the software behind every Recharge home. Choose a team to see what it uses.</p>
+            <p className="lead">These are the tools our team uses behind every Recharge home. Owners see their own client portal, shown under For owners. Choose a team to see what it uses.</p>
           </Reveal>
           <ToolsShowcase />
         </div>

@@ -1,26 +1,27 @@
-import { ArrowRight, Mail, Phone } from "lucide-react";
+import { ArrowRight, Check, Mail, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
 import { OwnerEnquiry } from "@/components/OwnerEnquiry";
+import { OwnerPortal } from "@/components/OwnerPortal";
 import { OwnerPlans } from "@/components/OwnerPlans";
-import { PageHero } from "@/components/PageHero";
+import { PhotoHero } from "@/components/PhotoHero";
+import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
+import { RowList } from "@/components/RowList";
 import { Steps } from "@/components/Steps";
 import { ownerFaqs } from "@/content/faqs";
 import { homes, regions, reviewTotal } from "@/content/properties";
+import { showcase } from "@/content/showcase";
 import { site } from "@/content/site";
-import { teams, toolCount } from "@/content/tools";
 import { abs, breadcrumbs, graph, organization } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Short-let management and guaranteed rent in Scotland",
-  description: "Guaranteed rent or full short-let management in Glasgow, Edinburgh and across Scotland. Free performance estimate, and every booking, clean, repair and payout visible in the Recharge app.",
+  description: "Guaranteed rent or full short-let management in Glasgow, Edinburgh and across Scotland. Free performance estimate, and every booking, repair and payout visible in your own client portal.",
   alternates: { canonical: "/owners" },
 };
-
-const ownerTools = teams.find((t) => t.id === "owners")!.tools;
 
 export default function OwnersPage() {
   const ld = graph(
@@ -46,59 +47,74 @@ export default function OwnersPage() {
   return (
     <>
       <JsonLd data={ld} />
-      <PageHero eyebrow="For property owners" title="Let us run your property" lead={`Guaranteed rent or full management. We run ${homes.length} homes across Scotland and you follow every booking, clean, repair and payout in the Recharge app.`}>
+      <PhotoHero
+        shot={showcase.ownerHero}
+        eyebrow="For property owners"
+        title={<>Your property,<br />run properly</>}
+        lead={`Guaranteed rent or full management across Scotland. We run ${homes.length} homes today, and you see every booking, repair and payout in your own client portal.`}
+        aside={
+          <div className="hero-card">
+            <strong>Free performance estimate</strong>
+            <ul className="checks single">
+              <li><Check size={18} /> What your property could earn</li>
+              <li><Check size={18} /> Guaranteed rent or full management</li>
+              <li><Check size={18} /> No obligation</li>
+            </ul>
+            <a className="btn btn-mint" href="#estimate">Get your estimate <ArrowRight size={18} /></a>
+          </div>
+        }
+      >
         <div className="hero-actions">
           <a className="btn btn-mint" href="#estimate">Get your free estimate <ArrowRight size={18} /></a>
-          <Link className="btn btn-line-light" href="/app">See the owner app</Link>
+          <a className="btn btn-line-light" href="#portal">See the owner portal</a>
         </div>
-      </PageHero>
+      </PhotoHero>
 
-      <section className="section">
+      <section className="section proof-band">
         <div className="wrap">
-          <div className="proof">
-            {[
-              [String(homes.length), "homes we run today"],
-              [String(regions.length), "areas across Scotland"],
-              [reviewTotal.toLocaleString("en-GB"), "guest reviews on our homes"],
-              [String(toolCount), "tools in the Recharge app"],
-            ].map(([n, t], i) => <Reveal key={t} delay={i * 0.06}><div><strong>{n}</strong><span>{t}</span></div></Reveal>)}
-          </div>
+          <Proof items={[[String(homes.length), "homes we run today"], [String(regions.length), "areas across Scotland"], [reviewTotal.toLocaleString("en-GB"), "guest reviews on our homes"], ["24/7", "support for you and your guests"]]} />
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section">
         <div className="wrap">
-          <Reveal className="section-head">
-            <p className="eyebrow">Your options</p>
-            <h2 className="h2">Two ways to work with us</h2>
-            <p className="lead">Choose the arrangement that suits you. We handle everything else.</p>
-          </Reveal>
+          <div className="head-row">
+            <Reveal><p className="eyebrow">Your options</p><h2 className="h2">Two ways to work with us</h2></Reveal>
+            <Reveal delay={0.08}><p className="lead">Choose the arrangement that suits you. We handle everything else.</p></Reveal>
+          </div>
           <OwnerPlans />
         </div>
       </section>
 
-      <section className="section paper">
+      <section className="section paper" id="portal" style={{ scrollMarginTop: 80 }}>
         <div className="wrap">
-          <div className="section-link">
-            <Reveal className="section-head">
-              <p className="eyebrow">Your client portal</p>
-              <h2 className="h2">See everything. Approve from your phone.</h2>
-              <p className="lead">Every owner gets the Recharge client portal. These are the tools in it.</p>
-            </Reveal>
-            <Link className="text-link" href="/app#tools">All {toolCount} tools <ArrowRight size={18} /></Link>
+          <div className="head-row">
+            <Reveal><p className="eyebrow">Your client portal</p><h2 className="h2">See everything. Approve from your phone.</h2></Reveal>
+            <Reveal delay={0.08}><p className="lead">Every owner gets their own login to the Recharge client portal. This is what you see in it.</p></Reveal>
           </div>
-          <ul className="tool-grid">
-            {ownerTools.map((t, i) => (
-              <Reveal as="li" key={t.name} delay={i * 0.05} className="tool">
-                <span className="ic"><t.icon size={20} /></span>
-                <div><strong>{t.name}</strong><p>{t.does}</p></div>
-              </Reveal>
-            ))}
-          </ul>
+          <OwnerPortal />
         </div>
       </section>
 
       <section className="section">
+        <div className="wrap split-sticky">
+          <Reveal className="split-head">
+            <p className="eyebrow">What we handle</p>
+            <h2 className="h2">You own it. We run it.</h2>
+            <p className="lead">One team covers everything a short let needs, from the first inspection to the monthly statement.</p>
+          </Reveal>
+          <RowList items={[
+            { title: "Setup and licensing", text: "Inspection, furnishing if you need it, photos, listings and help with your short-term let licence." },
+            { title: "Pricing and listings", text: "Prices reviewed every day and listings checked so each one stays ready to book." },
+            { title: "Guests, day and night", text: "Every message answered, with a real person on hand 24/7." },
+            { title: "Cleaning and laundry", text: "Every clean checked with photos. Fresh linen and towels for every stay." },
+            { title: "Repairs and safety checks", text: "Faults quoted and fixed. You approve costs before work starts." },
+            { title: "Statements and payouts", text: "Clear monthly statements, paid from cleared funds." },
+          ]} />
+        </div>
+      </section>
+
+      <section className="section paper">
         <div className="wrap">
           <Reveal className="section-head">
             <p className="eyebrow">How it works</p>
@@ -136,7 +152,7 @@ export default function OwnersPage() {
         <div className="wrap">
           <h2 className="h3" style={{ marginBottom: 16 }}>Keep reading</h2>
           <div className="next-links">
-            <Link href="/app"><strong>The Recharge app <ArrowRight size={16} /></strong><span>{toolCount} tools behind every home.</span></Link>
+            <Link href="/app"><strong>The Recharge app <ArrowRight size={16} /></strong><span>How our team runs every home.</span></Link>
             <Link href="/properties"><strong>Homes we run <ArrowRight size={16} /></strong><span>See {homes.length} homes across Scotland.</span></Link>
             <Link href="/support"><strong>24/7 support <ArrowRight size={16} /></strong><span>Help for guests and owners at any hour.</span></Link>
           </div>
