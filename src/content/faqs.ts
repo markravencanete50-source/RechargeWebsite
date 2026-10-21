@@ -20,6 +20,11 @@ export const guestFaqs: Faq[] = [
   { q: "Do you offer long-stay discounts?", a: `Many of our homes offer long-stay discounts on request. Call ${site.phone.display} or email ${site.email} with your dates and the home you like.` },
   { q: "What is included in every stay?", a: "A professionally cleaned home, fresh bed linen and towels, a kitchen with cooking basics and 24/7 support. Each home lists exactly what it has." },
   { q: "Is there parking?", a: "Many homes have free parking. Each property page shows its parking under What this home offers." },
+  { q: "What time are check-in and check-out?", a: "Most homes check in from 15:00 and check out by 10:00. A few use 16:00 and 11:00. Each property page shows its own times." },
+  { q: "Are your homes suitable for children?", a: `${homes.filter((h) => h.amenities.some((a) => /child|famil/i.test(a))).length} of our ${homes.length} homes are listed as suitable for children. Each property page shows the beds in every room, so you can check the layout before you book.` },
+  { q: "Do I need to register or show ID?", a: "Some homes ask every guest to complete a short registration and ID check through a secure link before check-in. The house rules on the property page say if this applies." },
+  { q: "Can I have a party or smoke in the home?", a: "No. Our house rules do not allow parties or loud music, and smoking and vaping are not allowed inside or outside the property." },
+  { q: "Can I extend my stay?", a: `Call ${site.phone.display} or message us. We check whether the home is free for the extra nights and how a longer stay is priced.` },
 ];
 
 export const ownerFaqs: Faq[] = [
@@ -30,6 +35,9 @@ export const ownerFaqs: Faq[] = [
   { q: "How are owner statements worked out?", a: "Booking income is matched to the platform payouts and the money received in the bank. Statements are issued from cleared funds, so the figures are real money." },
   { q: "Can you furnish my property?", a: "Yes. Our Recharge Ready team quotes the furnishing item by item. You accept or reject the quote in the app. If you prefer to furnish it yourself, our calculator gives you a room-by-room checklist." },
   { q: "How do I get started?", a: "Fill in the free performance estimate form. A member of the team comes back with an estimate, then books an inspection if you want to go ahead." },
+  { q: "Is the performance estimate free?", a: "Yes. There is no charge and no obligation to go ahead." },
+  { q: "Which areas do you cover?", a: `We run homes in ${regions.length} areas of Scotland today, including ${regions.slice(0, 5).map((r) => r.name).join(", ")}. If your property is somewhere else in Scotland, send us the details and we will tell you if we can help.` },
+  { q: "Will I know when guests are staying?", a: "Yes. Every booking appears in the calendar in your client portal, along with how each property is performing." },
 ];
 
 export const appFaqs: Faq[] = [
@@ -38,6 +46,8 @@ export const appFaqs: Faq[] = [
   { q: "How does the app keep cleaning standards high?", a: "Every clean is created from a booking, assigned to a cleaner and finished with photo evidence. Quality is tracked by cleaner and by property." },
   { q: "How are repairs handled?", a: "A problem raised by a guest, cleaner or owner becomes a job. Maintenance quotes it, the owner approves it in the app, and the work is tracked to completion with photos." },
   { q: `How many tools are in the app?`, a: `${toolCount} tools across five teams: owners, bookings and guests, cleaning, maintenance and accounts.` },
+  { q: "Do owners see all of those tools?", a: "No. The tools are for our own teams. Owners see their client portal: bookings, performance, statements, approvals, onboarding and post." },
+  { q: "How do guest messages get answered quickly?", a: "Every guest message lands in one inbox with a live response timer, so no message waits unnoticed. Anything urgent is escalated." },
 ];
 
 export const supportFaqs: Faq[] = [
@@ -45,6 +55,12 @@ export const supportFaqs: Faq[] = [
   { q: "I am locked out. What do I do?", a: `Call ${site.phone.display} straight away. We talk you through access and arrange help if it is needed.` },
   { q: "Something in the home is broken. Who fixes it?", a: "Tell us and it becomes a repair job in the app. Urgent problems go straight to our maintenance team." },
   { q: "I am an owner. Who do I speak to?", a: `Message us in the app, call ${site.phone.display} or email ${site.email}. Your bookings, statements and repairs are also in the client portal.` },
+];
+
+export const supportExtraFaqs: Faq[] = [
+  { q: "How quickly will someone reply?", a: "Messages are tracked with live response timers, so none waits unnoticed. For anything urgent, call us rather than messaging." },
+  { q: "I have left something behind. What should I do?", a: `Contact us with what it is and where you left it. Call ${site.phone.display} or email ${site.email}.` },
+  { q: "I live next door to a Recharge home. Who do I contact?", a: `Call ${site.phone.display} at any hour. Your concern is logged and passed to the team responsible for that home.` },
 ];
 
 export const propertiesFaqs: Faq[] = [

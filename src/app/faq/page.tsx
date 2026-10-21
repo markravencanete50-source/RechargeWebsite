@@ -1,9 +1,13 @@
+import { ArrowRight, Phone } from "lucide-react";
 import type { Metadata } from "next";
-import { FaqList } from "@/components/FaqList";
+import Link from "next/link";
+import { FaqExplorer } from "@/components/FaqExplorer";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
+import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
-import { appFaqs, generalFaqs, guestFaqs, ownerFaqs, propertiesFaqs, supportFaqs } from "@/content/faqs";
+import { appFaqs, generalFaqs, guestFaqs, ownerFaqs, propertiesFaqs, supportExtraFaqs, supportFaqs } from "@/content/faqs";
+import { homes } from "@/content/properties";
 import { site } from "@/content/site";
 import { breadcrumbs, faqPage, graph } from "@/lib/schema";
 
@@ -14,12 +18,12 @@ export const metadata: Metadata = {
 };
 
 const groups = [
-  { id: "about", t: "About Recharge", items: generalFaqs },
-  { id: "guests", t: "For guests", items: guestFaqs },
-  { id: "properties", t: "Finding a home", items: propertiesFaqs },
-  { id: "owners", t: "For owners", items: ownerFaqs },
-  { id: "app", t: "The Recharge app", items: appFaqs },
-  { id: "support", t: "Support", items: supportFaqs },
+  { id: "about", t: "About Recharge", lead: "Who we are and how we work.", items: generalFaqs },
+  { id: "guests", t: "Booking and staying", lead: "Before you book and during your stay.", items: guestFaqs },
+  { id: "properties", t: "Finding a home", lead: "Searching, prices and areas.", items: propertiesFaqs },
+  { id: "owners", t: "For owners", lead: "Guaranteed rent, full management and getting started.", items: ownerFaqs },
+  { id: "app", t: "The Recharge app", lead: "What the app does and who sees what.", items: appFaqs },
+  { id: "support", t: "Support", lead: "Reaching us, day or night.", items: [...supportFaqs, ...supportExtraFaqs] },
 ];
 
 export default function FaqPage() {
@@ -27,17 +31,35 @@ export default function FaqPage() {
   return (
     <>
       <JsonLd data={graph(faqPage(all), breadcrumbs([{ name: "FAQ", path: "/faq" }]))} />
-      <PageHero eyebrow="FAQ" title="Questions and answers" lead={`Cannot find what you need? Call ${site.phone.display} or email ${site.email}.`}>
+      <PageHero eyebrow="FAQ" title="Questions and answers" lead={`${all.length} straight answers for guests, owners and neighbours. Search below, or call ${site.phone.display} at any hour.`}>
         <nav className="link-cloud faq-nav" aria-label="Topics">{groups.map((g) => <a key={g.id} href={`#${g.id}`}>{g.t}</a>)}</nav>
       </PageHero>
-      {groups.map((g, i) => (
-        <section key={g.id} id={g.id} className={`section ${i % 2 ? "paper" : ""}`} style={{ scrollMarginTop: 80 }}>
-          <div className="wrap faq-grid">
-            <Reveal className="section-head"><h2 className="h2">{g.t}</h2></Reveal>
-            <Reveal><FaqList items={g.items} /></Reveal>
-          </div>
-        </section>
-      ))}
+
+      <section className="section proof-band">
+        <div className="wrap">
+          <Proof items={[[String(all.length), "questions answered"], [String(groups.length), "topics"], ["24/7", "a person for anything else"], [String(homes.length), "homes our answers cover"]]} />
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="wrap">
+          <FaqExplorer groups={groups} phone={site.phone} />
+        </div>
+      </section>
+
+      <section className="call-band dark on-dark">
+        <div className="wrap call-band-inner">
+          <Reveal><p className="call-band-big">24/7</p></Reveal>
+          <Reveal delay={0.08}>
+            <h2 className="h2">Did not find your answer?</h2>
+            <p className="lead">A real person is on hand at any hour. Or send a message and we will reply in writing.</p>
+          </Reveal>
+          <Reveal delay={0.16} className="call-band-actions">
+            <a className="btn btn-mint" href={site.phone.href}><Phone size={18} /> {site.phone.display}</a>
+            <Link className="btn btn-line-light" href="/support#contact">Send a message <ArrowRight size={18} /></Link>
+          </Reveal>
+        </div>
+      </section>
     </>
   );
 }
