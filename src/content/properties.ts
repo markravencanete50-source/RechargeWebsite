@@ -19,7 +19,8 @@ export type Home = {
   bedrooms: number;
   beds?: number;
   bathrooms?: number;
-  // Base nightly price from Hostaway. Dates can cost more or less; the booking site has the exact total.
+  // Typical nightly price: the median rate in the Hostaway calendar over the next 60 days. Dates can
+  // cost more or less; the booking site has the exact total.
   price?: number;
   currency?: string;
   checkIn?: string;

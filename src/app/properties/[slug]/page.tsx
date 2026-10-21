@@ -6,7 +6,7 @@ import { AmenityIcon } from "@/components/Amenity";
 import { Gallery } from "@/components/Gallery";
 import { HomeCard } from "@/components/HomeCard";
 import { Reveal } from "@/components/Reveal";
-import { distance, homeBySlug, homes } from "@/content/properties";
+import { distance, homeBySlug, homes, money } from "@/content/properties";
 import { site } from "@/content/site";
 
 const NEARBY_ICON: Record<string, LucideIcon> = { station: TrainFront, bus: Bus, supermarket: ShoppingCart, pharmacy: Pill, restaurant: UtensilsCrossed, park: Trees, attraction: Landmark, airport: Plane };
@@ -84,6 +84,7 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
               )}
             </div>
             <aside className="book-card" aria-label="Book this home">
+              {home.price !== undefined && <p className="book-price">Around <strong>{money(home.price, home.currency)}</strong> a night<span>Rates change by date. Your exact total shows when you choose dates.</span></p>}
               <strong className="h3">Book direct and save {site.directDiscount}</strong>
               <ul className="facts">
                 {facts.map((f) => <li key={f.text}><f.icon size={18} /> {f.text}</li>)}
