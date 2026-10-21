@@ -25,7 +25,8 @@ export async function generateMetadata({ params }: PageProps<"/properties/[slug]
 export default async function PropertyPage({ params }: PageProps<"/properties/[slug]">) {
   const home = homeBySlug((await params).slug);
   if (!home) notFound();
-  const paragraphs = (home.description ?? "").split(/\n{2,}|\n(?=[A-Z])/).map((p) => p.trim()).filter(Boolean);
+  // Blank lines split paragraphs; single line breaks (lists of rooms and places) are kept as written.
+  const paragraphs = (home.description ?? "").split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
   const others = homes.filter((h) => h.slug !== home.slug && h.region === home.region).slice(0, 4);
   const facts = [
     home.guests && { icon: Users, text: `Sleeps ${home.guests}` },
@@ -48,7 +49,7 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
               {paragraphs.length > 0 && (
                 <Reveal className="prop-block">
                   <h2 className="h3">About this home</h2>
-                  {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+                  {paragraphs.map((p, i) => <p key={i} style={{ whiteSpace: "pre-line" }}>{p}</p>)}
                 </Reveal>
               )}
 
