@@ -6,10 +6,12 @@ import { DiffVideo } from "@/components/DiffVideo";
 import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
 import { Journey } from "@/components/Journey";
-import { PageHero } from "@/components/PageHero";
+import { AppHero } from "@/components/AppHero";
+import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
 import { ToolsShowcase } from "@/components/ToolsShowcase";
 import { appFaqs } from "@/content/faqs";
+import { homes } from "@/content/properties";
 import { teams, toolCount } from "@/content/tools";
 import { abs, breadcrumbs, graph, organization } from "@/lib/schema";
 
@@ -37,30 +39,40 @@ export default function AppPage() {
   return (
     <>
       <JsonLd data={ld} />
-      <PageHero eyebrow="The Recharge app" title="One app runs every home" lead={`Owners, guest support, cleaners, maintenance and accounts all work from the same app. ${toolCount} tools, and every job has an owner, a status and a record.`}>
-        <div className="hero-actions">
-          <a className="btn btn-mint" href="#tools">See every tool <ArrowRight size={18} /></a>
-          <Link className="btn btn-line-light" href="/owners#estimate">Get your free estimate</Link>
-        </div>
-      </PageHero>
+      <AppHero>
+        <Reveal><p className="eyebrow">The Recharge app</p></Reveal>
+        <Reveal delay={0.06}><h1 className="h1 page-title">One app runs every home</h1></Reveal>
+        <Reveal delay={0.12}><p className="lead">Owners, guest support, cleaners, maintenance and accounts all work from the same app. Every job has an owner, a status and a record.</p></Reveal>
+        <Reveal delay={0.18}>
+          <div className="hero-actions">
+            <a className="btn btn-mint" href="#journey">See how it works <ArrowRight size={18} /></a>
+            <Link className="btn btn-line-light" href="/owners#portal">The owner portal</Link>
+          </div>
+        </Reveal>
+      </AppHero>
 
-      <section className="section">
+      <section className="section proof-band">
         <div className="wrap">
-          <Reveal className="section-head">
-            <p className="eyebrow">Who uses it</p>
-            <h2 className="h2">Each person sees what they need</h2>
-            <p className="lead">For the homes they look after, and nothing else.</p>
-          </Reveal>
+          <Proof items={[[String(toolCount), "tools in the app"], [String(teams.length), "teams working from it"], [String(homes.length), "homes it runs"], ["24/7", "support behind it"]]} />
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="wrap">
+          <div className="head-row">
+            <Reveal><p className="eyebrow">Who uses it</p><h2 className="h2">Each person sees what they need</h2></Reveal>
+            <Reveal delay={0.08}><p className="lead">For the homes they look after, and nothing else.</p></Reveal>
+          </div>
           <AppShowcase />
         </div>
       </section>
 
-      <section className="section dark on-dark">
-        <div className="wrap">
-          <Reveal className="section-head">
+      <section className="section dark on-dark" id="journey" style={{ scrollMarginTop: 80 }}>
+        <div className="wrap split-sticky">
+          <Reveal className="split-head">
             <p className="eyebrow">How it works</p>
             <h2 className="h2">One booking, start to finish</h2>
-            <p className="lead">Follow a single stay through the app. Each step is handled by a tool, and nothing depends on someone remembering.</p>
+            <p className="lead">Follow a single stay through the app. Each step is handled by a tool, so nothing depends on someone remembering.</p>
           </Reveal>
           <Journey />
         </div>
@@ -68,36 +80,21 @@ export default function AppPage() {
 
       <section className="section paper" id="tools" style={{ scrollMarginTop: 80 }}>
         <div className="wrap">
-          <Reveal className="section-head">
-            <p className="eyebrow">Every tool</p>
-            <h2 className="h2">{toolCount} tools across five teams</h2>
-            <p className="lead">These are the tools our team uses behind every Recharge home. Owners see their own client portal, shown under For owners. Choose a team to see what it uses.</p>
-          </Reveal>
+          <div className="head-row">
+            <Reveal><p className="eyebrow">Behind the scenes</p><h2 className="h2">{toolCount} tools across five teams</h2></Reveal>
+            <Reveal delay={0.08}><p className="lead">The tools our team uses behind every home. Owners see their own client portal, shown under For owners.</p></Reveal>
+          </div>
           <ToolsShowcase />
         </div>
       </section>
 
       <section className="section dark on-dark">
         <div className="wrap">
-          <Reveal className="section-head">
-            <p className="eyebrow">Watch</p>
-            <h2 className="h2">Why Recharge is different</h2>
-          </Reveal>
-          <Reveal><DiffVideo /></Reveal>
-          <div className="diff-grid">
-            {[
-              ["Owners", "Live bookings, statements and approvals on your phone."],
-              ["Guests", "Messages answered quickly, at any hour."],
-              ["Cleaners", "Schedules, checklists and photo proof for every clean."],
-              ["Maintenance", "Repairs logged, assigned and tracked to the finish."],
-            ].map(([t, d], i) => (
-              <Reveal key={t} delay={i * 0.08} className="diff">
-                <span className="num">0{i + 1}</span>
-                <strong className="h3" style={{ fontSize: 20 }}>{t}</strong>
-                <p>{d}</p>
-              </Reveal>
-            ))}
+          <div className="head-row">
+            <Reveal><p className="eyebrow">Watch</p><h2 className="h2">Why Recharge is different</h2></Reveal>
+            <Reveal delay={0.08}><p className="lead">How the app keeps owners, guests, cleaners and maintenance on the same page.</p></Reveal>
           </div>
+          <Reveal><DiffVideo /></Reveal>
         </div>
       </section>
 

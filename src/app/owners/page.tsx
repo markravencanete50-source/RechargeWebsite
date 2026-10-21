@@ -10,11 +10,13 @@ import { PhotoHero } from "@/components/PhotoHero";
 import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
 import { RowList } from "@/components/RowList";
+import { ReasonList } from "@/components/WhyChoose";
 import { Steps } from "@/components/Steps";
 import { ownerFaqs } from "@/content/faqs";
 import { homes, regions, reviewTotal } from "@/content/properties";
 import { showcase } from "@/content/showcase";
 import { site } from "@/content/site";
+import { ownerReasons } from "@/content/why";
 import { abs, breadcrumbs, graph, organization } from "@/lib/schema";
 
 export const metadata: Metadata = {
@@ -76,7 +78,19 @@ export default function OwnersPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="wrap split-sticky">
+          <Reveal className="split-head">
+            <p className="eyebrow">Why owners choose Recharge</p>
+            <h2 className="h2">Hands off, never in the dark.</h2>
+            <p className="lead">We run the property day to day. You see every booking, cost and payout, and you approve anything we spend.</p>
+            <a className="btn btn-primary" href="#estimate">Get your free estimate <ArrowRight size={18} /></a>
+          </Reveal>
+          <ReasonList items={ownerReasons} />
+        </div>
+      </section>
+
+      <section className="section paper">
         <div className="wrap">
           <div className="head-row">
             <Reveal><p className="eyebrow">Your options</p><h2 className="h2">Two ways to work with us</h2></Reveal>
@@ -86,7 +100,7 @@ export default function OwnersPage() {
         </div>
       </section>
 
-      <section className="section paper" id="portal" style={{ scrollMarginTop: 80 }}>
+      <section className="section" id="portal" style={{ scrollMarginTop: 80 }}>
         <div className="wrap">
           <div className="head-row">
             <Reveal><p className="eyebrow">Your client portal</p><h2 className="h2">See everything. Approve from your phone.</h2></Reveal>

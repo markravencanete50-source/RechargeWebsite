@@ -10,6 +10,7 @@ import { PhotoHero } from "@/components/PhotoHero";
 import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
 import { RowList } from "@/components/RowList";
+import { ReasonList } from "@/components/WhyChoose";
 import { SearchBar } from "@/components/SearchBar";
 import { Steps } from "@/components/Steps";
 import { TripGrid } from "@/components/TripGrid";
@@ -17,6 +18,7 @@ import { guestFaqs } from "@/content/faqs";
 import { homes, regions, reviewTotal } from "@/content/properties";
 import { showcase } from "@/content/showcase";
 import { site } from "@/content/site";
+import { guestReasons } from "@/content/why";
 import { breadcrumbs, graph } from "@/lib/schema";
 
 export const metadata: Metadata = {
@@ -42,17 +44,12 @@ export default function StayPage() {
       <section className="section">
         <div className="wrap split-sticky">
           <Reveal className="split-head">
-            <p className="eyebrow">Why book direct</p>
+            <p className="eyebrow">Why guests choose Recharge</p>
             <h2 className="h2">Save <span className="big-figure">{site.directDiscount}</span> and deal with us, not a platform.</h2>
             <p className="lead">Same home, same dates, a better rate. And the team that runs the home is the team you talk to.</p>
             <Link className="btn btn-primary" href="/properties">Find a home <ArrowRight size={18} /></Link>
           </Reveal>
-          <RowList items={[
-            { title: `${site.directDiscount} off every direct booking`, text: "Booking with Recharge costs less than booking the same home on a platform." },
-            { title: "Cleaned to a checklist", text: "Every clean is finished with photos in the Recharge app before you arrive." },
-            { title: "Help at any hour", text: "Message or call 24/7. Urgent problems go straight to our maintenance team." },
-            { title: "Long stays welcome", text: "Most homes offer long-stay discounts on request. Ideal for contractors and relocations." },
-          ]} />
+          <ReasonList items={guestReasons} />
         </div>
       </section>
 

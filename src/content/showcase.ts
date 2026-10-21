@@ -16,5 +16,8 @@ export const showcase = {
   contractors: pick("3-bedroom-home-in-edinburgh-5", 0),
   business: pick("1-bedroom-home-in-edinburgh-2", 0),
   longStays: pick("2-bedroom-home-in-aberdeen", 0),
+  homeHero: [pick("3-bedroom-home-in-edinburgh-4", 1), pick("1-bedroom-home-in-edinburgh-4", 0), pick("2-bedroom-home-in-livingston-4", 0)],
+  guests: pick("2-bedroom-home-in-edinburgh-3", 0),
+  owners: pick("2-bedroom-home-in-aberdeen", 1),
 };
-export type Shot = NonNullable<(typeof showcase)[keyof typeof showcase]>;
+export type Shot = NonNullable<ReturnType<typeof pick>>;

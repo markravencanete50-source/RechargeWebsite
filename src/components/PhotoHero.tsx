@@ -5,14 +5,16 @@ import type { Shot } from "@/content/showcase";
 import { Reveal } from "./Reveal";
 
 // A full-bleed hero on a real Recharge home, with a slow push-in on the photo.
-export function PhotoHero({ shot, eyebrow, title, lead, children, aside }: { shot: Shot | null; eyebrow: string; title: ReactNode; lead?: string; children?: ReactNode; aside?: ReactNode }) {
+// With several shots it crossfades between them.
+export function PhotoHero({ shot, shots, eyebrow, title, lead, children, aside, className = "" }: { shot?: Shot | null; shots?: (Shot | null)[]; eyebrow: string; title: ReactNode; lead?: string; children?: ReactNode; aside?: ReactNode; className?: string }) {
+  const set = (shots ?? [shot]).filter((s): s is Shot => !!s);
   return (
-    <section className="photo-hero on-dark">
-      {shot && (
-        <div className="photo-hero-img">
-          <Image src={shot.src} alt="" fill priority sizes="100vw" />
+    <section className={`photo-hero on-dark ${set.length > 1 ? "is-cycling" : ""} ${className}`}>
+      {set.map((s, i) => (
+        <div className="photo-hero-img" key={s.src} style={{ animationDelay: `${i * 7}s` }}>
+          <Image src={s.src} alt="" fill priority={i === 0} sizes="100vw" />
         </div>
-      )}
+      ))}
       <div className="photo-hero-shade" />
       <div className="wrap photo-hero-inner">
         <div className="photo-hero-copy">
@@ -23,7 +25,7 @@ export function PhotoHero({ shot, eyebrow, title, lead, children, aside }: { sho
         </div>
         {aside && <Reveal delay={0.25} className="photo-hero-aside">{aside}</Reveal>}
       </div>
-      {shot && <Link className="photo-hero-credit" href={shot.href}>{shot.caption}</Link>}
+      {set.length === 1 && <Link className="photo-hero-credit" href={set[0].href}>{set[0].caption}</Link>}
     </section>
   );
 }

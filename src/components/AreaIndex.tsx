@@ -3,10 +3,10 @@ import Link from "next/link";
 import { regions, regionSlug } from "@/content/properties";
 
 // Every area as an index, like the contents page of a guide.
-export function AreaIndex() {
+export function AreaIndex({ limit }: { limit?: number }) {
   return (
     <ul className="area-index">
-      {regions.map((r) => (
+      {regions.slice(0, limit).map((r) => (
         <li key={r.name}>
           <Link href={`/properties/area/${regionSlug(r.name)}`}>
             <span>{r.name}</span>
