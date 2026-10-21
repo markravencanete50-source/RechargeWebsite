@@ -8,6 +8,7 @@ import { Gallery } from "@/components/Gallery";
 import { HomeCard } from "@/components/HomeCard";
 import { JsonLd } from "@/components/JsonLd";
 import { NearbyMap, type PlacePhoto } from "@/components/NearbyMap";
+import { wantsPhoto } from "@/lib/place-photo";
 import { Sheet } from "@/components/Sheet";
 import { homeFaqs } from "@/content/faqs";
 import { groupAmenities, parseListing, topAmenities, type Room } from "@/content/listing";
@@ -229,7 +230,7 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
 
               <section className="prop-block" id="nearby">
                 <h2 className="h3">Where you will be</h2>
-                <NearbyMap area={`${home.town} ${home.district}, ${home.region}`} town={home.town} places={l.places.slice(0, 8)} photos={Object.fromEntries(l.places.filter((p) => `${p.name}|${home.town}` in placePhotos).map((p) => [p.name, placePhotos[`${p.name}|${home.town}`]]))} />
+                <NearbyMap area={`${home.town} ${home.district}, ${home.region}`} town={home.town} places={l.places.slice(0, 8)} photos={Object.fromEntries(l.places.filter((p) => wantsPhoto(p.name) && `${p.name}|${home.town}` in placePhotos).map((p) => [p.name, placePhotos[`${p.name}|${home.town}`]]))} />
                 {(l.places.length > 8 || l.placeNotes.length > 0 || (home.nearby?.length ?? 0) > 0) && (
                   <Sheet label={<>More about the area <ChevronRight size={16} /></>} title="What is nearby">
                     {l.places.length > 0 && placeList(l.places)}

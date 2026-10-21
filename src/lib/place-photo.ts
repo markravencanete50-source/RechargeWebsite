@@ -9,7 +9,10 @@ const API = "https://en.wikipedia.org/w/api.php";
 const GENERIC = /^(the )?(local |nearest |nearby )?(gym|gyms|supermarkets?|train station|bus stops?|shops?|shopping|town centre|city centre|city center|quick bites|steps away|commuter friendly|stress-free parking|edinburgh|glasgow|aberdeen|dundee|airport)\b/i;
 const STOP = new Set(["the", "and", "park", "centre", "center", "station", "shopping"]);
 
-export const wantsPhoto = (name: string) => name.length >= 4 && !GENERIC.test(name);
+// Shops and supermarkets match articles about the chain, not the branch nearby.
+const CHAIN = /\b(supermarkets?|superstore|tesco|aldi|lidl|asda|morrisons|sainsbury'?s|co-?op|gym group|puregym|jd gyms)\b/i;
+
+export const wantsPhoto = (name: string) => name.length >= 4 && !GENERIC.test(name) && !CHAIN.test(name);
 
 const words = (s: string) => s.toLowerCase().replace(/[’']/g, "").split(/[^a-z0-9]+/).filter((w) => w.length > 2 && !STOP.has(w));
 
