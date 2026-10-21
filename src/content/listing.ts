@@ -239,3 +239,16 @@ export function groupAmenities(list: string[]) {
   const order = [...GROUPS.map(([g]) => g), "Everyday essentials"];
   return order.filter((g) => groups.has(g)).map((g) => ({ name: g, items: groups.get(g)! }));
 }
+
+// The amenities guests look for first, in the order Airbnb and Booking.com lead with them.
+const POPULAR = [/wi-?fi|wireless|internet/i, /free parking/i, /parking/i, /^kitchen$/i, /washing machine|washer/i, /smart tv|^tv$/i, /heating/i, /workspace|desk/i, /dishwasher/i, /hair ?dryer/i, /garden|patio|balcony/i, /long term/i, /coffee/i, /iron/i];
+
+export function topAmenities(list: string[], n = 10) {
+  const picked: string[] = [];
+  for (const re of POPULAR) {
+    const hit = list.find((a) => re.test(a) && !picked.includes(a));
+    if (hit && !(re.source.includes("parking") && picked.some((p) => /parking/i.test(p)))) picked.push(hit);
+    if (picked.length === n) return picked;
+  }
+  return [...picked, ...list.filter((a) => !picked.includes(a))].slice(0, n);
+}

@@ -1,4 +1,4 @@
-import { ArrowUpRight, Bath, BedDouble, Bus, Check, CigaretteOff, Clock, CookingPot, DoorOpen, House, IdCard, Info, Landmark, LogOut, MapPin, Package, Percent, Phone, Pill, Plane, ShoppingCart, Sofa, TrainFront, Trees, TriangleAlert, Users, UtensilsCrossed, VolumeX, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Bath, ChevronRight, MessageSquareText, BedDouble, Bus, Check, CigaretteOff, Clock, CookingPot, DoorOpen, House, IdCard, Info, Landmark, LogOut, MapPin, Package, Percent, Phone, Pill, Plane, ShoppingCart, Sofa, TrainFront, Trees, TriangleAlert, Users, UtensilsCrossed, VolumeX, type LucideIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -7,13 +7,16 @@ import { FaqList } from "@/components/FaqList";
 import { Gallery } from "@/components/Gallery";
 import { HomeCard } from "@/components/HomeCard";
 import { JsonLd } from "@/components/JsonLd";
-import { Reveal } from "@/components/Reveal";
+import { NearbyMap, type PlacePhoto } from "@/components/NearbyMap";
+import { Sheet } from "@/components/Sheet";
 import { homeFaqs } from "@/content/faqs";
-import { groupAmenities, parseListing, type Room } from "@/content/listing";
+import { groupAmenities, parseListing, topAmenities, type Room } from "@/content/listing";
 import { distance, heading, homeBySlug, homes, money, regionSlug, tags } from "@/content/properties";
+import photoData from "@/content/place-photos.json";
 import { site } from "@/content/site";
 import { abs, breadcrumbs, faqPage, graph, organization } from "@/lib/schema";
 
+const placePhotos = photoData as Record<string, PlacePhoto>;
 const NEARBY_ICON: Record<string, LucideIcon> = { station: TrainFront, bus: Bus, supermarket: ShoppingCart, pharmacy: Pill, restaurant: UtensilsCrossed, park: Trees, attraction: Landmark, airport: Plane };
 const ROOM_ICON: Record<Room["kind"], LucideIcon> = { bedroom: BedDouble, living: Sofa, kitchen: CookingPot, bathroom: Bath, dining: UtensilsCrossed, other: Package };
 
@@ -63,9 +66,9 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
   ].filter(Boolean) as { icon: LucideIcon; text: string }[];
   const sections = [
     { id: "overview", label: "Overview", show: l.intro.length > 0 || l.highlights.length > 0 },
-    { id: "rooms", label: "Rooms", show: l.rooms.length > 0 },
+    { id: "rooms", label: "Rooms", show: sleeping.length > 0 },
     { id: "amenities", label: "Amenities", show: home.amenities.length > 0 },
-    { id: "nearby", label: "Nearby", show: l.places.length > 0 || (home.nearby?.length ?? 0) > 0 },
+    { id: "nearby", label: "Location", show: true },
     { id: "good-to-know", label: "Good to know", show: true },
     { id: "questions", label: "Questions", show: faqs.length > 0 },
   ].filter((s) => s.show);
@@ -73,6 +76,27 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
     const m = line.match(/^([^:]{3,40}):\s+(.+)$/);
     return m ? <><b>{m[1]}:</b> {m[2]}</> : line;
   };
+  const popular = topAmenities(home.amenities, 10);
+  const longAbout = l.intro.join(" ").length > 320;
+  const placeList = (places: typeof l.places) => (
+    <ul className="places">
+      {places.map((p) => (
+        <li key={p.name + p.time}>
+          <span className="ic"><MapPin size={18} /></span>
+          <div><strong>{p.name}</strong>{p.note && <span>{p.note}</span>}</div>
+          {p.time && <em><Clock size={14} /> {p.time}</em>}
+        </li>
+      ))}
+    </ul>
+  );
+  const osmList = home.nearby && home.nearby.length > 0 && (
+    <ul className="nearby">
+      {home.nearby.map((n) => {
+        const Icon = NEARBY_ICON[n.kind] ?? MapPin;
+        return <li key={n.kind}><span className="ic"><Icon size={20} /></span><div><strong>{n.name || n.label}</strong><span>{n.name ? `${n.label}, ` : ""}{distance(n.metres)}</span></div></li>;
+      })}
+    </ul>
+  );
   const areaHref = `/properties/area/${regionSlug(home.region)}`;
 
   const ld = graph(
@@ -108,7 +132,7 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
         <div className="wrap">
           <nav className="crumbs" aria-label="Breadcrumb"><Link href="/properties">Properties</Link> / <Link href={areaHref}>{home.region}</Link> / <span>{home.town}</span></nav>
           <h1 className="h2 prop-title">{heading(home)}</h1>
-          <p className="prop-place"><MapPin size={17} /> {home.town}, {home.region} {home.district}{home.reviews > 0 && <span> · {home.reviews} guest reviews</span>}</p>
+          <p className="prop-place"><span><MapPin size={17} /> {home.town}, {home.region} {home.district}</span>{home.reviews > 0 && <span><MessageSquareText size={16} /> {home.reviews} guest reviews</span>}</p>
           {(tags(home).length > 0 || l.longStay) && (
             <div className="home-tags prop-tags">
               {l.longStay && <span className="tag-strong"><Percent size={13} /> Long-stay discounts</span>}
@@ -126,138 +150,147 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
               <ul className="prop-facts">{facts.map((f) => <li key={f.text}><f.icon size={20} /> {f.text}</li>)}</ul>
 
               {(l.intro.length > 0 || l.highlights.length > 0) && (
-                <Reveal className="prop-block" id="overview">
+                <section className="prop-block" id="overview">
                   <h2 className="h3">About this home</h2>
-                  {l.intro.map((p, i) => <p key={i}>{p}</p>)}
                   {l.highlights.length > 0 && (
-                    <ul className="checks">{l.highlights.map((h) => <li key={h}><Check size={18} /> {h}</li>)}</ul>
+                    <ul className="checks">{l.highlights.slice(0, 4).map((h) => <li key={h}><Check size={18} /> {h}</li>)}</ul>
                   )}
-                </Reveal>
-              )}
-
-              {l.rooms.length > 0 && (
-                <Reveal className="prop-block" id="rooms">
-                  {sleeping.length > 0 && (
-                    <>
-                      <h2 className="h3">Where you will sleep</h2>
-                      <div className={`rooms${sleeping.some((r) => r.items.some((it) => it.length > 70)) ? " rooms-wide" : ""}`}>
-                        {sleeping.map((r) => {
-                          const Icon = ROOM_ICON[r.kind];
-                          return (
-                            <div className="room" key={r.name}>
-                              <span className="ic"><Icon size={22} /></span>
-                              <strong>{r.name}</strong>
-                              <ul className={r.items.some((it) => it.length > 70) ? "prose" : undefined}>{r.items.map((it) => <li key={it}>{labelled(it.replace(/\s*\(sleeps \d+\)/i, ""))}</li>)}</ul>
-                              {r.sleeps && <span className="room-sleeps"><Users size={14} /> Sleeps {r.sleeps}</span>}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </>
-                  )}
-                  {inside.length > 0 && (
-                    <>
-                      <h2 className="h3" style={{ marginTop: sleeping.length ? 18 : 0 }}>Inside the home</h2>
-                      <div className="rooms rooms-wide">
-                        {inside.map((r) => {
-                          const Icon = ROOM_ICON[r.kind];
-                          return (
-                            <div className="room" key={r.name}>
-                              <span className="ic"><Icon size={22} /></span>
-                              <strong>{r.name}</strong>
-                              <ul className={r.items.some((it) => it.length > 70) ? "prose" : undefined}>{r.items.map((it) => <li key={it}>{labelled(it)}</li>)}</ul>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </>
-                  )}
-                </Reveal>
-              )}
-
-              {l.extra.map((e) => (
-                <Reveal className="prop-block" key={e.title}>
-                  <h2 className="h3">{e.title}</h2>
-                  {e.lines.map((p, i) => <p key={i}>{labelled(p)}</p>)}
-                </Reveal>
-              ))}
-
-              {amenityGroups.length > 0 && (
-                <Reveal className="prop-block" id="amenities">
-                  <h2 className="h3">What this home offers <span className="count">{home.amenities.length}</span></h2>
-                  <div className="amenity-groups">
-                    {amenityGroups.map((g) => (
-                      <div key={g.name}>
-                        <h3>{g.name}</h3>
-                        <ul className="amenities">{g.items.map((a) => <li key={a}><AmenityIcon name={a} /> {a}</li>)}</ul>
-                      </div>
-                    ))}
-                  </div>
-                </Reveal>
-              )}
-
-              {(l.places.length > 0 || (home.nearby?.length ?? 0) > 0) && (
-                <Reveal className="prop-block" id="nearby">
-                  <h2 className="h3">What is nearby</h2>
-                  {l.places.length > 0 && (
-                    <ul className="places">
-                      {l.places.map((p) => (
-                        <li key={p.name + p.time}>
-                          <span className="ic"><MapPin size={18} /></span>
-                          <div><strong>{p.name}</strong>{p.note && <span>{p.note}</span>}</div>
-                          {p.time && <em><Clock size={14} /> {p.time}</em>}
-                        </li>
+                  {l.intro.length > 0 && <div className={longAbout ? "clamp" : undefined}>{l.intro.map((p, i) => <p key={i}>{p}</p>)}</div>}
+                  {(longAbout || inside.length > 0 || l.extra.length > 0 || l.highlights.length > 4) && (
+                    <Sheet label={<>Show more <ChevronRight size={16} /></>} title="About this home">
+                      {l.intro.map((p, i) => <p key={i}>{p}</p>)}
+                      {l.highlights.length > 0 && <ul className="checks single">{l.highlights.map((h) => <li key={h}><Check size={18} /> {h}</li>)}</ul>}
+                      {l.rooms.length > 0 && (
+                        <>
+                          <h3>The space</h3>
+                          <div className="sheet-rooms">
+                            {l.rooms.map((r) => {
+                              const Icon = ROOM_ICON[r.kind];
+                              return (
+                                <div key={r.name}>
+                                  <strong><Icon size={18} /> {r.name}</strong>
+                                  <ul>{r.items.map((it) => <li key={it}>{labelled(it)}</li>)}</ul>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </>
+                      )}
+                      {l.extra.map((e) => (
+                        <div key={e.title}>
+                          <h3>{e.title}</h3>
+                          {e.lines.map((p, i) => <p key={i}>{labelled(p)}</p>)}
+                        </div>
                       ))}
-                    </ul>
+                    </Sheet>
                   )}
-                  {l.placeNotes.map((n) => <p key={n}>{labelled(n)}</p>)}
-                  {l.places.some((p) => p.time) && <p className="fine">Travel times are approximate and given by the host.</p>}
-                  {home.nearby && home.nearby.length > 0 && (
-                    <>
-                      <ul className="nearby">
-                        {home.nearby.map((n) => {
-                          const Icon = NEARBY_ICON[n.kind] ?? MapPin;
-                          return <li key={n.kind}><span className="ic"><Icon size={20} /></span><div><strong>{n.name || n.label}</strong><span>{n.name ? `${n.label}, ` : ""}{distance(n.metres)}</span></div></li>;
+                </section>
+              )}
+
+              {sleeping.length > 0 && (
+                <section className="prop-block" id="rooms">
+                  <h2 className="h3">Where you will sleep</h2>
+                  <div className="rooms-scroll">
+                    {sleeping.map((r) => {
+                      const Icon = ROOM_ICON[r.kind];
+                      const beds = r.items.filter((it) => /bed|sofa|cot|bunk/i.test(it) && it.length < 70);
+                      return (
+                        <div className="room" key={r.name}>
+                          <span className="ic"><Icon size={22} /></span>
+                          <strong>{r.name}</strong>
+                          <ul>{(beds.length ? beds : r.items.slice(0, 2)).map((it) => <li key={it}>{labelled(it.replace(/\s*\(sleeps \d+\)/i, ""))}</li>)}</ul>
+                          {r.sleeps && <span className="room-sleeps"><Users size={14} /> Sleeps {r.sleeps}</span>}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
+
+              {home.amenities.length > 0 && (
+                <section className="prop-block" id="amenities">
+                  <h2 className="h3">What this home offers</h2>
+                  <ul className="amenities top">{popular.map((a) => <li key={a}><AmenityIcon name={a} /> {a}</li>)}</ul>
+                  {home.amenities.length > popular.length && (
+                    <Sheet label={`Show all ${home.amenities.length} amenities`} title="What this home offers">
+                      <div className="amenity-groups">
+                        {amenityGroups.map((g) => (
+                          <div key={g.name}>
+                            <h3>{g.name}</h3>
+                            <ul className="amenities">{g.items.map((a) => <li key={a}><AmenityIcon name={a} /> {a}</li>)}</ul>
+                          </div>
+                        ))}
+                      </div>
+                    </Sheet>
+                  )}
+                </section>
+              )}
+
+              <section className="prop-block" id="nearby">
+                <h2 className="h3">Where you will be</h2>
+                <NearbyMap area={`${home.town} ${home.district}, ${home.region}`} places={l.places.slice(0, 8)} photos={Object.fromEntries(l.places.map((p) => [p.name, placePhotos[`${p.name}|${home.town}`]]))} />
+                {(l.places.length > 8 || l.placeNotes.length > 0 || (home.nearby?.length ?? 0) > 0) && (
+                  <Sheet label={<>More about the area <ChevronRight size={16} /></>} title="What is nearby">
+                    {l.places.length > 0 && placeList(l.places)}
+                    {l.placeNotes.map((n) => <p key={n}>{labelled(n)}</p>)}
+                    {home.nearby && home.nearby.length > 0 && <><h3>Everyday essentials</h3>{osmList}</>}
+                    {l.places.some((p) => p.time) && <p className="fine">Travel times are approximate and given by the host.</p>}
+                  </Sheet>
+                )}
+                {l.places.some((p) => p.time) && <p className="fine">Travel times are approximate and given by the host. Choose a place to see it on the map.</p>}
+              </section>
+
+              <section className="prop-block" id="good-to-know">
+                <h2 className="h3">Good to know</h2>
+                <div className="know">
+                  <div>
+                    <h3>Arriving and leaving</h3>
+                    <ul className="rules">
+                      {home.checkIn && <li><DoorOpen size={18} /> Check in from {home.checkIn}</li>}
+                      {home.checkOut && <li><LogOut size={18} /> Check out by {home.checkOut}</li>}
+                      <li><Phone size={18} /> Support 24/7 during your stay</li>
+                    </ul>
+                  </div>
+                  {l.rules.length > 0 && (
+                    <div>
+                      <h3>House rules</h3>
+                      <ul className="rules">
+                        {l.rules.slice(0, 3).map((r) => {
+                          const Icon = ruleIcon(r);
+                          return <li key={r}><Icon size={18} /> {r}</li>;
                         })}
                       </ul>
-                      <p className="fine">Straight-line distances, from OpenStreetMap.</p>
-                    </>
+                    </div>
                   )}
-                </Reveal>
-              )}
-
-              <Reveal className="prop-block" id="good-to-know">
-                <h2 className="h3">Good to know</h2>
-                <div className="times">
-                  {home.checkIn && <div><DoorOpen size={22} /><span>Check in</span><strong>From {home.checkIn}</strong></div>}
-                  {home.checkOut && <div><LogOut size={22} /><span>Check out</span><strong>By {home.checkOut}</strong></div>}
-                  <div><Phone size={22} /><span>Support</span><strong>24/7 during your stay</strong></div>
                 </div>
-                {(l.details.length > 0 || l.included.length > 0) && (
-                  <ul className="checks">
-                    {l.details.map((d) => <li key={d.text}><House size={18} /> <span>{d.label && <b>{d.label}: </b>}{d.text}</span></li>)}
-                    {l.included.map((d) => <li key={d}><Check size={18} /> {d}</li>)}
-                  </ul>
-                )}
-                {l.rules.length > 0 && (
-                  <>
-                    <h3 className="sub">House rules</h3>
+                {(l.rules.length > 3 || l.details.length > 0 || l.included.length > 0) && (
+                  <Sheet label={<>Show more <ChevronRight size={16} /></>} title="Good to know">
+                    <h3>House rules</h3>
                     <ul className="rules">
                       {l.rules.map((r) => {
                         const Icon = ruleIcon(r);
                         return <li key={r}><Icon size={18} /> {r}</li>;
                       })}
                     </ul>
-                  </>
+                    {(l.details.length > 0 || l.included.length > 0) && (
+                      <>
+                        <h3>Included</h3>
+                        <ul className="checks single">
+                          {l.details.map((d) => <li key={d.text}><House size={18} /> <span>{d.label && <b>{d.label}: </b>}{d.text}</span></li>)}
+                          {l.included.map((d) => <li key={d}><Check size={18} /> {d}</li>)}
+                        </ul>
+                      </>
+                    )}
+                  </Sheet>
                 )}
-              </Reveal>
+              </section>
 
               {faqs.length > 0 && (
-                <Reveal className="prop-block" id="questions">
+                <section className="prop-block" id="questions">
                   <h2 className="h3">Questions about this home</h2>
                   <FaqList items={faqs} />
                   <p className="fine">More answers on our <Link href="/faq">FAQ page</Link>, or see <Link href="/stay">how staying with Recharge works</Link>.</p>
-                </Reveal>
+                </section>
               )}
             </div>
             <aside className="book-card" aria-label="Book this home">
@@ -276,6 +309,13 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
           </div>
         </div>
       </section>
+      <div className="book-bar">
+        <div>
+          {home.price !== undefined ? <p><strong>{money(home.price, home.currency)}</strong> a night</p> : <p><strong>Book direct</strong></p>}
+          <span>Save {site.directDiscount} booking direct</span>
+        </div>
+        <a className="btn btn-primary" href={home.bookingUrl ?? site.bookingUrl} target="_blank" rel="noopener">Check dates</a>
+      </div>
       {others.length > 0 && (
         <section className="section paper">
           <div className="wrap">
