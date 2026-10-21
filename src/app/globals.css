@@ -1264,3 +1264,26 @@ a.card:hover .ic, .tool:hover .ic, .row-item:hover .row-ic { transform: rotate(-
 .chat-compose button:hover { transform: scale(1.06) rotate(-8deg); }
 @media (max-width: 560px) { .chat { width: 100vw; } .chat-row { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .chat-avatar i, .bubble.typing i, .bp-ghost { animation: none; } }
+
+/* ---------------------------------------------------------------- search bar room
+   A hero without a side panel gives the search bar the full width, and keeps the heading and lead at their reading
+   width. The bar lays itself out from its own width, not the window's: under 940px it becomes two rows, so the dates
+   never squeeze into each other wherever the bar is placed. */
+.photo-hero-inner.solo { grid-template-columns: minmax(0, 1fr); }
+.photo-hero-inner.solo .page-title, .photo-hero-inner.solo .lead { max-width: 880px; }
+.photo-hero .search-wrap { max-width: 1120px; }
+.search-wrap { container-type: inline-size; }
+@container (min-width: 941px) {
+  .search { grid-template-columns: minmax(170px, 1.4fr) minmax(150px, 1fr) minmax(150px, 1fr) minmax(104px, 0.8fr) auto auto; border-radius: 999px; gap: 0; }
+}
+@container (max-width: 940px) {
+  .search { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border-radius: 24px; gap: 4px; }
+  .search-field { padding: 10px 16px; border-radius: 16px; background: #f7f4ec; }
+  .search-field + .search-field::before { display: none; }
+  .search-field:first-child { grid-column: 1 / -1; }
+  .search-focus { border-radius: 16px; }
+  /* Filters sits beside Guests, so the second row has no gap. */
+  .search-more { grid-column: auto; height: 100%; min-height: 60px; margin: 0; border-radius: 16px; }
+  .search-btn { grid-column: 1 / -1; height: 56px; border-radius: 16px; }
+  .search-filters { grid-template-columns: 1fr 1fr; }
+}

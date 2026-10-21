@@ -16,7 +16,7 @@ export function PhotoHero({ shot, shots, eyebrow, title, lead, children, aside, 
         </div>
       ))}
       <div className="photo-hero-shade" />
-      <div className="wrap photo-hero-inner">
+      <div className={`wrap photo-hero-inner${aside ? "" : " solo"}`}>
         <div className="photo-hero-copy">
           <Reveal><p className="eyebrow">{eyebrow}</p></Reveal>
           <Reveal delay={0.06}><h1 className="h1 page-title">{title}</h1></Reveal>
