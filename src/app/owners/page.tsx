@@ -1,3 +1,5 @@
+import { OwnerCalculator } from "@/components/OwnerCalculator";
+import { rateTable } from "@/content/estimate";
 import { ArrowRight, Check, Mail, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -78,7 +80,17 @@ export default function OwnersPage() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section" id="calculator" style={{ paddingTop: 0, scrollMarginTop: 80 }}>
+        <div className="wrap">
+          <Reveal className="section-head">
+            <div><p className="eyebrow">Earnings calculator</p><h2 className="h2">What could your property earn?</h2></div>
+            <p className="lead">The same calculator our owners use in the Recharge app, with nightly rates from the {homes.length} homes we run today.</p>
+          </Reveal>
+          <OwnerCalculator table={rateTable()} />
+        </div>
+      </section>
+
+      <section className="section">
         <div className="wrap split-sticky">
           <Reveal className="split-head">
             <p className="eyebrow">Why owners choose Recharge</p>

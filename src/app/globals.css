@@ -1344,3 +1344,113 @@ a.card:hover .ic, .tool:hover .ic, .row-item:hover .row-ic { transform: rotate(-
 @media (max-width: 700px) {
   .header[data-scrolled="true"] { background: var(--cream); backdrop-filter: none; -webkit-backdrop-filter: none; }
 }
+
+/* ---------------------------------------------------------------- where you will sleep, and what this home offers
+   Rooms as one quiet list (no separate cards): an icon, the room, its beds, and how many it sleeps on the right. The top
+   amenities as a clear two-column list with each icon on a mint tile, all ten shown on a phone too. */
+.sleep-list { grid-template-columns: 1fr; gap: 0; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); overflow: hidden; }
+.sleep-list li { grid-template-columns: 40px minmax(0, 1fr) auto; grid-template-areas: "ic name sleeps" "ic beds sleeps"; column-gap: 14px; row-gap: 1px; align-items: center; padding: 14px 16px; border: 0; border-radius: 0; background: none; }
+.sleep-list li + li { border-top: 1px solid var(--line); }
+.sleep-list svg { grid-area: ic; box-sizing: border-box; width: 40px; height: 40px; padding: 9px; margin: 0; border-radius: 12px; background: var(--mint-wash); color: var(--forest); }
+.sleep-list strong { grid-area: name; font-size: 15px; }
+.sleep-list span { grid-area: beds; font-size: 14px; }
+.sleep-list em { grid-area: sleeps; margin: 0; padding: 4px 10px; border-radius: 999px; background: var(--mint-wash); color: var(--forest); font-size: 12px; font-weight: 700; white-space: nowrap; }
+@media (max-width: 560px) { .sleep-list { grid-template-columns: 1fr; gap: 0; } .sleep-list li { padding: 12px 14px; } }
+
+.amenities.top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px 20px; }
+.amenities.top li { gap: 12px; font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.3; }
+.amenities.top svg { box-sizing: border-box; width: 38px; height: 38px; padding: 9px; border-radius: 12px; background: var(--mint-wash); color: var(--forest); }
+@media (max-width: 700px) {
+  .amenities.top li:nth-child(n+7) { display: flex; }
+  .amenities.top { gap: 12px 14px; }
+  .amenities.top li { font-size: 14px; }
+}
+
+/* ---------------------------------------------------------------- search box on a phone: compact
+   Shorter fields, smaller labels, a slimmer Search button and Filters the height of Guests, so the box is about a third
+   shorter and reads as one control rather than a stack of large buttons. */
+@container (max-width: 940px) {
+  .search { padding: 6px; gap: 4px; border-radius: 20px; }
+  .search-field { padding: 7px 14px 8px; gap: 0; border-radius: 13px; }
+  .search-field label { font-size: 11px; letter-spacing: 0.03em; }
+  .search-field select, .search-field input { font-size: 15px; min-height: 22px; }
+  .search-focus { border-radius: 13px; }
+  .search-more { height: auto; min-height: 0; align-self: stretch; border-radius: 13px; font-size: 14px; gap: 6px; }
+  .search-more svg { width: 16px; height: 16px; }
+  .search-btn { height: 46px; border-radius: 13px; font-size: 15px; }
+  .search-btn svg { width: 18px; height: 18px; }
+}
+@media (max-width: 700px) {
+  .photo-hero .quick-areas { gap: 6px; font-size: 13px; }
+  .photo-hero .quick-areas a { padding: 5px 11px; font-size: 13px; }
+}
+
+/* ---------------------------------------------------------------- phone menu: calmer type
+   Menu words at a reading size with an arrow, tighter rows, and the two buttons at the usual phone height. */
+.mobile-menu nav { margin-top: 20px; }
+.mobile-menu nav a { display: flex; align-items: center; justify-content: space-between; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; padding: 16px 0; }
+.mobile-menu nav a::after { content: "→"; font-size: 18px; opacity: 0.5; }
+.mobile-menu nav a[aria-current="page"] { color: var(--mint); }
+.mobile-menu-foot { gap: 10px; }
+.mobile-menu-foot .btn { min-height: 48px; font-size: 15px; }
+.menu-toggle { width: 44px; height: 44px; }
+.header-logo { width: 140px; }
+@media (min-width: 701px) { .header-logo { width: 168px; } }
+
+/* ---------------------------------------------------------------- owner earnings calculator */
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(18px, 3vw, 32px); align-items: start; }
+.calc-inputs { display: grid; gap: 18px; padding: clamp(20px, 3vw, 28px); border-radius: 24px; background: var(--paper); box-shadow: 0 0 0 1px var(--line); }
+.calc-field { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; min-width: 0; }
+.calc-field > span, .calc-field legend { padding: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--moss); }
+.calc-field legend { margin-bottom: 8px; }
+.calc-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.calc-row b { font-size: 16px; letter-spacing: 0; text-transform: none; color: var(--ink); }
+.calc-field select { min-height: 46px; padding: 0 14px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font: inherit; font-size: 15px; color: var(--ink); }
+.calc-seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; padding: 4px; border-radius: 14px; background: #efe9db; }
+.calc-seg button { position: relative; min-height: 40px; border: 0; border-radius: 10px; background: none; font: inherit; font-size: 15px; font-weight: 600; color: var(--ink); cursor: pointer; }
+.calc-seg button:disabled { opacity: 0.35; cursor: default; }
+.calc-seg button > span { position: relative; z-index: 1; display: grid; gap: 1px; }
+.calc-seg button[aria-pressed="true"] { color: var(--cream); }
+.calc-seg-pill { position: absolute; inset: 0; border-radius: 10px; background: var(--forest); box-shadow: 0 6px 14px -8px rgb(21 45 40 / 0.7); }
+.calc-seg-wide button { min-height: 52px; padding: 6px 4px; }
+.calc-seg-wide strong { font-size: 14px; }
+.calc-seg-wide small { font-size: 12px; font-weight: 500; opacity: 0.75; }
+.calc input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 999px; background: linear-gradient(90deg, var(--forest) var(--p), #e3dccb var(--p)); outline: none; }
+.calc input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #fff; border: 2px solid var(--forest); box-shadow: 0 2px 8px rgb(0 0 0 / 0.2); cursor: pointer; }
+.calc input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 2px solid var(--forest); cursor: pointer; }
+.calc input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px var(--mint); }
+
+.calc-result { display: grid; gap: 10px; padding: clamp(22px, 3vw, 32px); border-radius: 24px; background: var(--forest); color: var(--cream); position: sticky; top: 100px; }
+.calc-kicker { margin: 0; font-size: 14px; color: rgb(239 233 219 / 0.75); }
+.calc-big { margin: 0; font-size: clamp(40px, 6vw, 60px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.calc-big .calc-unit { font-size: 18px; font-weight: 500; letter-spacing: 0; color: rgb(239 233 219 / 0.75); }
+.calc-year { margin: 0 0 6px; font-size: 15px; color: rgb(239 233 219 / 0.85); }
+.calc-bar { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: rgb(239 233 219 / 0.15); }
+.calc-bar i, .calc-lines i { display: block; }
+.calc-bar .own, .calc-lines i.own { background: var(--mint); }
+.calc-bar .mgmt, .calc-lines i.mgmt { background: #6fa58e; }
+.calc-bar .plat, .calc-lines i.plat { background: rgb(239 233 219 / 0.45); }
+.calc-lines { display: grid; margin: 4px 0 0; }
+.calc-lines div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid rgb(239 233 219 / 0.14); font-size: 14px; }
+.calc-lines dt { display: flex; align-items: center; gap: 8px; color: rgb(239 233 219 / 0.85); }
+.calc-lines dd { margin: 0; font-weight: 600; white-space: nowrap; }
+.calc-lines i { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.calc-lines .total { border-bottom: 0; font-size: 16px; }
+.calc-lines .total dt { color: var(--cream); font-weight: 600; }
+.calc-basis { display: flex; gap: 8px; align-items: flex-start; margin: 2px 0 0; font-size: 12.5px; line-height: 1.5; color: rgb(239 233 219 / 0.7); }
+.calc-basis svg { flex: none; margin-top: 2px; }
+.calc-cta { display: grid; gap: 12px; margin-top: 8px; padding: 16px; border-radius: 18px; background: rgb(239 233 219 / 0.08); border: 1px solid rgb(239 233 219 / 0.16); }
+.calc-cta > div { display: grid; gap: 4px; }
+.calc-cta strong { font-size: 17px; }
+.calc-cta span { font-size: 14px; line-height: 1.5; color: rgb(239 233 219 / 0.8); }
+.calc-cta .btn { justify-self: start; }
+@media (max-width: 900px) {
+  .calc { grid-template-columns: minmax(0, 1fr); }
+  .calc-result { position: static; }
+}
+@media (max-width: 560px) {
+  .calc-inputs { gap: 16px; padding: 18px 16px; }
+  .calc-cta .btn { justify-self: stretch; justify-content: center; }
+}
+
+.calc-result .rolling { color: inherit; font-weight: inherit; }
