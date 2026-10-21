@@ -50,6 +50,39 @@ const STEPS = [40, 50, 60, 75, 100, 125, 150, 200, 250, 300, 400, 500];
 export const priceSteps = prices.length ? STEPS.filter((s) => s >= Math.floor(prices[0] / 10) * 10 && s <= prices[prices.length - 1] + 50) : STEPS.slice(1, 9);
 export const money = (n: number, currency = "GBP") => new Intl.NumberFormat("en-GB", { style: "currency", currency, maximumFractionDigits: 0 }).format(n);
 
+// A clean heading from the facts, such as "2-bedroom flat in Glasgow". Hostaway titles are
+// Airbnb keyword strings ("Free Parking | Central | Sleeps 6"), so those become tags instead.
+export function heading(h: Home) {
+  const t = h.title.toLowerCase();
+  const kind = /cottage/.test(t) ? "cottage" : /bungalow/.test(t) ? "bungalow" : /\bhouse\b/.test(t) ? "house" : /flat|apartment|basement/.test(t) ? "flat" : "home";
+  return h.bedrooms > 0 ? `${h.bedrooms}-bedroom ${kind} in ${h.town}` : `Studio ${kind === "home" ? "flat" : kind} in ${h.town}`;
+}
+
+// The useful selling points in a Hostaway title, worded the same way everywhere. Counts of guests
+// and bedrooms are left out (the page shows them), and so are adjectives on their own.
+const TAGS: [RegExp, string][] = [
+  [/free parking/i, "Free parking"],
+  [/^parking$/i, "Parking"],
+  [/city cent(re|er)/i, "City centre"],
+  [/^central$|modern & central|central & modern/i, "Central"],
+  [/(great|prime|excellent|nice|lovely) (location|area)/i, "Great location"],
+  [/transport/i, "Great transport links"],
+  [/airport/i, "Near the airport"],
+  [/hampden/i, "Near Hampden Park"],
+  [/seton sands/i, "Near Seton Sands"],
+  [/views?\b/i, "Great views"],
+  [/new interior|renovated|refurbished|newly furnished/i, "Newly refurbished"],
+  [/peaceful/i, "Peaceful"],
+];
+export function tags(h: Home) {
+  const out: string[] = [];
+  for (const part of h.title.split("|").map((p) => p.trim())) {
+    const tag = TAGS.find(([re]) => re.test(part))?.[1];
+    if (tag && !out.includes(tag) && !(tag === "Parking" && out.includes("Free parking"))) out.push(tag);
+  }
+  return out.filter((t) => !(t === "Parking" && out.includes("Free parking")));
+}
+
 export function distance(m: number) {
   const walk = Math.round(m / 80);
   if (m < 1000) return `${Math.max(50, Math.round(m / 10) * 10)} m, ${Math.max(1, walk)} min walk`;

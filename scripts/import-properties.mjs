@@ -21,6 +21,7 @@
 //
 // Nothing is made up: a field Hostaway or OpenStreetMap does not have is left out, and the page hides it.
 import { readFileSync, writeFileSync } from "node:fs";
+import { cleanDescription } from "./listing-text.mjs";
 import sharp from "sharp";
 
 const ROOT = new URL("../", import.meta.url);
@@ -183,7 +184,7 @@ async function fromHostaway(home, l, token) {
   let amenities = [...new Set((l.listingAmenities || []).map((a) => clean(a.amenityName)).filter((a) => a && !NOT_AMENITY.test(a)))];
   if (amenities.includes("Free WiFi")) amenities = amenities.filter((a) => a !== "Wireless");
   amenities = amenities.map((a, i) => [a, i]).sort((x, y) => rank(x[0]) - rank(y[0]) || x[1] - y[1]).map(([a]) => a);
-  const description = scrub(l.description, l);
+  const description = cleanDescription(scrub(l.description, l));
   return {
     title,
     description: description || undefined,

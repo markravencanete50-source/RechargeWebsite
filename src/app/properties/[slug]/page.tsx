@@ -6,7 +6,7 @@ import { AmenityIcon } from "@/components/Amenity";
 import { Gallery } from "@/components/Gallery";
 import { HomeCard } from "@/components/HomeCard";
 import { Reveal } from "@/components/Reveal";
-import { distance, homeBySlug, homes, money } from "@/content/properties";
+import { distance, heading, homeBySlug, homes, money, tags } from "@/content/properties";
 import { site } from "@/content/site";
 
 const NEARBY_ICON: Record<string, LucideIcon> = { station: TrainFront, bus: Bus, supermarket: ShoppingCart, pharmacy: Pill, restaurant: UtensilsCrossed, park: Trees, attraction: Landmark, airport: Plane };
@@ -18,8 +18,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/properties/[slug]">): Promise<Metadata> {
   const home = homeBySlug((await params).slug);
   if (!home) return {};
-  const description = home.description?.split("\n")[0].slice(0, 155) || `Book ${home.title} in ${home.town} direct with Recharge.`;
-  return { title: `${home.title}, ${home.town}`, description, alternates: { canonical: `/properties/${home.slug}` }, openGraph: home.photos[0]?.src ? { images: [home.photos[0].src] } : undefined };
+  const description = home.description?.split("\n")[0].slice(0, 155) || `Book this ${heading(home).toLowerCase()} direct with Recharge.`;
+  return { title: heading(home), description, alternates: { canonical: `/properties/${home.slug}` }, openGraph: home.photos[0]?.src ? { images: [home.photos[0].src] } : undefined };
 }
 
 export default async function PropertyPage({ params }: PageProps<"/properties/[slug]">) {
@@ -39,9 +39,10 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
       <section className="section prop-section">
         <div className="wrap">
           <p className="crumbs"><Link href="/properties">Properties</Link> / <Link href={`/properties?area=${encodeURIComponent(home.region)}`}>{home.region}</Link></p>
-          <h1 className="h2 prop-title">{home.title}</h1>
+          <h1 className="h2 prop-title">{heading(home)}</h1>
           <p className="prop-place"><MapPin size={17} /> {home.town}, {home.region} {home.district}{home.reviews > 0 && <span> · {home.reviews} guest reviews</span>}</p>
-          <Gallery photos={home.photos} title={home.title} />
+          {tags(home).length > 0 && <div className="home-tags prop-tags">{tags(home).map((t) => <span key={t}>{t}</span>)}</div>}
+          <Gallery photos={home.photos} title={heading(home)} />
           <div className="prop">
             <div className="prop-main">
               <ul className="prop-facts">{facts.map((f) => <li key={f.text}><f.icon size={20} /> {f.text}</li>)}</ul>
