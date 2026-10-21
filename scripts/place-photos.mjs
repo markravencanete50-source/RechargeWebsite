@@ -12,7 +12,18 @@ const OUT = new URL("../src/content/place-photos.json", import.meta.url);
 const homes = JSON.parse(fs.readFileSync(new URL("../src/content/properties.json", import.meta.url), "utf8"));
 const known = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, "utf8")) : {};
 const UA = { "user-agent": "RechargeWebsite/1.0 (https://rechargestays.co.uk; enquiries@rechargestays.co.uk)" };
-const get = async (u) => { const r = await fetch(u, { headers: UA }); if (!r.ok) throw new Error(String(r.status)); return r.json(); };
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+// Wikipedia rate-limits shared connections: wait as long as it asks, then try again.
+async function get(u, tries = 6) {
+  for (let i = 0; i < tries; i++) {
+    const r = await fetch(u, { headers: UA });
+    if (r.status === 429 || r.status >= 500) { await sleep((Number(r.headers.get("retry-after")) || 20) * 1000 + 1000); continue; }
+    if (!r.ok) throw new Error(String(r.status));
+    await sleep(1200);
+    return r.json();
+  }
+  throw new Error("still rate limited");
+}
 
 const wanted = new Map();
 for (const h of homes) {
@@ -21,15 +32,16 @@ for (const h of homes) {
 
 let found = 0;
 for (const [key, [name, town]] of wanted) {
-  if (known[key]) { found++; continue; }
+  if (key in known) { if (known[key]) found++; continue; }
   try {
     const hit = await findPlacePhoto(name, town, get);
     if (hit) { known[key] = hit; found++; console.log("ok  ", key, "->", hit.page); }
-    else console.log("none", key);
+    else { known[key] = null; console.log("none", key); }
   } catch (e) {
     console.log("fail", key, e.message);
   }
-  await new Promise((r) => setTimeout(r, 200));
+  // Saved as it goes, so a stopped run can carry on where it left off.
+  fs.writeFileSync(OUT, JSON.stringify(known, null, 1) + "\n");
 }
 fs.writeFileSync(OUT, JSON.stringify(known, null, 1) + "\n");
 console.log(`${found} of ${wanted.size} places have a photo`);

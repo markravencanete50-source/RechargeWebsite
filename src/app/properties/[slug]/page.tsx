@@ -16,7 +16,8 @@ import photoData from "@/content/place-photos.json";
 import { site } from "@/content/site";
 import { abs, breadcrumbs, faqPage, graph, organization } from "@/lib/schema";
 
-const placePhotos = photoData as Record<string, PlacePhoto>;
+// Checked at build time: a photo, or null where Wikipedia has no clear match.
+const placePhotos = photoData as Record<string, PlacePhoto | null>;
 const NEARBY_ICON: Record<string, LucideIcon> = { station: TrainFront, bus: Bus, supermarket: ShoppingCart, pharmacy: Pill, restaurant: UtensilsCrossed, park: Trees, attraction: Landmark, airport: Plane };
 const ROOM_ICON: Record<Room["kind"], LucideIcon> = { bedroom: BedDouble, living: Sofa, kitchen: CookingPot, bathroom: Bath, dining: UtensilsCrossed, other: Package };
 
@@ -228,7 +229,7 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
 
               <section className="prop-block" id="nearby">
                 <h2 className="h3">Where you will be</h2>
-                <NearbyMap area={`${home.town} ${home.district}, ${home.region}`} town={home.town} places={l.places.slice(0, 8)} photos={Object.fromEntries(l.places.map((p) => [p.name, placePhotos[`${p.name}|${home.town}`]]))} />
+                <NearbyMap area={`${home.town} ${home.district}, ${home.region}`} town={home.town} places={l.places.slice(0, 8)} photos={Object.fromEntries(l.places.filter((p) => `${p.name}|${home.town}` in placePhotos).map((p) => [p.name, placePhotos[`${p.name}|${home.town}`]]))} />
                 {(l.places.length > 8 || l.placeNotes.length > 0 || (home.nearby?.length ?? 0) > 0) && (
                   <Sheet label={<>More about the area <ChevronRight size={16} /></>} title="What is nearby">
                     {l.places.length > 0 && placeList(l.places)}

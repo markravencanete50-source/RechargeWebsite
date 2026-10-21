@@ -14,9 +14,9 @@ type Found = Record<string, PlacePhoto | null | undefined>;
 // A Google map of the area, with the nearby places beside it. Places with a real photograph
 // (from Wikipedia, credited) get a photo card; the rest are listed plainly, never with a stand-in.
 // Choosing a place moves the map to it. The map shows the town and postcode district only.
-export function NearbyMap({ area, town, places, photos }: { area: string; town: string; places: Place[]; photos: Record<string, PlacePhoto | undefined> }) {
+export function NearbyMap({ area, town, places, photos }: { area: string; town: string; places: Place[]; photos: Record<string, PlacePhoto | null> }) {
   const [focus, setFocus] = useState<string | null>(null);
-  const [found, setFound] = useState<Found>(() => Object.fromEntries(places.map((p) => [p.name, photos[p.name] ?? (wantsPhoto(p.name) ? undefined : null)])));
+  const [found, setFound] = useState<Found>(() => Object.fromEntries(places.map((p) => [p.name, p.name in photos ? photos[p.name] : wantsPhoto(p.name) ? undefined : null])));
   const query = focus ? `${focus}, ${area}` : area;
   const src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=${focus ? 14 : 13}&hl=en-GB&output=embed`;
 
