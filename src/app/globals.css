@@ -1116,3 +1116,56 @@ a.card:hover .ic, .tool:hover .ic, .row-item:hover .row-ic { transform: rotate(-
 .place-rows li.active strong { color: var(--moss); }
 @media (max-width: 560px) { .place-rows { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .place-photo.loading { animation: none; } }
+
+/* ===== Search motion ===== */
+.search-wrap { gap: 0; }
+.search-field:hover, .search-field:focus-within { background: transparent; outline: none; }
+.search-field > *:not(.search-focus):not(.where-list) { position: relative; z-index: 1; }
+.search-field:hover:not(:focus-within) { background: #f7f4ec; }
+.search-focus { position: absolute; inset: 0; z-index: 0; border-radius: 999px; background: #efe9db; box-shadow: inset 0 0 0 2px var(--forest), 0 10px 24px -14px rgb(21 45 40 / 0.5); }
+.where-input { position: relative; }
+.where-input input { cursor: text; }
+.where-hint { position: absolute; inset: 0; display: flex; align-items: center; overflow: hidden; pointer-events: none; color: var(--muted); font-size: 15px; white-space: nowrap; }
+.where-hint > span { display: block; }
+.where-list { position: absolute; z-index: 40; top: calc(100% + 14px); left: 0; width: min(400px, 88vw); margin: 0; padding: 8px; list-style: none; background: #fff; border-radius: 24px; box-shadow: 0 30px 70px -24px rgb(11 31 26 / 0.5), 0 0 0 1px rgb(21 45 40 / 0.06); transform-origin: top left; }
+.where-list li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; cursor: pointer; transition: background-color 150ms; }
+.where-list li[aria-selected="true"] { background: #f2eee4; }
+.where-pin { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--mint-wash); color: var(--forest); transition: transform 300ms var(--ease), background-color 200ms; }
+.where-list li[aria-selected="true"] .where-pin { background: var(--forest); color: var(--mint); transform: rotate(-8deg) scale(1.05); }
+.where-name { display: grid; min-width: 0; }
+.where-name strong { font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.where-name small { font-size: 12px; color: var(--muted); }
+.where-list em { font-style: normal; font-size: 12px; font-weight: 700; color: var(--forest); background: var(--mint-wash); padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.search-btn { overflow: hidden; min-width: 150px; }
+.search-btn-in { display: inline-flex; align-items: center; gap: 10px; }
+.spin { animation: spin 0.9s linear infinite; }
+.search-wrap.is-pending .search { box-shadow: 0 0 0 3px rgb(167 217 193 / 0.7), 0 24px 60px -24px rgb(0 0 0 / 0.45); transition: box-shadow 300ms; }
+.search-filters-shell { overflow: hidden; }
+.search-filters-shell > .search-filters { margin-top: 10px; }
+.search-more em { display: grid; }
+@media (max-width: 900px) {
+  .search-focus { border-radius: 16px; }
+  .where-list { width: calc(100vw - 2 * var(--gutter) - 16px); }
+  .search-btn { min-width: 0; }
+}
+
+/* Results motion */
+.results-stage { position: relative; }
+.results-sweep { position: absolute; left: 0; right: 0; top: -14px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--mint), var(--forest)); transform-origin: left center; pointer-events: none; }
+.rolling { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink); }
+.tab-glide { position: relative; isolation: isolate; }
+.tab-glide[aria-current="page"] { background: transparent; border-color: transparent; color: var(--paper); }
+.tab-glide > span:not(.tab-pill) { position: relative; z-index: 1; }
+.tab-pill { position: absolute; inset: -1.5px; z-index: 0; border-radius: 999px; background: var(--forest); }
+.active-filters > span { display: inline-flex; }
+.empty-ic { width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; background: var(--mint-wash); color: var(--forest); }
+
+/* Header: where you are, and how far down the page */
+.header-nav a { position: relative; }
+.header-nav a[aria-current="page"] { font-weight: 600; }
+.nav-mark { position: absolute; left: 14px; right: 14px; bottom: 4px; height: 2px; border-radius: 2px; background: var(--forest); }
+.scroll-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, var(--mint), var(--forest)); transform-origin: left center; }
+
+/* Home cards: a second photo on hover */
+.home-photo-next { position: absolute; inset: 0; opacity: 0; transition: opacity 600ms var(--ease); }
+@media (hover: hover) { .home-card:hover .home-photo-next { opacity: 1; } }

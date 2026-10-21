@@ -1,14 +1,20 @@
 "use client";
 
 import { Menu, Phone, X } from "lucide-react";
+import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { nav, site } from "@/content/site";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 40 });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -32,9 +38,15 @@ export function Header() {
           <Image src="/brand/recharge-logo-forest.png" alt="Recharge" width={1886} height={366} priority />
         </Link>
         <nav className="header-nav" aria-label="Main">
-          {nav.map((item) => (
-            <Link key={item.href} href={item.href}>{item.label}</Link>
-          ))}
+          {nav.map((item) => {
+            const here = pathname === item.href || pathname.startsWith(item.href + "/");
+            return (
+              <Link key={item.href} href={item.href} aria-current={here ? "page" : undefined}>
+                {item.label}
+                {here && <motion.span layoutId="nav-mark" className="nav-mark" transition={{ type: "spring", stiffness: 400, damping: 34 }} />}
+              </Link>
+            );
+          })}
         </nav>
         <div className="header-actions">
           <a className="header-phone" href={site.phone.href}>{site.phone.display}</a>
@@ -44,6 +56,7 @@ export function Header() {
           </button>
         </div>
       </div>
+      {!reduce && <motion.span className="scroll-progress" style={{ scaleX: progress }} aria-hidden />}
       {open && (
         <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="mobile-menu-top">

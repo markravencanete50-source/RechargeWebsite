@@ -1,16 +1,22 @@
 "use client";
 
-import { X } from "lucide-react";
+import { SearchX, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { homes, money, regions } from "@/content/properties";
 import { site } from "@/content/site";
 import { HomeCard } from "./HomeCard";
+import { RollingNumber } from "./RollingNumber";
 import { SearchBar } from "./SearchBar";
 
-// The search, the filters and every matching home, driven by the address bar.
+const ease = [0.2, 0.7, 0.2, 1] as const;
+
+// The search, the filters and every matching home, driven by the address bar. When the search
+// changes, a sweep runs across the results, the count rolls and the homes glide to new places.
 export function PropertyResults() {
   const params = useSearchParams();
+  const reduce = useReducedMotion();
   const get = (k: string) => params.get(k) ?? "";
   const num = (k: string) => Number(params.get(k) ?? 0);
   const area = get("area");
@@ -50,29 +56,58 @@ export function PropertyResults() {
     <>
       <SearchBar key={params.toString()} initial={initial} compact />
       <div className="area-filter area-scroll" aria-label="Filter by area">
-        <Link href={withArea("")} className="tab" aria-current={!area ? "page" : undefined}>All areas <span className="tab-count">{homes.length}</span></Link>
+        <Link href={withArea("")} className="tab tab-glide" aria-current={!area ? "page" : undefined}>
+          {!area && <motion.span layoutId="area-pill" className="tab-pill" transition={{ type: "spring", stiffness: 380, damping: 34 }} />}
+          <span>All areas <span className="tab-count">{homes.length}</span></span>
+        </Link>
         {regions.map((r) => (
-          <Link key={r.name} href={withArea(r.name)} className="tab" aria-current={area === r.name ? "page" : undefined}>{r.name} <span className="tab-count">{r.count}</span></Link>
+          <Link key={r.name} href={withArea(r.name)} className="tab tab-glide" aria-current={area === r.name ? "page" : undefined}>
+            {area === r.name && <motion.span layoutId="area-pill" className="tab-pill" transition={{ type: "spring", stiffness: 380, damping: 34 }} />}
+            <span>{r.name} <span className="tab-count">{r.count}</span></span>
+          </Link>
         ))}
       </div>
       <div className="results-bar">
-        <p className="muted results-count">{list.length} {list.length === 1 ? "home" : "homes"}{area ? ` in ${area}` : " across Scotland"}</p>
-        {chips.length > 0 && (
-          <div className="active-filters">
-            {chips.map((c) => <Link key={c.key} href={without(c.key)} className="chip-x" aria-label={`Remove ${c.label}`}>{c.label} <X size={14} /></Link>)}
-            <Link href={area ? `/properties?area=${encodeURIComponent(area)}` : "/properties"} className="text-link">Clear filters</Link>
-          </div>
+        <p className="muted results-count" aria-live="polite"><RollingNumber value={list.length} /> {list.length === 1 ? "home" : "homes"}{area ? ` in ${area}` : " across Scotland"}</p>
+        <div className="active-filters">
+          <AnimatePresence initial={false}>
+            {chips.map((c) => (
+              <motion.span key={c.key} layout initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.6 }} transition={{ type: "spring", stiffness: 420, damping: 28 }}>
+                <Link href={without(c.key)} className="chip-x" aria-label={`Remove ${c.label}`}>{c.label} <X size={14} /></Link>
+              </motion.span>
+            ))}
+          </AnimatePresence>
+          {chips.length > 0 && <Link href={area ? `/properties?area=${encodeURIComponent(area)}` : "/properties"} className="text-link">Clear filters</Link>}
+        </div>
+      </div>
+      <div className="results-stage">
+        {!reduce && <motion.span key={params.toString()} className="results-sweep" aria-hidden initial={{ scaleX: 0, opacity: 1 }} animate={{ scaleX: 1, opacity: 0 }} transition={{ duration: 0.9, ease }} />}
+        {list.length ? (
+          <motion.div className="homes" layout={!reduce}>
+            <AnimatePresence mode="popLayout" initial={false}>
+              {list.map((h, i) => (
+                <motion.div
+                  key={h.slug}
+                  layout={!reduce}
+                  initial={reduce ? false : { opacity: 0, y: 24, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={reduce ? undefined : { opacity: 0, scale: 0.94, transition: { duration: 0.2 } }}
+                  transition={{ duration: 0.45, ease, delay: Math.min(i, 12) * 0.03 }}
+                >
+                  <HomeCard home={h} priority={i < 4} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        ) : (
+          <motion.div className="empty" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease }}>
+            <motion.span className="empty-ic" animate={reduce ? undefined : { rotate: [0, -12, 10, -6, 0] }} transition={{ duration: 1.2, delay: 0.2 }}><SearchX size={28} /></motion.span>
+            <strong className="h3">No homes match that search</strong>
+            <p className="muted">Try another area or loosen a filter, or call us on {site.phone.display} and we will find you somewhere.</p>
+            <Link className="btn btn-ghost" href="/properties">See all homes</Link>
+          </motion.div>
         )}
       </div>
-      {list.length ? (
-        <div className="homes">{list.map((h, i) => <HomeCard key={h.slug} home={h} priority={i < 4} />)}</div>
-      ) : (
-        <div className="empty">
-          <strong className="h3">No homes match that search</strong>
-          <p className="muted">Try another area or loosen a filter, or call us on {site.phone.display} and we will find you somewhere.</p>
-          <Link className="btn btn-ghost" href="/properties">See all homes</Link>
-        </div>
-      )}
     </>
   );
 }

@@ -48,6 +48,12 @@ export const regions = Object.entries(homes.reduce<Record<string, number>>((acc,
   .sort((a, b) => b[1] - a[1])
   .map(([name, count]) => ({ name, count }));
 
+// Every town with homes, for the search suggestions.
+export const towns = Object.values(homes.reduce<Record<string, { name: string; region: string; count: number }>>((acc, h) => {
+  acc[h.town] = { name: h.town, region: h.region, count: (acc[h.town]?.count ?? 0) + 1 };
+  return acc;
+}, {})).sort((a, b) => b.count - a.count);
+
 export const regionSlug = (region: string) => region.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 export const regionBySlug = (slug: string) => regions.find((r) => regionSlug(r.name) === slug);
 export const reviewTotal = homes.reduce((n, h) => n + h.reviews, 0);
