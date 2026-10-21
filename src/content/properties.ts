@@ -19,6 +19,9 @@ export type Home = {
   bedrooms: number;
   beds?: number;
   bathrooms?: number;
+  // Base nightly price from Hostaway. Dates can cost more or less; the booking site has the exact total.
+  price?: number;
+  currency?: string;
   checkIn?: string;
   checkOut?: string;
   amenities: string[];
@@ -39,6 +42,12 @@ export const regions = Object.entries(homes.reduce<Record<string, number>>((acc,
 
 // The homes shown first: those with photos, then the most stayed in.
 export const featured = [...homes].sort((a, b) => Number(!!b.photos[0]?.src) - Number(!!a.photos[0]?.src) || b.reviews - a.reviews);
+
+// Price steps for the filters, from the cheapest to the dearest home that has a price.
+const prices = homes.map((h) => h.price).filter((p): p is number => typeof p === "number").sort((a, b) => a - b);
+const STEPS = [40, 50, 60, 75, 100, 125, 150, 200, 250, 300, 400, 500];
+export const priceSteps = prices.length ? STEPS.filter((s) => s >= Math.floor(prices[0] / 10) * 10 && s <= prices[prices.length - 1] + 50) : STEPS.slice(1, 9);
+export const money = (n: number, currency = "GBP") => new Intl.NumberFormat("en-GB", { style: "currency", currency, maximumFractionDigits: 0 }).format(n);
 
 export function distance(m: number) {
   const walk = Math.round(m / 80);

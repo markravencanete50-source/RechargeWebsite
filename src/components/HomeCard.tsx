@@ -1,6 +1,6 @@
 import { Bath, BedDouble, MapPin, Users } from "lucide-react";
 import Link from "next/link";
-import type { Home } from "@/content/properties";
+import { money, type Home } from "@/content/properties";
 import { AmenityIcon } from "./Amenity";
 import { Photo } from "./Photo";
 
@@ -20,6 +20,7 @@ export function HomeCard({ home, priority }: { home: Home; priority?: boolean })
           {home.guests && <span><Users size={15} /> Sleeps {home.guests}</span>}
           {home.bathrooms && <span><Bath size={15} /> {home.bathrooms} bath</span>}
         </div>
+        {home.price !== undefined && <span className="home-price"><strong>{money(home.price, home.currency)}</strong> a night, from</span>}
         {top.length > 0 && (
           <div className="home-amenities">
             {top.map((a) => <span key={a}><AmenityIcon name={a} size={14} /> {a}</span>)}
