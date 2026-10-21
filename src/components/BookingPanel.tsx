@@ -1,11 +1,11 @@
 "use client";
 
-import { ArrowUpRight, CalendarDays, Check, ChevronDown, Info, Loader2, Mail, MessageCircle, Minus, Phone, Plus, Send, Sparkles, X } from "lucide-react";
+import { ArrowUpRight, CalendarDays, Check, ChevronDown, Info, Loader2, MessageCircle, Minus, Plus, Sparkles } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
-import { createPortal } from "react-dom";
+import { useCallback, useEffect, useState } from "react";
 import type { Quote } from "@/lib/hostaway";
 import { RollingNumber } from "./RollingNumber";
+import { TeamChat, useTeamChat } from "./TeamChat";
 
 const ease = [0.2, 0.7, 0.2, 1] as const;
 type HomeInfo = { slug: string; title: string; town: string; price?: number; currency?: string; maxGuests?: number; checkIn?: string; bookingUrl: string; longStay: boolean };
@@ -35,6 +35,8 @@ export function BookingPanel({ home, contact }: { home: HomeInfo; contact: Conta
   const [state, setState] = useState<State>({ kind: "idle" });
   const [showNights, setShowNights] = useState(false);
   const [chat, setChat] = useState<null | "book" | "ask">(null);
+  const team = useTeamChat(home, chat !== null);
+  const closeChat = useCallback(() => setChat(null), []);
   const nights = checkin && checkout ? Math.round((Date.parse(checkout) - Date.parse(checkin)) / 86_400_000) : 0;
   const maxGuests = home.maxGuests ?? 16;
 
@@ -143,115 +145,18 @@ export function BookingPanel({ home, contact }: { home: HomeInfo; contact: Conta
         <motion.button type="button" className="btn btn-primary bp-cta" whileTap={reduce ? undefined : { scale: 0.97 }} onClick={() => setChat("book")}>
           {stay ? "Request to book" : "Check dates and book"} <ArrowUpRight size={18} />
         </motion.button>
-        <button type="button" className="btn btn-ghost bp-ask" onClick={() => setChat("ask")}><MessageCircle size={18} /> Message the team</button>
+        <button type="button" className="btn btn-ghost bp-ask" onClick={() => setChat("ask")}>
+          <MessageCircle size={18} /> {team.session ? "Open your chat" : "Message the team"}
+          <AnimatePresence>{team.unread > 0 && <motion.em className="bp-unread" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} aria-label={`${team.unread} new ${team.unread === 1 ? "reply" : "replies"}`}>{team.unread}</motion.em>}</AnimatePresence>
+        </button>
         <p className="bp-small">You will not be charged yet. Book direct and save {contact.discount}. <a href={home.bookingUrl} target="_blank" rel="noopener">Or book on our booking site</a>.</p>
       </div>
 
       <AnimatePresence>
-        {chat && <TeamChat home={home} contact={contact} mode={chat} stay={stay} onClose={() => setChat(null)} />}
+        {chat && <TeamChat home={home} contact={contact} chat={team} stay={stay} onClose={closeChat}
+          intro={chat === "book" && !stay ? `Hi! Tell us your dates and how many are coming, and we will check ${home.title} for you.` : `Hi! This is the Recharge team. Ask us anything about ${home.title}. We reply 24/7.`}
+          draft={chat === "book" && stay ? `Hi, I would like to book ${home.title} from ${day(stay.checkin)} to ${day(stay.checkout)} for ${stay.guests} guest${stay.guests === 1 ? "" : "s"}.` : ""} />}
       </AnimatePresence>
     </>
-  );
-}
-
-type Bubble = { from: "team" | "you"; text: string; tone?: "warn" };
-
-// A message thread with the Recharge team, in a panel. The guest's message, with their stay
-// attached, goes to the team's guest inbox in the Recharge app.
-function TeamChat({ home, contact, mode, stay, onClose }: { home: HomeInfo; contact: Contact; mode: "book" | "ask"; stay: { checkin: string; checkout: string; guests: number; total?: number; currency: string } | null; onClose: () => void }) {
-  const reduce = useReducedMotion();
-  const [sending, setSending] = useState(false);
-  const [typing, setTyping] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [mailto, setMailto] = useState<string | null>(null);
-  const draft = useMemo(() => (mode === "book" && stay ? `Hi, I would like to book ${home.title} from ${day(stay.checkin)} to ${day(stay.checkout)} for ${stay.guests} guest${stay.guests === 1 ? "" : "s"}.` : ""), [mode, stay, home.title]);
-  const [bubbles, setBubbles] = useState<Bubble[]>([
-    { from: "team", text: mode === "book" && !stay ? `Hi! Tell us your dates and how many are coming, and we will check ${home.title} for you.` : `Hi! This is the Recharge team. Ask us anything about ${home.title}. We reply 24/7.` },
-  ]);
-  const end = useRef<HTMLDivElement>(null);
-  useEffect(() => { end.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "end" }); }, [bubbles, typing, reduce]);
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
-  }, [onClose]);
-
-  async function send(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const f = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
-    setSending(true);
-    setBubbles((b) => [...b, { from: "you", text: f.message }]);
-    setTyping(true);
-    let ok = false;
-    try {
-      const res = await fetch("/api/guest-message", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...f, home: home.slug, booking: stay }) });
-      ok = res.ok;
-    } catch {}
-    await new Promise((r) => setTimeout(r, reduce ? 0 : 900));
-    setTyping(false);
-    setSending(false);
-    if (ok) {
-      setSent(true);
-      setBubbles((b) => [...b, { from: "team", text: `Thanks ${f.name.split(" ")[0]}, we have your message${stay ? " and your dates" : ""}. The team will reply to ${f.email} shortly.` }]);
-    } else {
-      const subject = encodeURIComponent(`${home.title}${stay ? `, ${stay.checkin} to ${stay.checkout}` : ""}`);
-      const body = encodeURIComponent(`${f.message}\n\n${stay ? `Dates: ${stay.checkin} to ${stay.checkout}\nGuests: ${stay.guests}\n` : ""}Name: ${f.name}\nPhone: ${f.phone || "-"}`);
-      setBubbles((b) => [...b, { from: "team", tone: "warn", text: `We could not send this from here just now. Email it to ${contact.email} (we have filled it in for you) or call ${contact.phone.display}, any hour.`, }]);
-      setMailto(`mailto:${contact.email}?subject=${subject}&body=${body}`);
-    }
-  }
-  return createPortal(
-    <motion.div className="chat-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}>
-      <motion.div
-        className="chat"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Message the Recharge team"
-        onClick={(e) => e.stopPropagation()}
-        initial={reduce ? false : { x: 40, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        exit={reduce ? undefined : { x: 40, opacity: 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 30 }}
-      >
-        <header className="chat-head">
-          <span className="chat-avatar">R<i /></span>
-          <div><strong>Recharge team</strong><span>Replies 24/7</span></div>
-          <button type="button" onClick={onClose} aria-label="Close"><X size={20} /></button>
-        </header>
-        <div className="chat-body">
-          {stay && (
-            <motion.div className="chat-stay" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-              <strong>{home.title}</strong>
-              <span>{day(stay.checkin)} to {day(stay.checkout)} · {stay.guests} guest{stay.guests === 1 ? "" : "s"}{stay.total ? ` · ${fmt(stay.total, stay.currency)}` : ""}</span>
-            </motion.div>
-          )}
-          {bubbles.map((b, i) => (
-            <motion.p key={i} className={`bubble ${b.from}${b.tone ? ` ${b.tone}` : ""}`} initial={reduce ? false : { opacity: 0, y: 12, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ type: "spring", stiffness: 320, damping: 26 }}>
-              {b.text}
-            </motion.p>
-          ))}
-          {mailto && <a className="btn btn-primary chat-mail" href={mailto}><Mail size={16} /> Email the team</a>}
-          {mailto && <a className="btn btn-ghost chat-mail" href={contact.phone.href}><Phone size={16} /> {contact.phone.display}</a>}
-          {typing && <p className="bubble team typing" aria-label="The team is typing"><i /><i /><i /></p>}
-          <div ref={end} />
-        </div>
-        {!sent && !mailto && (
-          <form className="chat-form" onSubmit={send}>
-            <div className="chat-row">
-              <input name="name" placeholder="Your name" autoComplete="name" required maxLength={120} />
-              <input name="email" type="email" placeholder="Email" autoComplete="email" required maxLength={200} />
-            </div>
-            <input name="phone" type="tel" placeholder="Phone (optional)" autoComplete="tel" maxLength={40} />
-            <input name="website" tabIndex={-1} autoComplete="off" className="hp" aria-hidden />
-            <div className="chat-compose">
-              <textarea name="message" required maxLength={4000} rows={3} defaultValue={draft} placeholder="Type your message" />
-              <button type="submit" disabled={sending} aria-label="Send">{sending ? <Loader2 size={18} className="spin" /> : <Send size={18} />}</button>
-            </div>
-          </form>
-        )}
-      </motion.div>
-    </motion.div>,
-    document.body,
   );
 }

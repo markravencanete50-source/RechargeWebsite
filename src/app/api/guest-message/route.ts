@@ -3,10 +3,12 @@ import { homes } from "@/content/properties";
 // A guest's message from a property page, with their booking details if they were pricing a stay.
 // It goes to the Recharge app's guest inbox (the Stays Communication Centre) once the app's
 // endpoint is set in RECHARGE_GUEST_MESSAGES_URL with its key in RECHARGE_WEBSITE_KEY. Until
-// then this answers 503 and the panel offers email and phone instead.
+// then this answers 503 and the panel offers email and phone instead. A message from the chat window carries the chat's key, so the
+// team's replies come back to that window (see /api/guest-chat).
 
 const text = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
+const CHAT = /^[A-Za-z0-9_-]{32,128}$/;
 
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
@@ -31,6 +33,7 @@ export async function POST(request: Request) {
       ? { checkin: text(booking.checkin, 10), checkout: text(booking.checkout, 10), guests: Number(booking.guests) || undefined, total: Number(booking.total) || undefined, currency: text(booking.currency, 3) || "GBP" }
       : null,
     sentAt: new Date().toISOString(),
+    ...(CHAT.test(text(body.chat, 128)) ? { chat: text(body.chat, 128) } : {}),
   };
   if (!message.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(message.email) || !message.body) {
     return Response.json({ error: "invalid" }, { status: 400 });
