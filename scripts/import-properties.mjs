@@ -4,13 +4,16 @@
 //   node scripts/import-properties.mjs --offline  only the portfolio list (no network), for a first build
 //
 // Nearby places already in properties.json are kept (Overpass is slow and rate limited), so a re-run
-// only looks up homes that have none. Add --refresh-nearby to look them all up again.
+// only looks up homes that have none. Add --refresh-nearby to look them all up again, or
+// --skip-nearby to refresh only the Hostaway data.
 //
 // Sources:
 // - scripts/portfolio.json: the active homes from the Recharge platform (Hostaway id, region, town,
 //   postcode district, bedrooms, review count). Exact addresses are deliberately not stored here.
 // - Hostaway (HOSTAWAY_ACCOUNT_ID, HOSTAWAY_API_KEY): each listing's public title, description,
-//   amenities, photos, capacity, check-in and check-out times, licence number and map position.
+//   amenities, photos, capacity, check-in and check-out times, nightly price, licence number and map position.
+//   The price is the median nightly rate in the Hostaway calendar over the next 60 days; the listing's
+//   base price is a placeholder (often 500, 1000 or 5000) and is not used.
 //   A listing without a real map position (Hostaway's default is the centre of the UK) is placed by
 //   its postcode with OpenStreetMap Nominatim. Neither the position nor the postcode is stored.
 // - OpenStreetMap (Overpass API): the nearest station, bus stop, supermarket, pharmacy, park,
@@ -18,6 +21,7 @@
 //
 // Nothing is made up: a field Hostaway or OpenStreetMap does not have is left out, and the page hides it.
 import { readFileSync, writeFileSync } from "node:fs";
+import sharp from "sharp";
 
 const ROOT = new URL("../", import.meta.url);
 const OFFLINE = process.argv.includes("--offline");
@@ -130,9 +134,42 @@ async function position(l) {
   return hit ? { lat: Number(hit.lat), lng: Number(hit.lon) } : undefined;
 }
 
-// Marketing tiles made for booking sites (text on a tinted photo), not photos of the home.
-const TILE = /^(nearby|property features|features|feedback|book with us|prop info|.*property information)\b/i;
-const FILENAME = /^(other: other|download|\d+|[\w-]+\.(jpe?g|png|jfif|webp|heic))(\s*\(\d+\))?$/i;
+// Marketing tiles made for booking sites: text on the Recharge teal (nearby lists, features, screenshots
+// of guest reviews with star ratings). Captions are mostly file names, so tiles are found by colour:
+// in a tile most pixels are that teal, in a photo of a home almost none are (at most 0.2 in practice).
+async function isTile(url) {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(60000) });
+      if (!res.ok) throw new Error(`photo download failed (${res.status})`);
+      const { data } = await sharp(Buffer.from(await res.arrayBuffer())).resize(200, 200, { fit: "inside" }).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+      let teal = 0;
+      for (let i = 0; i < data.length; i += 3) if (data[i + 1] - data[i] > 35 && Math.abs(data[i + 1] - data[i + 2]) < 25 && data[i] < 120) teal++;
+      return teal / (data.length / 3) > 0.4;
+    } catch (e) {
+      if (attempt >= 2) throw new Error(`Could not check photo ${url}: ${e.message}`);
+      await sleep(2000);
+    }
+  }
+}
+async function photosOf(l, title, town) {
+  const urls = (l.listingImages || []).slice().sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0)).map((img) => img.url).filter(Boolean);
+  const tile = [];
+  for (let i = 0; i < urls.length; i += 12) tile.push(...await Promise.all(urls.slice(i, i + 12).map(isTile)));
+  // Hostaway captions are file names, some with the street in them, so the alt text is the title.
+  return urls.filter((u, i) => !tile[i]).map((src) => ({ src, alt: `${title}, ${town}` }));
+}
+
+// Median nightly rate over the next 60 days, from the Hostaway calendar.
+async function nightlyPrice(token, id) {
+  const day = (offset) => new Date(Date.now() + offset * 864e5).toISOString().slice(0, 10);
+  await sleep(700);
+  const res = await fetch(`${HOSTAWAY}/listings/${id}/calendar?startDate=${day(0)}&endDate=${day(59)}`, { headers: { authorization: `Bearer ${token}`, "cache-control": "no-cache" } });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok || body.status === "fail") throw new Error(`Hostaway calendar failed for ${id} (${res.status})`);
+  const prices = (body.result || []).map((d) => d.price).filter((p) => Number.isFinite(p) && p > 0).sort((a, b) => a - b);
+  return prices.length ? Math.round(prices[Math.floor(prices.length / 2)]) : undefined;
+}
 
 // Hostaway amenities that describe the area or the host, not the home.
 const NOT_AMENITY = /^(hospital nearby|museums|shopping|theme parks|laundromat|.*emergency contact|wheelchair not accessible|internet)$/i;
@@ -140,16 +177,12 @@ const NOT_AMENITY = /^(hospital nearby|museums|shopping|theme parks|laundromat|.
 const FIRST = [/wi-?fi|wireless/i, /free parking|private parking/i, /parking/i, /hot tub/i, /swimming pool/i, /^kitchen$/i, /washing machine/i, /dishwasher/i, /workspace/i, /smart tv|^tv$/i, /garden/i, /balcony/i];
 const rank = (a) => { const i = FIRST.findIndex((re) => re.test(a)); return i < 0 ? FIRST.length : i; };
 
-async function fromHostaway(home, l) {
+async function fromHostaway(home, l, token) {
   const title = (clean(l.externalListingName) || clean(l.airbnbName) || clean(l.name)).replace(/\s*\|\s*/g, " | ");
-  const photos = (l.listingImages || []).slice().sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
-    .filter((img) => img.url && !TILE.test(clean(img.bookingEngineCaption) || clean(img.caption)))
-    .map((img) => {
-      const caption = [img.bookingEngineCaption, img.airbnbCaption, img.caption].map(clean).find((c) => c && !FILENAME.test(c));
-      return { src: img.url, alt: caption ? `${caption}, ${title}` : `${title}, ${home.town}` };
-    });
-  const amenities = [...new Set((l.listingAmenities || []).map((a) => clean(a.amenityName)).filter((a) => a && !NOT_AMENITY.test(a)))]
-    .map((a, i) => [a, i]).sort((x, y) => rank(x[0]) - rank(y[0]) || x[1] - y[1]).map(([a]) => a);
+  const photos = await photosOf(l, title, home.town);
+  let amenities = [...new Set((l.listingAmenities || []).map((a) => clean(a.amenityName)).filter((a) => a && !NOT_AMENITY.test(a)))];
+  if (amenities.includes("Free WiFi")) amenities = amenities.filter((a) => a !== "Wireless");
+  amenities = amenities.map((a, i) => [a, i]).sort((x, y) => rank(x[0]) - rank(y[0]) || x[1] - y[1]).map(([a]) => a);
   const description = scrub(l.description, l);
   return {
     title,
@@ -164,6 +197,8 @@ async function fromHostaway(home, l) {
     amenities,
     photos,
     licence: clean(l.propertyLicenseNumber) || undefined,
+    price: await nightlyPrice(token, l.id),
+    currency: clean(l.currencyCode) || undefined,
     at: await position(l),
   };
 }
@@ -172,11 +207,12 @@ const previous = new Map();
 try {
   for (const h of JSON.parse(readFileSync(new URL("src/content/properties.json", ROOT), "utf8"))) if (h.nearby?.length) previous.set(h.hostawayId, h.nearby);
 } catch {}
-let overpassFailures = 0;
+let overpassFailures = process.argv.includes("--skip-nearby") ? Infinity : 0;
 
 const listings = new Map();
+let token;
 if (!OFFLINE) {
-  const token = await hostawayToken();
+  token = await hostawayToken();
   for (const l of await hostawayListings(token)) listings.set(Number(l.id), l);
   console.log(`Hostaway: ${listings.size} listings`);
 }
@@ -186,9 +222,9 @@ const homes = [];
 for (const home of portfolio) {
   const l = listings.get(home.hostawayId);
   if (!OFFLINE && !l) console.warn(`Not in Hostaway: ${home.hostawayId} (${home.town})`);
-  const data = l ? await fromHostaway(home, l) : { title: `${home.bedrooms}-bedroom home in ${home.town}`, bedrooms: home.bedrooms, amenities: [], photos: [] };
-  // Slugs come from the portfolio, not the listing title, so links stay put when a title changes.
-  const base = slugify(`${home.bedrooms}-bedroom home in ${home.town}`);
+  const data = l ? await fromHostaway(home, l, token) : { title: `${home.bedrooms}-bedroom home in ${home.town}`, bedrooms: home.bedrooms, amenities: [], photos: [] };
+  // Slugs come from bedrooms and town, not the listing title, so links stay put when a title changes.
+  const base = slugify(`${data.bedrooms}-bedroom home in ${home.town}`);
   let slug = base;
   for (let n = 2; used.has(slug); n++) slug = `${base}-${n}`;
   used.add(slug);
