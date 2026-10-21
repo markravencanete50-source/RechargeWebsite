@@ -1,12 +1,15 @@
-import { ArrowUpRight, Bath, BedDouble, Clock, MapPin, Phone, Users } from "lucide-react";
+import { ArrowUpRight, Bath, BedDouble, Bus, Clock, DoorOpen, Landmark, MapPin, Phone, Pill, Plane, ShoppingCart, TrainFront, Trees, Users, UtensilsCrossed, type LucideIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AmenityIcon } from "@/components/Amenity";
+import { Gallery } from "@/components/Gallery";
 import { HomeCard } from "@/components/HomeCard";
-import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
-import { homeBySlug, homes } from "@/content/photos";
+import { distance, homeBySlug, homes } from "@/content/properties";
 import { site } from "@/content/site";
+
+const NEARBY_ICON: Record<string, LucideIcon> = { station: TrainFront, bus: Bus, supermarket: ShoppingCart, pharmacy: Pill, restaurant: UtensilsCrossed, park: Trees, attraction: Landmark, airport: Plane };
 
 export function generateStaticParams() {
   return homes.map((h) => ({ slug: h.slug }));
@@ -15,46 +18,79 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/properties/[slug]">): Promise<Metadata> {
   const home = homeBySlug((await params).slug);
   if (!home) return {};
-  return { title: `${home.name}, ${home.area}`, description: `Book ${home.name} in ${home.area} direct with Recharge.`, alternates: { canonical: `/properties/${home.slug}` } };
+  const description = home.description?.split("\n")[0].slice(0, 155) || `Book ${home.title} in ${home.town} direct with Recharge.`;
+  return { title: `${home.title}, ${home.town}`, description, alternates: { canonical: `/properties/${home.slug}` }, openGraph: home.photos[0]?.src ? { images: [home.photos[0].src] } : undefined };
 }
 
 export default async function PropertyPage({ params }: PageProps<"/properties/[slug]">) {
   const home = homeBySlug((await params).slug);
   if (!home) notFound();
-  const photos = [0, 1, 2].map((i) => home.photos[i] ?? { src: null, alt: `${home.name}, photo ${i + 1}` });
-  const others = homes.filter((h) => h.slug !== home.slug).slice(0, 4);
+  const paragraphs = (home.description ?? "").split(/\n{2,}|\n(?=[A-Z])/).map((p) => p.trim()).filter(Boolean);
+  const others = homes.filter((h) => h.slug !== home.slug && h.region === home.region).slice(0, 4);
+  const facts = [
+    home.guests && { icon: Users, text: `Sleeps ${home.guests}` },
+    { icon: BedDouble, text: `${home.bedrooms} bedroom${home.bedrooms === 1 ? "" : "s"}${home.beds ? `, ${home.beds} bed${home.beds === 1 ? "" : "s"}` : ""}` },
+    home.bathrooms && { icon: Bath, text: `${home.bathrooms} bathroom${home.bathrooms === 1 ? "" : "s"}` },
+  ].filter(Boolean) as { icon: LucideIcon; text: string }[];
 
   return (
     <>
-      <section className="section" style={{ paddingTop: "calc(76px + 40px)" }}>
+      <section className="section prop-section">
         <div className="wrap">
-          <Reveal>
-            <p className="muted" style={{ margin: "0 0 8px", fontSize: 14 }}><Link href="/properties">Properties</Link> / {home.area}</p>
-            <h1 className="h2" style={{ marginBottom: 10 }}>{home.name}</h1>
-            <p className="home-area" style={{ fontSize: 16, margin: "0 0 28px" }}><MapPin size={17} /> {home.area}</p>
-          </Reveal>
+          <p className="crumbs"><Link href="/properties">Properties</Link> / <Link href={`/properties?area=${encodeURIComponent(home.region)}`}>{home.region}</Link></p>
+          <h1 className="h2 prop-title">{home.title}</h1>
+          <p className="prop-place"><MapPin size={17} /> {home.town}, {home.region} {home.district}{home.reviews > 0 && <span> · {home.reviews} guest reviews</span>}</p>
+          <Gallery photos={home.photos} title={home.title} />
           <div className="prop">
-            <div style={{ display: "grid", gap: 32 }}>
-              <Reveal className="gallery">
-                {photos.map((p, i) => <div key={i}><Photo photo={p} sizes={i === 0 ? "(max-width: 900px) 70vw, 45vw" : "25vw"} priority={i === 0} /></div>)}
-              </Reveal>
-              {home.summary && <p className="lead" style={{ maxWidth: "none" }}>{home.summary}</p>}
+            <div className="prop-main">
+              <ul className="prop-facts">{facts.map((f) => <li key={f.text}><f.icon size={20} /> {f.text}</li>)}</ul>
+
+              {paragraphs.length > 0 && (
+                <Reveal className="prop-block">
+                  <h2 className="h3">About this home</h2>
+                  {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+                </Reveal>
+              )}
+
+              {home.amenities.length > 0 && (
+                <Reveal className="prop-block">
+                  <h2 className="h3">What this home offers</h2>
+                  <ul className="amenities">{home.amenities.map((a) => <li key={a}><AmenityIcon name={a} /> {a}</li>)}</ul>
+                </Reveal>
+              )}
+
+              {home.nearby && home.nearby.length > 0 && (
+                <Reveal className="prop-block">
+                  <h2 className="h3">What is nearby</h2>
+                  <ul className="nearby">
+                    {home.nearby.map((n) => {
+                      const Icon = NEARBY_ICON[n.kind] ?? MapPin;
+                      return <li key={n.kind}><span className="ic"><Icon size={20} /></span><div><strong>{n.name || n.label}</strong><span>{n.name ? `${n.label}, ` : ""}{distance(n.metres)}</span></div></li>;
+                    })}
+                  </ul>
+                  <p className="fine">Straight-line distances, from OpenStreetMap.</p>
+                </Reveal>
+              )}
+
+              {(home.checkIn || home.checkOut || home.houseRules) && (
+                <Reveal className="prop-block">
+                  <h2 className="h3">Good to know</h2>
+                  <ul className="prop-facts">
+                    {home.checkIn && <li><DoorOpen size={20} /> Check in from {home.checkIn}</li>}
+                    {home.checkOut && <li><Clock size={20} /> Check out by {home.checkOut}</li>}
+                  </ul>
+                  {home.houseRules && <p className="muted" style={{ whiteSpace: "pre-line" }}>{home.houseRules}</p>}
+                </Reveal>
+              )}
             </div>
             <aside className="book-card" aria-label="Book this home">
-              <strong className="h3">Book {home.name}</strong>
-              {(home.sleeps || home.bedrooms || home.bathrooms) && (
-                <ul className="facts">
-                  {home.sleeps && <li><Users size={18} /> Sleeps {home.sleeps}</li>}
-                  {home.bedrooms && <li><BedDouble size={18} /> {home.bedrooms} bedroom{home.bedrooms > 1 ? "s" : ""}</li>}
-                  {home.bathrooms && <li><Bath size={18} /> {home.bathrooms} bathroom{home.bathrooms > 1 ? "s" : ""}</li>}
-                </ul>
-              )}
+              <strong className="h3">Book direct and save {site.directDiscount}</strong>
               <ul className="facts">
+                {facts.map((f) => <li key={f.text}><f.icon size={18} /> {f.text}</li>)}
                 <li><Clock size={18} /> Support 24/7 during your stay</li>
               </ul>
               <a className="btn btn-primary" href={home.bookingUrl ?? site.bookingUrl} target="_blank" rel="noopener">Check dates and book <ArrowUpRight size={18} /></a>
               <a className="btn btn-ghost" href={site.phone.href}><Phone size={18} /> {site.phone.display}</a>
-              <p className="muted" style={{ margin: 0, fontSize: 14 }}>Book direct and save {site.directDiscount}.</p>
               {home.licence && <p className="licence">Short-term let licence: {home.licence}</p>}
             </aside>
           </div>
@@ -63,7 +99,10 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
       {others.length > 0 && (
         <section className="section paper">
           <div className="wrap">
-            <h2 className="h2" style={{ marginBottom: 32, fontSize: "clamp(28px,3vw,40px)" }}>More homes</h2>
+            <div className="section-link">
+              <h2 className="h2" style={{ fontSize: "clamp(28px,3vw,40px)" }}>More homes in {home.region}</h2>
+              <Link className="text-link" href={`/properties?area=${encodeURIComponent(home.region)}`}>See all <ArrowUpRight size={16} /></Link>
+            </div>
             <div className="homes">{others.map((h) => <HomeCard key={h.slug} home={h} />)}</div>
           </div>
         </section>

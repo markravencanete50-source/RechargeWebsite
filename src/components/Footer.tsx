@@ -42,7 +42,7 @@ export async function Footer() {
             <ul>
               <li><a href={site.phone.href}>{site.phone.display}</a></li>
               <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-              <li>{site.areas.join(", ")}</li>
+              <li>Homes across Scotland</li>
             </ul>
           </div>
         </div>

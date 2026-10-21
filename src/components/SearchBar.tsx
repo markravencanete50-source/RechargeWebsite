@@ -3,7 +3,7 @@
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, type FocusEvent, type FormEvent } from "react";
-import { site } from "@/content/site";
+import { regions } from "@/content/properties";
 
 const iso = (d: Date) => d.toISOString().slice(0, 10);
 
@@ -27,7 +27,7 @@ export function SearchBar({ initial, compact }: { initial?: { area?: string; che
         <label htmlFor="s-area">Where</label>
         <select id="s-area" name="area" defaultValue={initial?.area ?? ""}>
           <option value="">Anywhere</option>
-          {site.areas.map((a) => <option key={a} value={a}>{a}</option>)}
+          {regions.map((r) => <option key={r.name} value={r.name}>{r.name}</option>)}
         </select>
       </div>
       <div className="search-field">

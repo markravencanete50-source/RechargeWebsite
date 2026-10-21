@@ -6,7 +6,7 @@ import { HomeCard } from "@/components/HomeCard";
 import { OwnerPlans } from "@/components/OwnerPlans";
 import { Reveal } from "@/components/Reveal";
 import { SearchBar } from "@/components/SearchBar";
-import { homes } from "@/content/photos";
+import { featured, homes, regions } from "@/content/properties";
 import { site } from "@/content/site";
 
 export default function Home() {
@@ -18,14 +18,14 @@ export default function Home() {
             <Reveal><p className="eyebrow">Serviced accommodation in Scotland</p></Reveal>
             <Reveal delay={0.05}><h1 className="h1">Find your stay. Book direct.</h1></Reveal>
             <Reveal delay={0.1}>
-              <p className="lead">Serviced apartments and homes across Glasgow, Edinburgh and the Central Belt. Book direct with Recharge and save {site.directDiscount}.</p>
+              <p className="lead">{homes.length} serviced homes across Scotland, from Edinburgh and Glasgow to the Borders and Skye. Book direct with Recharge and save {site.directDiscount}.</p>
             </Reveal>
           </div>
           <Reveal delay={0.15}><SearchBar /></Reveal>
           <Reveal delay={0.2}>
             <div className="quick-areas">
               <span>Popular:</span>
-              {site.areas.map((a) => <Link key={a} href={`/properties?area=${encodeURIComponent(a)}`}>{a}</Link>)}
+              {regions.slice(0, 6).map((r) => <Link key={r.name} href={`/properties?area=${encodeURIComponent(r.name)}`}>{r.name}</Link>)}
             </div>
           </Reveal>
         </div>
@@ -36,12 +36,12 @@ export default function Home() {
           <div className="section-link">
             <Reveal className="section-head">
               <p className="eyebrow">Properties</p>
-              <h2 className="h2">Stay with Recharge</h2>
+              <h2 className="h2">{homes.length} homes across Scotland</h2>
             </Reveal>
-            <Link className="text-link" href="/properties">See all properties <ArrowRight size={18} /></Link>
+            <Link className="text-link" href="/properties">See all {homes.length} homes <ArrowRight size={18} /></Link>
           </div>
           <div className="homes">
-            {homes.slice(0, 4).map((h, i) => <Reveal key={h.slug} delay={i * 0.06}><HomeCard home={h} /></Reveal>)}
+            {featured.slice(0, 8).map((h, i) => <Reveal key={h.slug} delay={i * 0.06}><HomeCard home={h} /></Reveal>)}
           </div>
         </div>
       </section>

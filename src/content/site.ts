@@ -16,7 +16,6 @@ export const site = {
   company: { legalName: "", number: "", registeredOffice: "" },
   // CONFIRM: the old home page offers 10% off for booking direct.
   directDiscount: "10%",
-  areas: ["Glasgow", "Edinburgh", "Paisley", "Livingston", "Tranent"],
 } as const;
 
 export const nav = [

@@ -1,0 +1,738 @@
+[
+ {
+  "hostawayId": 601876,
+  "region": "Stirling and Falkirk",
+  "town": "Bo'ness",
+  "district": "EH51",
+  "bedrooms": 4,
+  "reviews": 3
+ },
+ {
+  "hostawayId": 600977,
+  "region": "Dumfries and Galloway",
+  "town": "Stranraer",
+  "district": "DG9",
+  "bedrooms": 2,
+  "reviews": 2
+ },
+ {
+  "hostawayId": 501274,
+  "region": "Aberdeen",
+  "town": "Aberdeen",
+  "district": "AB10",
+  "bedrooms": 1,
+  "reviews": 32
+ },
+ {
+  "hostawayId": 505728,
+  "region": "Aberdeen",
+  "town": "Aberdeen",
+  "district": "AB10",
+  "bedrooms": 1,
+  "reviews": 18
+ },
+ {
+  "hostawayId": 478197,
+  "region": "Aberdeen",
+  "town": "Aberdeen",
+  "district": "AB10",
+  "bedrooms": 2,
+  "reviews": 60
+ },
+ {
+  "hostawayId": 560926,
+  "region": "Aberdeen",
+  "town": "Peterhead",
+  "district": "AB42",
+  "bedrooms": 2,
+  "reviews": 17
+ },
+ {
+  "hostawayId": 496672,
+  "region": "Aberdeenshire and Moray",
+  "town": "Cruden Bay",
+  "district": "AB42",
+  "bedrooms": 3,
+  "reviews": 28
+ },
+ {
+  "hostawayId": 505687,
+  "region": "Aberdeenshire and Moray",
+  "town": "Portgordon",
+  "district": "AB56",
+  "bedrooms": 1,
+  "reviews": 24
+ },
+ {
+  "hostawayId": 590895,
+  "region": "Aberdeenshire and Moray",
+  "town": "Huntly",
+  "district": "AB54",
+  "bedrooms": 4,
+  "reviews": 6
+ },
+ {
+  "hostawayId": 483851,
+  "region": "Aberdeenshire and Moray",
+  "town": "Alford",
+  "district": "AB33",
+  "bedrooms": 2,
+  "reviews": 14
+ },
+ {
+  "hostawayId": 560616,
+  "region": "Angus",
+  "town": "Montrose",
+  "district": "DD10",
+  "bedrooms": 1,
+  "reviews": 16
+ },
+ {
+  "hostawayId": 561005,
+  "region": "Angus",
+  "town": "Montrose",
+  "district": "DD10",
+  "bedrooms": 2,
+  "reviews": 12
+ },
+ {
+  "hostawayId": 562986,
+  "region": "Angus",
+  "town": "Montrose",
+  "district": "DD10",
+  "bedrooms": 2,
+  "reviews": 16
+ },
+ {
+  "hostawayId": 569495,
+  "region": "Ayrshire",
+  "town": "Prestwick",
+  "district": "KA9",
+  "bedrooms": 2,
+  "reviews": 15
+ },
+ {
+  "hostawayId": 529763,
+  "region": "Ayrshire",
+  "town": "Ardrossan",
+  "district": "KA22",
+  "bedrooms": 2,
+  "reviews": 9
+ },
+ {
+  "hostawayId": 605041,
+  "region": "Dunbartonshire",
+  "town": "Helensburgh",
+  "district": "G84",
+  "bedrooms": 1,
+  "reviews": 0
+ },
+ {
+  "hostawayId": 515594,
+  "region": "Dunbartonshire",
+  "town": "Alexandria",
+  "district": "G83",
+  "bedrooms": 2,
+  "reviews": 40
+ },
+ {
+  "hostawayId": 472101,
+  "region": "Dunbartonshire",
+  "town": "Dumbarton",
+  "district": "G82",
+  "bedrooms": 2,
+  "reviews": 34
+ },
+ {
+  "hostawayId": 527048,
+  "region": "Dunbartonshire",
+  "town": "Alexandria",
+  "district": "G83",
+  "bedrooms": 3,
+  "reviews": 16
+ },
+ {
+  "hostawayId": 527583,
+  "region": "Dundee",
+  "town": "Dundee",
+  "district": "DD1",
+  "bedrooms": 6,
+  "reviews": 20
+ },
+ {
+  "hostawayId": 477188,
+  "region": "East Lothian",
+  "town": "Port Seton",
+  "district": "EH32",
+  "bedrooms": 3,
+  "reviews": 51
+ },
+ {
+  "hostawayId": 493219,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH12",
+  "bedrooms": 1,
+  "reviews": 88
+ },
+ {
+  "hostawayId": 447672,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH5",
+  "bedrooms": 1,
+  "reviews": 164
+ },
+ {
+  "hostawayId": 574508,
+  "region": "Edinburgh",
+  "town": "Balerno",
+  "district": "EH14",
+  "bedrooms": 2,
+  "reviews": 23
+ },
+ {
+  "hostawayId": 466637,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH8",
+  "bedrooms": 3,
+  "reviews": 53
+ },
+ {
+  "hostawayId": 479797,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH7",
+  "bedrooms": 3,
+  "reviews": 54
+ },
+ {
+  "hostawayId": 561468,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH15",
+  "bedrooms": 2,
+  "reviews": 42
+ },
+ {
+  "hostawayId": 447681,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH16",
+  "bedrooms": 3,
+  "reviews": 75
+ },
+ {
+  "hostawayId": 465423,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH13",
+  "bedrooms": 2,
+  "reviews": 63
+ },
+ {
+  "hostawayId": 447673,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH6",
+  "bedrooms": 1,
+  "reviews": 105
+ },
+ {
+  "hostawayId": 487626,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH11",
+  "bedrooms": 1,
+  "reviews": 76
+ },
+ {
+  "hostawayId": 473082,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH7",
+  "bedrooms": 1,
+  "reviews": 103
+ },
+ {
+  "hostawayId": 447677,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH6",
+  "bedrooms": 2,
+  "reviews": 96
+ },
+ {
+  "hostawayId": 447674,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH6",
+  "bedrooms": 3,
+  "reviews": 198
+ },
+ {
+  "hostawayId": 562116,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH7",
+  "bedrooms": 1,
+  "reviews": 43
+ },
+ {
+  "hostawayId": 447687,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH4",
+  "bedrooms": 3,
+  "reviews": 76
+ },
+ {
+  "hostawayId": 584554,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH16",
+  "bedrooms": 2,
+  "reviews": 13
+ },
+ {
+  "hostawayId": 580069,
+  "region": "Edinburgh",
+  "town": "Edinburgh",
+  "district": "EH11",
+  "bedrooms": 1,
+  "reviews": 2
+ },
+ {
+  "hostawayId": 590505,
+  "region": "Fife",
+  "town": "Kirkcaldy",
+  "district": "KY1",
+  "bedrooms": 2,
+  "reviews": 10
+ },
+ {
+  "hostawayId": 473976,
+  "region": "Fife",
+  "town": "Dunfermline",
+  "district": "KY12",
+  "bedrooms": 1,
+  "reviews": 64
+ },
+ {
+  "hostawayId": 512046,
+  "region": "Fife",
+  "town": "Dunfermline",
+  "district": "KY11",
+  "bedrooms": 3,
+  "reviews": 23
+ },
+ {
+  "hostawayId": 563837,
+  "region": "Glasgow",
+  "town": "Glasgow",
+  "district": "G44",
+  "bedrooms": 2,
+  "reviews": 32
+ },
+ {
+  "hostawayId": 588719,
+  "region": "Glasgow",
+  "town": "Glasgow",
+  "district": "G32",
+  "bedrooms": 2,
+  "reviews": 17
+ },
+ {
+  "hostawayId": 474293,
+  "region": "Glasgow",
+  "town": "Glasgow",
+  "district": "G32",
+  "bedrooms": 2,
+  "reviews": 72
+ },
+ {
+  "hostawayId": 516201,
+  "region": "Glasgow",
+  "town": "Gartcosh",
+  "district": "G69",
+  "bedrooms": 3,
+  "reviews": 29
+ },
+ {
+  "hostawayId": 478924,
+  "region": "Glasgow",
+  "town": "Rutherglen",
+  "district": "G73",
+  "bedrooms": 3,
+  "reviews": 29
+ },
+ {
+  "hostawayId": 505619,
+  "region": "Glasgow",
+  "town": "East Kilbride",
+  "district": "G74",
+  "bedrooms": 3,
+  "reviews": 25
+ },
+ {
+  "hostawayId": 576182,
+  "region": "Glasgow",
+  "town": "Cambuslang",
+  "district": "G72",
+  "bedrooms": 2,
+  "reviews": 11
+ },
+ {
+  "hostawayId": 524572,
+  "region": "Glasgow",
+  "town": "Glasgow",
+  "district": "G52",
+  "bedrooms": 3,
+  "reviews": 31
+ },
+ {
+  "hostawayId": 571500,
+  "region": "Glasgow",
+  "town": "Glasgow",
+  "district": "G33",
+  "bedrooms": 2,
+  "reviews": 8
+ },
+ {
+  "hostawayId": 512031,
+  "region": "Glasgow",
+  "town": "Glasgow",
+  "district": "G44",
+  "bedrooms": 3,
+  "reviews": 26
+ },
+ {
+  "hostawayId": 592913,
+  "region": "Glasgow",
+  "town": "Glasgow",
+  "district": "G51",
+  "bedrooms": 2,
+  "reviews": 3
+ },
+ {
+  "hostawayId": 596169,
+  "region": "Lanarkshire",
+  "town": "Hamilton",
+  "district": "ML3",
+  "bedrooms": 2,
+  "reviews": 5
+ },
+ {
+  "hostawayId": 563650,
+  "region": "Glasgow",
+  "town": "Glasgow",
+  "district": "G33",
+  "bedrooms": 3,
+  "reviews": 26
+ },
+ {
+  "hostawayId": 505623,
+  "region": "Glasgow",
+  "town": "East Kilbride",
+  "district": "G74",
+  "bedrooms": 3,
+  "reviews": 26
+ },
+ {
+  "hostawayId": 576441,
+  "region": "Renfrewshire and Inverclyde",
+  "town": "Paisley",
+  "district": "PA2",
+  "bedrooms": 2,
+  "reviews": 17
+ },
+ {
+  "hostawayId": 595216,
+  "region": "Glasgow",
+  "town": "Glasgow",
+  "district": "G32",
+  "bedrooms": 2,
+  "reviews": 5
+ },
+ {
+  "hostawayId": 558515,
+  "region": "Glasgow",
+  "town": "Glasgow",
+  "district": "G21",
+  "bedrooms": 2,
+  "reviews": 40
+ },
+ {
+  "hostawayId": 515534,
+  "region": "Glasgow",
+  "town": "Glasgow",
+  "district": "G33",
+  "bedrooms": 2,
+  "reviews": 16
+ },
+ {
+  "hostawayId": 511869,
+  "region": "Glasgow",
+  "town": "Glasgow",
+  "district": "G44",
+  "bedrooms": 2,
+  "reviews": 13
+ },
+ {
+  "hostawayId": 595186,
+  "region": "Glasgow",
+  "town": "Baillieston",
+  "district": "G69",
+  "bedrooms": 2,
+  "reviews": 10
+ },
+ {
+  "hostawayId": 507365,
+  "region": "Inverness and Highlands",
+  "town": "Portree, Isle of Skye",
+  "district": "IV51",
+  "bedrooms": 3,
+  "reviews": 15
+ },
+ {
+  "hostawayId": 454207,
+  "region": "Lanarkshire",
+  "town": "Wishaw",
+  "district": "ML2",
+  "bedrooms": 3,
+  "reviews": 14
+ },
+ {
+  "hostawayId": 505632,
+  "region": "Lanarkshire",
+  "town": "East Kilbride",
+  "district": "G75",
+  "bedrooms": 3,
+  "reviews": 16
+ },
+ {
+  "hostawayId": 490152,
+  "region": "Midlothian",
+  "town": "Polton",
+  "district": "EH18",
+  "bedrooms": 3,
+  "reviews": 35
+ },
+ {
+  "hostawayId": 482408,
+  "region": "Renfrewshire and Inverclyde",
+  "town": "Renfrew",
+  "district": "PA4",
+  "bedrooms": 1,
+  "reviews": 53
+ },
+ {
+  "hostawayId": 565688,
+  "region": "Renfrewshire and Inverclyde",
+  "town": "Renfrew",
+  "district": "PA4",
+  "bedrooms": 1,
+  "reviews": 29
+ },
+ {
+  "hostawayId": 575922,
+  "region": "Renfrewshire and Inverclyde",
+  "town": "Greenock",
+  "district": "PA16",
+  "bedrooms": 2,
+  "reviews": 17
+ },
+ {
+  "hostawayId": 505584,
+  "region": "Renfrewshire and Inverclyde",
+  "town": "Paisley",
+  "district": "PA2",
+  "bedrooms": 3,
+  "reviews": 21
+ },
+ {
+  "hostawayId": 454206,
+  "region": "Renfrewshire and Inverclyde",
+  "town": "Paisley",
+  "district": "PA2",
+  "bedrooms": 3,
+  "reviews": 34
+ },
+ {
+  "hostawayId": 600041,
+  "region": "Renfrewshire and Inverclyde",
+  "town": "Bishopton",
+  "district": "PA7",
+  "bedrooms": 2,
+  "reviews": 3
+ },
+ {
+  "hostawayId": 587840,
+  "region": "Scottish Borders",
+  "town": "Hawick",
+  "district": "TD9",
+  "bedrooms": 2,
+  "reviews": 4
+ },
+ {
+  "hostawayId": 578167,
+  "region": "Scottish Borders",
+  "town": "Hawick",
+  "district": "TD9",
+  "bedrooms": 2,
+  "reviews": 12
+ },
+ {
+  "hostawayId": 571545,
+  "region": "Scottish Borders",
+  "town": "Hawick",
+  "district": "TD9",
+  "bedrooms": 2,
+  "reviews": 19
+ },
+ {
+  "hostawayId": 512069,
+  "region": "Scottish Borders",
+  "town": "Hawick",
+  "district": "TD9",
+  "bedrooms": 2,
+  "reviews": 23
+ },
+ {
+  "hostawayId": 565855,
+  "region": "Scottish Borders",
+  "town": "Hawick",
+  "district": "TD9",
+  "bedrooms": 3,
+  "reviews": 10
+ },
+ {
+  "hostawayId": 478134,
+  "region": "Scottish Borders",
+  "town": "Hawick",
+  "district": "TD9",
+  "bedrooms": 2,
+  "reviews": 48
+ },
+ {
+  "hostawayId": 504345,
+  "region": "Scottish Borders",
+  "town": "Hawick",
+  "district": "TD9",
+  "bedrooms": 2,
+  "reviews": 22
+ },
+ {
+  "hostawayId": 560928,
+  "region": "Scottish Borders",
+  "town": "Galashiels",
+  "district": "TD1",
+  "bedrooms": 2,
+  "reviews": 22
+ },
+ {
+  "hostawayId": 487005,
+  "region": "Scottish Borders",
+  "town": "Hawick",
+  "district": "TD9",
+  "bedrooms": 3,
+  "reviews": 23
+ },
+ {
+  "hostawayId": 586123,
+  "region": "Scottish Borders",
+  "town": "Hawick",
+  "district": "TD9",
+  "bedrooms": 3,
+  "reviews": 5
+ },
+ {
+  "hostawayId": 478430,
+  "region": "Scottish Borders",
+  "town": "Hawick",
+  "district": "TD9",
+  "bedrooms": 2,
+  "reviews": 33
+ },
+ {
+  "hostawayId": 594518,
+  "region": "Stirling and Falkirk",
+  "town": "Airth",
+  "district": "FK2",
+  "bedrooms": 2,
+  "reviews": 5
+ },
+ {
+  "hostawayId": 447686,
+  "region": "West Lothian",
+  "town": "Livingston",
+  "district": "EH54",
+  "bedrooms": 2,
+  "reviews": 88
+ },
+ {
+  "hostawayId": 490134,
+  "region": "West Lothian",
+  "town": "Armadale",
+  "district": "EH48",
+  "bedrooms": 3,
+  "reviews": 27
+ },
+ {
+  "hostawayId": 447680,
+  "region": "West Lothian",
+  "town": "Livingston",
+  "district": "EH54",
+  "bedrooms": 2,
+  "reviews": 124
+ },
+ {
+  "hostawayId": 448151,
+  "region": "West Lothian",
+  "town": "Armadale",
+  "district": "EH48",
+  "bedrooms": 3,
+  "reviews": 84
+ },
+ {
+  "hostawayId": 529945,
+  "region": "West Lothian",
+  "town": "Blackridge",
+  "district": "EH48",
+  "bedrooms": 1,
+  "reviews": 38
+ },
+ {
+  "hostawayId": 447678,
+  "region": "West Lothian",
+  "town": "Livingston",
+  "district": "EH54",
+  "bedrooms": 3,
+  "reviews": 125
+ },
+ {
+  "hostawayId": 456017,
+  "region": "West Lothian",
+  "town": "Livingston",
+  "district": "EH54",
+  "bedrooms": 2,
+  "reviews": 79
+ },
+ {
+  "hostawayId": 447684,
+  "region": "West Lothian",
+  "town": "Livingston",
+  "district": "EH54",
+  "bedrooms": 2,
+  "reviews": 114
+ },
+ {
+  "hostawayId": 477155,
+  "region": "West Lothian",
+  "town": "Livingston",
+  "district": "EH54",
+  "bedrooms": 3,
+  "reviews": 66
+ }
+]

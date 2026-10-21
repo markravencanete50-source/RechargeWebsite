@@ -1,25 +1,31 @@
-import { ArrowUpRight, BedDouble, MapPin, Users } from "lucide-react";
+import { Bath, BedDouble, MapPin, Users } from "lucide-react";
 import Link from "next/link";
-import type { Home } from "@/content/photos";
+import type { Home } from "@/content/properties";
+import { AmenityIcon } from "./Amenity";
 import { Photo } from "./Photo";
 
 export function HomeCard({ home, priority }: { home: Home; priority?: boolean }) {
+  const top = home.amenities.slice(0, 3);
   return (
     <Link className="home-card" href={`/properties/${home.slug}`}>
       <div className="home-photo">
-        <Photo photo={home.photos[0]} sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 25vw" priority={priority} />
-        <span className="home-open"><ArrowUpRight size={18} /></span>
+        <Photo photo={home.photos[0]} alt={`${home.title}, ${home.town}`} sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 25vw" priority={priority} />
+        {home.photos.length > 1 && <span className="home-count">{home.photos.length} photos</span>}
       </div>
-      <div className="home-meta">
-        <strong>{home.name}</strong>
-        <span className="home-area"><MapPin size={15} /> {home.area}</span>
-      </div>
-      {(home.sleeps || home.bedrooms) && (
+      <div className="home-body">
+        <span className="home-area"><MapPin size={15} /> {home.town}, {home.region}</span>
+        <strong className="home-title">{home.title}</strong>
         <div className="home-facts">
-          {home.sleeps && <span><Users size={15} /> Sleeps {home.sleeps}</span>}
-          {home.bedrooms && <span><BedDouble size={15} /> {home.bedrooms} bedroom{home.bedrooms > 1 ? "s" : ""}</span>}
+          <span><BedDouble size={15} /> {home.bedrooms} bed{home.bedrooms === 1 ? "" : "s"}</span>
+          {home.guests && <span><Users size={15} /> Sleeps {home.guests}</span>}
+          {home.bathrooms && <span><Bath size={15} /> {home.bathrooms} bath</span>}
         </div>
-      )}
+        {top.length > 0 && (
+          <div className="home-amenities">
+            {top.map((a) => <span key={a}><AmenityIcon name={a} size={14} /> {a}</span>)}
+          </div>
+        )}
+      </div>
     </Link>
   );
 }
