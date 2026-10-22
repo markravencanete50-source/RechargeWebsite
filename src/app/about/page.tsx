@@ -13,7 +13,7 @@ import { showcase } from "@/content/showcase";
 import { abs, breadcrumbs, graph, organization } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "About Recharge",
+  title: "About us: serviced accommodation in Scotland",
   description: "Recharge runs serviced accommodation and short lets across Scotland. We managed our own homes first, then opened the same service to owners. Meet the team and see how we work.",
   alternates: { canonical: "/about" },
 };
