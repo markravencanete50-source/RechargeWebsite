@@ -1514,10 +1514,6 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .adm-switch input:focus-visible + span { outline: 3px solid var(--moss); outline-offset: 2px; }
 .adm-inline { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
 .adm-inline input { width: 80px; }
-.adm-amen { display: flex; flex-wrap: wrap; gap: 6px; max-height: 280px; overflow-y: auto; padding: 2px; }
-.adm-amen button { display: inline-flex; align-items: center; gap: 5px; min-height: 36px; padding: 0 12px; border-radius: 999px; border: 1.5px solid var(--line); background: #fff; color: var(--muted); font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; }
-.adm-amen button[aria-pressed="true"] { background: var(--mint-wash); border-color: var(--moss); color: var(--forest-deep); font-weight: 600; }
-.adm-add { display: flex; gap: 8px; }
 .adm-check { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--ink); cursor: pointer; }
 .adm-check input { width: 20px; height: 20px; min-height: 0; margin: 1px 0 0; padding: 0; flex: none; accent-color: var(--moss); }
 
@@ -1556,9 +1552,6 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .adm-tools + .adm-sub { margin-top: 6px; }
 .adm-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .adm-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.adm-prefix { display: flex !important; align-items: stretch; justify-content: flex-start !important; gap: 0 !important; }
-.adm-prefix em { display: flex; align-items: center; padding: 0 4px 0 14px; font-style: normal; font-weight: 400; color: var(--muted); background: var(--cream); border: 1.5px solid var(--line); border-right: 0; border-radius: 12px 0 0 12px; white-space: nowrap; }
-.adm-prefix input { border-radius: 0 12px 12px 0; }
 .adm-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
 .adm-photos figure { margin: 0; display: grid; gap: 6px; padding: 6px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
 .adm-photos img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; }
@@ -1780,3 +1773,19 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
   .page-hero.has-photo { min-height: 0; }
   .page-hero-photo::after { background: linear-gradient(0deg, rgb(18 48 42 / 0.95) 10%, rgb(18 48 42 / 0.7) 60%, rgb(18 48 42 / 0.45) 100%); }
 }
+
+/* Dashboard: amenity picker */
+.ap { display: grid; gap: 10px; }
+.ap-chosen { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.ap-chosen li { display: inline-flex; align-items: center; gap: 2px; min-height: 36px; padding: 0 4px 0 12px; border-radius: 999px; background: var(--mint-wash); border: 1.5px solid var(--moss); color: var(--forest-deep); font-size: 13px; font-weight: 600; }
+.ap-chosen button { width: 28px; height: 28px; display: grid; place-items: center; border: 0; border-radius: 50%; background: transparent; color: var(--forest); cursor: pointer; }
+.ap-chosen button:hover { background: rgb(27 62 56 / 0.1); }
+.ap-empty { margin: 0; font-size: 13px; font-weight: 400; color: var(--muted); }
+.ap-search { position: relative; display: block; }
+.ap-search svg { position: absolute; left: 14px; top: 50%; translate: 0 -50%; color: var(--muted); pointer-events: none; }
+.adm .ap-search input { padding-left: 40px; }
+.ap-options { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.ap-label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+.ap-options button { display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0 12px; border-radius: 999px; border: 1.5px dashed var(--line); background: #fff; color: var(--forest); font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; }
+.ap-options button:hover { border-style: solid; border-color: var(--moss); }
+.ap-options .ap-custom { border-style: solid; border-color: var(--forest); font-weight: 600; }

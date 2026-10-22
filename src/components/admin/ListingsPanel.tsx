@@ -1,8 +1,9 @@
 "use client";
 
-import { Check, EyeOff, Globe, Loader2, Plus, RotateCcw, Search, Star, X } from "lucide-react";
+import { EyeOff, Globe, Loader2, Plus, RotateCcw, Search, Star, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { adminFetch, supabase } from "@/lib/supabase-browser";
+import { AmenityPicker } from "./AmenityPicker";
 import { WebsiteListingEditor, type WebsiteRow } from "./WebsiteListingEditor";
 
 type Base = { hostawayId: number; slug: string; title: string; description: string; amenities: string[]; photo: string | null; region: string; town: string; bedrooms: number; price: number | null };
@@ -149,14 +150,11 @@ function Editor({ base, override, vocabulary, onClose, onSaved }: { base: Base; 
   const [title, setTitle] = useState(override?.title ?? base.title);
   const [description, setDescription] = useState(override?.description ?? base.description);
   const [amenities, setAmenities] = useState<string[]>(override?.amenities ?? base.amenities);
-  const [extra, setExtra] = useState("");
   const [hostaway, setHostaway] = useState(true);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<{ tone: "ok" | "error"; text: string } | null>(null);
 
-  const all = useMemo(() => [...new Set([...amenities, ...vocabulary])].sort((a, b) => a.localeCompare(b)), [amenities, vocabulary]);
   const textChanged = title.trim() !== base.title || description.trim() !== base.description || amenities.length !== base.amenities.length || amenities.some((a) => !base.amenities.includes(a));
-  const toggle = (a: string) => setAmenities((list) => (list.includes(a) ? list.filter((x) => x !== a) : [...list, a]));
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -201,16 +199,8 @@ function Editor({ base, override, vocabulary, onClose, onSaved }: { base: Base; 
           <label className="adm-field">Title<input value={title} maxLength={200} onChange={(e) => setTitle(e.target.value)} /><small>Hostaway: {base.title}</small></label>
           <label className="adm-field">Description<textarea rows={12} value={description} maxLength={20000} onChange={(e) => setDescription(e.target.value)} /></label>
           <div className="adm-field">
-            <span>Amenities <small>{amenities.length} selected</small></span>
-            <div className="adm-amen">
-              {all.map((a) => (
-                <button key={a} type="button" aria-pressed={amenities.includes(a)} onClick={() => toggle(a)}>{amenities.includes(a) && <Check size={13} />}{a}</button>
-              ))}
-            </div>
-            <div className="adm-add">
-              <input placeholder="Add another amenity" value={extra} maxLength={80} onChange={(e) => setExtra(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); if (extra.trim()) { setAmenities((l) => [...new Set([...l, extra.trim()])]); setExtra(""); } } }} />
-              <button type="button" className="adm-btn" onClick={() => { if (extra.trim()) { setAmenities((l) => [...new Set([...l, extra.trim()])]); setExtra(""); } }}><Plus size={14} /> Add</button>
-            </div>
+            <span>Amenities <small>{amenities.length} chosen</small></span>
+            <AmenityPicker value={amenities} onChange={setAmenities} vocabulary={vocabulary} />
           </div>
         </div>
         <footer>

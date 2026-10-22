@@ -1,8 +1,9 @@
 "use client";
 
-import { ArrowLeft, Check, ImagePlus, Loader2, Plus, Trash2, X } from "lucide-react";
+import { ArrowLeft, ImagePlus, Loader2, Trash2, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { adminFetch, supabase } from "@/lib/supabase-browser";
+import { AmenityPicker } from "./AmenityPicker";
 
 type Photo = { src: string; alt: string };
 export type WebsiteData = {
@@ -28,8 +29,6 @@ export function WebsiteListingEditor({ row, vocabulary, regions, towns, takenSlu
   const [featured, setFeatured] = useState(!!row?.featured_rank);
   const [rank, setRank] = useState(String(row?.featured_rank ?? 1));
   const [title, setTitle] = useState(d.title ?? "");
-  const [slug, setSlug] = useState(row?.slug ?? "");
-  const [slugTouched, setSlugTouched] = useState(!!row);
   const [region, setRegion] = useState(d.region ?? "");
   const [town, setTown] = useState(d.town ?? "");
   const [district, setDistrict] = useState(d.district ?? "");
@@ -40,18 +39,23 @@ export function WebsiteListingEditor({ row, vocabulary, regions, towns, takenSlu
   const [description, setDescription] = useState(d.description ?? "");
   const [houseRules, setHouseRules] = useState(d.houseRules ?? "");
   const [amenities, setAmenities] = useState<string[]>(d.amenities ?? []);
-  const [extra, setExtra] = useState("");
   const [photos, setPhotos] = useState<Photo[]>(d.photos ?? []);
   const [uploading, setUploading] = useState(0);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<{ tone: "ok" | "error"; text: string } | null>(null);
 
-  const finalSlug = slugTouched ? slug : slugify(title);
-  const all = useMemo(() => [...new Set([...amenities, ...vocabulary])].sort((a, b) => a.localeCompare(b)), [amenities, vocabulary]);
+  // The web address is made from the home itself, like the Hostaway homes ("2-bedroom-home-in-glasgow"), with a number added
+  // when another home has it. Once saved it never changes, so links to the listing keep working.
+  const [savedSlug, setSavedSlug] = useState(row?.slug ?? null);
+  const finalSlug = useMemo(() => {
+    if (savedSlug) return savedSlug;
+    const beds = Number(facts.bedrooms);
+    const base = slugify(`${beds > 0 ? `${beds}-bedroom` : "studio"}-home-in-${town}`);
+    if (!takenSlugs.has(base)) return base;
+    for (let n = 2; ; n++) if (!takenSlugs.has(`${base}-${n}`)) return `${base}-${n}`;
+  }, [savedSlug, facts.bedrooms, town, takenSlugs]);
   const townOptions = towns.filter((t) => !region || t.region === region);
   const set = (k: keyof typeof facts) => (e: React.ChangeEvent<HTMLInputElement>) => setFacts((f) => ({ ...f, [k]: e.target.value }));
-  const toggle = (a: string) => setAmenities((l) => (l.includes(a) ? l.filter((x) => x !== a) : [...l, a]));
-  const addExtra = () => { if (extra.trim()) { setAmenities((l) => [...new Set([...l, extra.trim()])]); setExtra(""); } };
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -77,8 +81,6 @@ export function WebsiteListingEditor({ row, vocabulary, regions, towns, takenSlu
 
   function check(): string | null {
     if (!title.trim()) return "Add a title.";
-    if (!/^[a-z0-9][a-z0-9-]{1,119}$/.test(finalSlug)) return "The web address needs at least two letters or numbers.";
-    if (takenSlugs.has(finalSlug) && finalSlug !== row?.slug) return "Another home already uses that web address. Change the title or the address.";
     if (!region.trim() || !town.trim()) return "Add the area and the town.";
     if (!(Number(facts.bedrooms) >= 0)) return "Add the number of bedrooms (0 for a studio).";
     if (featured && !(Number(rank) >= 1 && Number(rank) <= 100)) return "Featured position must be 1 to 100.";
@@ -107,6 +109,7 @@ export function WebsiteListingEditor({ row, vocabulary, regions, towns, takenSlu
       return;
     }
     setId(saved.id);
+    setSavedSlug(values.slug);
     await adminFetch("/api/admin/refresh", { method: "POST" });
     await onSaved();
     setBusy(false);
@@ -138,10 +141,6 @@ export function WebsiteListingEditor({ row, vocabulary, regions, towns, takenSlu
           </div>
 
           <label className="adm-field">Title<input value={title} maxLength={200} placeholder="For example: 2-bedroom flat in Glasgow city centre" onChange={(e) => setTitle(e.target.value)} /></label>
-          <label className="adm-field">Web address
-            <span className="adm-prefix"><em>/properties/</em><input value={finalSlug} maxLength={120} onChange={(e) => { setSlugTouched(true); setSlug(slugify(e.target.value)); }} /></span>
-          </label>
-
           <div className="adm-grid">
             <label className="adm-field">Area<input list="adm-regions" value={region} maxLength={80} onChange={(e) => setRegion(e.target.value)} /></label>
             <label className="adm-field">Town<input list="adm-towns" value={town} maxLength={80} onChange={(e) => setTown(e.target.value)} /></label>
@@ -187,14 +186,8 @@ export function WebsiteListingEditor({ row, vocabulary, regions, towns, takenSlu
           <label className="adm-field"><span>House rules <small>optional</small></span><textarea rows={4} value={houseRules} maxLength={5000} onChange={(e) => setHouseRules(e.target.value)} /></label>
 
           <div className="adm-field">
-            <span>Amenities <small>{amenities.length} selected</small></span>
-            <div className="adm-amen">
-              {all.map((a) => <button key={a} type="button" aria-pressed={amenities.includes(a)} onClick={() => toggle(a)}>{amenities.includes(a) && <Check size={13} />}{a}</button>)}
-            </div>
-            <div className="adm-add">
-              <input placeholder="Add another amenity" value={extra} maxLength={80} onChange={(e) => setExtra(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addExtra(); } }} />
-              <button type="button" className="adm-btn" onClick={addExtra}><Plus size={14} /> Add</button>
-            </div>
+            <span>Amenities <small>{amenities.length} chosen</small></span>
+            <AmenityPicker value={amenities} onChange={setAmenities} vocabulary={vocabulary} />
           </div>
         </div>
         <footer>
