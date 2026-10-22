@@ -15,7 +15,8 @@ export async function GET(request: Request) {
   const nights = (Date.parse(checkout) - Date.parse(checkin)) / 86_400_000;
   const today = new Date().toISOString().slice(0, 10);
   if (!(nights >= 1 && nights <= 365) || checkin < today) return Response.json({ error: "dates" }, { status: 400 });
-  if (!hostawayConnected()) return Response.json({ error: "not_connected" }, { status: 503 });
+  // A home added in the dashboard has no Hostaway calendar: the panel shows an estimate and the team confirms the price.
+  if (!hostawayConnected() || home.source === "website") return Response.json({ error: "not_connected" }, { status: 503 });
   try {
     const q = await quote(home.hostawayId, checkin, checkout);
     return Response.json(q, { headers: { "cache-control": "private, max-age=60" } });

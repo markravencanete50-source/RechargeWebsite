@@ -304,8 +304,9 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
             </div>
             <aside className="book-card" aria-label="Book this home">
               <BookingPanel
-                home={{ slug: home.slug, title: heading(home), town: home.town, price: home.price, currency: home.currency, maxGuests: home.guests, checkIn: home.checkIn, bookingUrl: home.bookingUrl ?? site.bookingUrl, longStay: l.longStay }}
+                home={{ slug: home.slug, title: heading(home), town: home.town, region: home.region, price: home.price, currency: home.currency, maxGuests: home.guests, checkIn: home.checkIn, bookingUrl: home.bookingUrl ?? site.bookingUrl, longStay: l.longStay }}
                 contact={{ phone: site.phone, email: site.email, discount: site.directDiscount }}
+                discounts={catalog.discounts.filter((d) => !d.region || d.region === home.region)}
               />
               <ul className="facts">
                 {facts.map((f) => <li key={f.text}><f.icon size={18} /> {f.text}</li>)}

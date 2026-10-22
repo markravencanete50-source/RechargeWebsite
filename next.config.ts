@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   images: {
-    // Property photos: Hostaway's image store, or Cloudinary.
-    remotePatterns: [new URL("https://res.cloudinary.com/**"), new URL("https://hostaway-platform.s3.us-west-2.amazonaws.com/**"), new URL("https://upload.wikimedia.org/**"), new URL("https://thumb.wikimedia.org/**")],
+    // Property photos: Hostaway's image store, Cloudinary, or the dashboard's own photo store.
+    remotePatterns: [new URL("https://arxerajvwtrndolfsfcn.supabase.co/storage/v1/object/public/listing-photos/**"), new URL("https://res.cloudinary.com/**"), new URL("https://hostaway-platform.s3.us-west-2.amazonaws.com/**"), new URL("https://upload.wikimedia.org/**"), new URL("https://thumb.wikimedia.org/**")],
     formats: ["image/avif", "image/webp"],
   },
   turbopack: {

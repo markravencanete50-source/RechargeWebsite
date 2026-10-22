@@ -1,17 +1,19 @@
 "use client";
 
 import type { Session } from "@supabase/supabase-js";
-import { Activity, Home, Loader2, LogOut, Users } from "lucide-react";
+import { Activity, BadgePercent, Home, Loader2, LogOut, Users } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState, type FormEvent } from "react";
 import { supabase } from "@/lib/supabase-browser";
 import { ActivityPanel } from "./ActivityPanel";
 import { AdminsPanel } from "./AdminsPanel";
+import { DiscountsPanel } from "./DiscountsPanel";
 import { ListingsPanel } from "./ListingsPanel";
 
-type Tab = "listings" | "admins" | "activity";
+type Tab = "listings" | "discounts" | "admins" | "activity";
 const TABS: { id: Tab; label: string; icon: typeof Home }[] = [
   { id: "listings", label: "Listings", icon: Home },
+  { id: "discounts", label: "Discounts", icon: BadgePercent },
   { id: "admins", label: "Admins", icon: Users },
   { id: "activity", label: "Activity", icon: Activity },
 ];
@@ -74,6 +76,7 @@ export function AdminApp() {
       </aside>
       <main className="adm-main">
         {tab === "listings" && <ListingsPanel />}
+        {tab === "discounts" && <DiscountsPanel />}
         {tab === "admins" && <AdminsPanel me={session.user.id} />}
         {tab === "activity" && <ActivityPanel />}
       </main>

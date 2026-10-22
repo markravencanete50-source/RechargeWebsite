@@ -1,14 +1,16 @@
 "use client";
 
-import { ArrowUpRight, CalendarDays, Check, ChevronDown, Info, Loader2, MessageCircle, Minus, Plus, Sparkles } from "lucide-react";
+import { ArrowUpRight, BadgePercent, CalendarDays, Check, ChevronDown, Info, Loader2, MessageCircle, Minus, Plus, Sparkles } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
+import type { Discount } from "@/content/catalog";
+import { amountOff, discountsFor, ukToday, type StayDiscounts } from "@/content/discounts";
 import type { Quote } from "@/lib/hostaway";
 import { RollingNumber } from "./RollingNumber";
 import { TeamChat, useTeamChat } from "./TeamChat";
 
 const ease = [0.2, 0.7, 0.2, 1] as const;
-type HomeInfo = { slug: string; title: string; town: string; price?: number; currency?: string; maxGuests?: number; checkIn?: string; bookingUrl: string; longStay: boolean };
+type HomeInfo = { slug: string; title: string; town: string; region: string; price?: number; currency?: string; maxGuests?: number; checkIn?: string; bookingUrl: string; longStay: boolean };
 type Contact = { phone: { display: string; href: string }; email: string; discount: string };
 
 const fmt = (n: number, c = "GBP") => new Intl.NumberFormat("en-GB", { style: "currency", currency: c, maximumFractionDigits: 0 }).format(n);
@@ -27,7 +29,7 @@ type State =
 // The booking card on a property page: choose dates and guests and see the cost add up, night by
 // night, with live prices and availability from Hostaway. Request to book or message the team
 // from the same card; both open the chat with the stay attached. Payment is added later.
-export function BookingPanel({ home, contact }: { home: HomeInfo; contact: Contact }) {
+export function BookingPanel({ home, contact, discounts = [] }: { home: HomeInfo; contact: Contact; discounts?: Discount[] }) {
   const reduce = useReducedMotion();
   const [checkin, setCheckin] = useState("");
   const [checkout, setCheckout] = useState("");
@@ -39,6 +41,9 @@ export function BookingPanel({ home, contact }: { home: HomeInfo; contact: Conta
   const closeChat = useCallback(() => setChat(null), []);
   const nights = checkin && checkout ? Math.round((Date.parse(checkout) - Date.parse(checkin)) / 86_400_000) : 0;
   const maxGuests = home.maxGuests ?? 16;
+  // Worked out once the page is in the browser, so a page built yesterday still shows today's offers.
+  const [deals, setDeals] = useState<StayDiscounts>({ offer: null, newGuest: null });
+  useEffect(() => { queueMicrotask(() => setDeals(discountsFor(discounts, home.region, ukToday()))); }, [discounts, home.region]);
 
   // Prices the stay whenever the dates settle.
   useEffect(() => {
@@ -62,7 +67,9 @@ export function BookingPanel({ home, contact }: { home: HomeInfo; contact: Conta
 
   const q = state.kind === "quote" ? state.q : null;
   const tooShort = q && q.nights < q.minStay;
-  const total = q ? q.total : state.kind === "estimate" && home.price ? home.price * state.nights : 0;
+  const subtotal = q ? q.subtotal : state.kind === "estimate" && home.price ? home.price * state.nights : 0;
+  const offerOff = deals.offer ? amountOff(subtotal, deals.offer.percent) : 0;
+  const total = (q ? q.total : subtotal) - offerOff;
   const currency = q?.currency ?? home.currency ?? "GBP";
   const avg = q && q.nights ? Math.round(q.subtotal / q.nights) : home.price ?? 0;
   const bookable = !!q && q.available && !tooShort && guests <= (q.maxGuests ?? maxGuests);
@@ -71,6 +78,9 @@ export function BookingPanel({ home, contact }: { home: HomeInfo; contact: Conta
   return (
     <>
       <div className="bp" id="book">
+        {(deals.offer || deals.newGuest) && (
+          <p className="bp-deal"><BadgePercent size={16} /> {deals.offer ? <><strong>{deals.offer.percent}% off</strong> {deals.offer.label}</> : <><strong>{deals.newGuest!.percent}% off</strong> your first stay with us</>}</p>
+        )}
         <p className="book-price">{home.price !== undefined ? <>From around <strong>{fmt(home.price, home.currency)}</strong> a night</> : <strong>Book direct</strong>}</p>
 
         <div className="bp-dates">
@@ -114,7 +124,7 @@ export function BookingPanel({ home, contact }: { home: HomeInfo; contact: Conta
                       {fmt(avg, currency)} × {q ? q.nights : nights} night{(q ? q.nights : nights) === 1 ? "" : "s"}
                       {q && <ChevronDown size={14} style={{ transform: showNights ? "rotate(180deg)" : undefined, transition: "transform 300ms" }} />}
                     </button>
-                    <span>{fmt(q ? q.subtotal : total, currency)}</span>
+                    <span>{fmt(subtotal, currency)}</span>
                   </motion.li>
                   <AnimatePresence initial={false}>
                     {q && showNights && (
@@ -126,6 +136,9 @@ export function BookingPanel({ home, contact }: { home: HomeInfo; contact: Conta
                   {q && q.cleaningFee > 0 && (
                     <motion.li initial={reduce ? false : { opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.12 }}><span>Cleaning fee</span><span>{fmt(q.cleaningFee, currency)}</span></motion.li>
                   )}
+                  {offerOff > 0 && deals.offer && (
+                    <motion.li className="bp-off" initial={reduce ? false : { opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.16 }}><span>{deals.offer.label} ({deals.offer.percent}%)</span><span>−{fmt(offerOff, currency)}</span></motion.li>
+                  )}
                   <motion.li className="bp-total" initial={reduce ? false : { opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
                     <span>{state.kind === "estimate" ? "Estimated total" : "Total"}</span>
                     <strong>{currency === "GBP" ? "£" : ""}<RollingNumber value={Math.round(total)} /></strong>
@@ -136,6 +149,7 @@ export function BookingPanel({ home, contact }: { home: HomeInfo; contact: Conta
                 {q && q.available && tooShort && <p className="bp-note warn"><Info size={14} /> The minimum stay for these dates is {q.minStay} nights.</p>}
                 {q && guests > (q.maxGuests ?? maxGuests) && <p className="bp-note warn"><Info size={14} /> This home sleeps up to {q.maxGuests ?? maxGuests}.</p>}
                 {bookable && <motion.p className="bp-note ok" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}><Check size={14} /> Available for your dates</motion.p>}
+                {deals.newGuest && <p className="bp-note ok"><BadgePercent size={14} /> New to Recharge? {deals.newGuest.label}: a further {deals.newGuest.percent}% off the nightly price of your first stay. We add it when you send your request.</p>}
                 {home.longStay && nights >= 28 && <p className="bp-note ok"><Sparkles size={14} /> Long-stay discount available on request. Ask us below.</p>}
               </motion.div>
             )}

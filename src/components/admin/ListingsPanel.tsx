@@ -1,14 +1,16 @@
 "use client";
 
-import { Check, EyeOff, Loader2, Plus, RotateCcw, Search, Star, X } from "lucide-react";
+import { Check, EyeOff, Globe, Loader2, Plus, RotateCcw, Search, Star, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { adminFetch, supabase } from "@/lib/supabase-browser";
+import { WebsiteListingEditor, type WebsiteRow } from "./WebsiteListingEditor";
 
 type Base = { hostawayId: number; slug: string; title: string; description: string; amenities: string[]; photo: string | null; region: string; town: string; bedrooms: number; price: number | null };
 type Override = { hostaway_id: number; published: boolean; featured_rank: number | null; title: string | null; description: string | null; amenities: string[] | null };
-type Filter = "all" | "shown" | "hidden" | "featured" | "edited";
+type Filter = "all" | "shown" | "hidden" | "featured" | "edited" | "website";
 
-// Every Hostaway home, with what the website shows for it: shown or hidden, featured, and any edited text or amenities.
+// Every Hostaway home, with what the website shows for it: shown or hidden, featured, and any edited text or amenities. Below
+// them, the homes added in the dashboard only.
 export function ListingsPanel() {
   const [base, setBase] = useState<Base[] | null>(null);
   const [vocabulary, setVocabulary] = useState<string[]>([]);
@@ -17,19 +19,27 @@ export function ListingsPanel() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
   const [open, setOpen] = useState<Base | null>(null);
+  const [own, setOwn] = useState<WebsiteRow[]>([]);
+  const [openOwn, setOpenOwn] = useState<WebsiteRow | "new" | null>(null);
 
   const load = useCallback(async () => {
     setError("");
-    const [res, ov] = await Promise.all([adminFetch("/api/admin/listings"), supabase.from("listing_overrides").select("hostaway_id,published,featured_rank,title,description,amenities")]);
+    const [res, ov, web] = await Promise.all([
+      adminFetch("/api/admin/listings"),
+      supabase.from("listing_overrides").select("hostaway_id,published,featured_rank,title,description,amenities"),
+      supabase.from("website_listings").select("id,slug,published,featured_rank,data").order("created_at"),
+    ]);
     if (!res.ok) { setError("The listings could not be loaded. Sign out and in again."); return; }
     const data = await res.json();
     setBase(data.listings); setVocabulary(data.vocabulary);
     setOverrides(new Map((ov.data ?? []).map((o: Override) => [o.hostaway_id, o])));
+    setOwn((web.data ?? []) as WebsiteRow[]);
   }, []);
   useEffect(() => { queueMicrotask(load); }, [load]);
 
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
+    if (filter === "website") return [];
     return (base ?? []).filter((b) => {
       const o = overrides.get(b.hostawayId);
       const text = `${o?.title ?? b.title} ${b.town} ${b.region} ${b.hostawayId}`.toLowerCase();
@@ -41,6 +51,21 @@ export function ListingsPanel() {
       return true;
     }).sort((a, b) => (overrides.get(a.hostawayId)?.featured_rank ?? 1000) - (overrides.get(b.hostawayId)?.featured_rank ?? 1000));
   }, [base, overrides, query, filter]);
+  const ownRows = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return own.filter((w) => {
+      if (q && !`${w.data.title} ${w.data.town} ${w.data.region} ${w.slug}`.toLowerCase().includes(q)) return false;
+      if (filter === "shown") return w.published;
+      if (filter === "hidden") return !w.published;
+      if (filter === "featured") return !!w.featured_rank;
+      return filter !== "edited";
+    });
+  }, [own, query, filter]);
+  const places = useMemo(() => {
+    const towns = new Map<string, string>();
+    for (const b of base ?? []) towns.set(b.town, b.region);
+    return { regions: [...new Set((base ?? []).map((b) => b.region))].sort(), towns: [...towns].map(([name, region]) => ({ name, region })).sort((a, b) => a.name.localeCompare(b.name)) };
+  }, [base]);
 
   if (error) return <p className="adm-note error">{error}</p>;
   if (!base) return <div className="adm-center"><Loader2 className="spin" /></div>;
@@ -49,16 +74,43 @@ export function ListingsPanel() {
   return (
     <section>
       <header className="adm-head">
-        <div><h1>Listings</h1><p className="adm-muted">{counts.all} homes from Hostaway · {counts.all - counts.hidden} on the website · {counts.featured} featured</p></div>
+        <div><h1>Listings</h1><p className="adm-muted">{counts.all} homes from Hostaway · {counts.all - counts.hidden} on the website · {counts.featured} featured{own.length ? ` · ${own.length} added here` : ""}</p></div>
+        <button type="button" className="adm-btn primary" onClick={() => setOpenOwn("new")}><Plus size={16} /> Add a listing</button>
       </header>
       <div className="adm-tools">
         <label className="adm-search"><Search size={16} /><input placeholder="Search by name, town or Hostaway ID" value={query} onChange={(e) => setQuery(e.target.value)} /></label>
         <div className="adm-chips">
-          {(["all", "shown", "hidden", "featured", "edited"] as Filter[]).map((f) => (
-            <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)}>{f[0].toUpperCase() + f.slice(1)}</button>
+          {(["all", "shown", "hidden", "featured", "edited", "website"] as Filter[]).map((f) => (
+            <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === "website" ? "Added here" : f[0].toUpperCase() + f.slice(1)}</button>
           ))}
         </div>
       </div>
+      {ownRows.length > 0 && (
+        <>
+          <h2 className="adm-sub">Added in the dashboard</h2>
+          <ul className="adm-list">
+            {ownRows.map((w) => (
+              <li key={w.id}>
+                <button type="button" onClick={() => setOpenOwn(w)}>
+                  {/* eslint-disable-next-line @next/next/no-img-element -- small admin thumbnails, no need for the image optimiser */}
+                  <span className="adm-thumb">{w.data.photos?.[0] && <img src={w.data.photos[0].src} alt="" loading="lazy" />}</span>
+                  <span className="adm-row-main">
+                    <strong>{w.data.title}</strong>
+                    <small>{w.data.town}, {w.data.region} · {w.data.bedrooms ?? 0} bed{w.data.bedrooms === 1 ? "" : "s"}{w.data.price ? ` · around £${w.data.price}` : ""}</small>
+                  </span>
+                  <span className="adm-badges">
+                    <em><Globe size={13} /> Website only</em>
+                    {!w.published && <em className="hidden"><EyeOff size={13} /> Draft</em>}
+                    {w.featured_rank && <em className="featured"><Star size={13} /> Featured {w.featured_rank}</em>}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+          {rows.length > 0 && <h2 className="adm-sub">From Hostaway</h2>}
+        </>
+      )}
+      {filter === "website" && ownRows.length === 0 && <p className="adm-muted">No listings added here yet. Use Add a listing for a home that is not in Hostaway.</p>}
       <ul className="adm-list">
         {rows.map((b) => {
           const o = overrides.get(b.hostawayId);
@@ -81,6 +133,10 @@ export function ListingsPanel() {
           );
         })}
       </ul>
+      {openOwn && (
+        <WebsiteListingEditor row={openOwn === "new" ? null : openOwn} vocabulary={vocabulary} regions={places.regions} towns={places.towns}
+          takenSlugs={new Set([...base.map((b) => b.slug), ...own.map((w) => w.slug)])} onClose={() => setOpenOwn(null)} onSaved={load} />
+      )}
       {open && <Editor base={open} override={overrides.get(open.hostawayId)} vocabulary={vocabulary} onClose={() => setOpen(null)} onSaved={load} />}
     </section>
   );
