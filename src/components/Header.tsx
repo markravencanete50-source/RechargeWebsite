@@ -1,7 +1,7 @@
 "use client";
 
-import { Menu, Phone, X } from "lucide-react";
-import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
+import { Menu, Phone, UserRound, X } from "lucide-react";
+import { motion, useScroll, useSpring } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -12,7 +12,6 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 40 });
 
@@ -49,6 +48,7 @@ export function Header() {
           })}
         </nav>
         <div className="header-actions">
+          <a className="header-login" href={site.ownerLogin}><UserRound size={16} /> Owner login</a>
           <a className="header-phone" href={site.phone.href}>{site.phone.display}</a>
           <Link className="btn btn-primary" href="/properties">Book a stay</Link>
           <button className="menu-toggle" aria-label="Open menu" aria-expanded={open} onClick={() => setOpen(true)}>
@@ -56,7 +56,8 @@ export function Header() {
           </button>
         </div>
       </div>
-      {!reduce && <motion.span className="scroll-progress" style={{ scaleX: progress }} aria-hidden />}
+      {/* Always rendered so the server and browser agree; hidden by CSS for reduced motion. */}
+      <motion.span className="scroll-progress" style={{ scaleX: progress }} aria-hidden />
       {open && (
         <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="mobile-menu-top">
@@ -73,6 +74,7 @@ export function Header() {
           <div className="mobile-menu-foot">
             <Link className="btn btn-mint" href="/properties" onClick={() => setOpen(false)}>Book a stay</Link>
             <a className="btn btn-line-light" href={site.phone.href}><Phone size={18} /> {site.phone.display}</a>
+            <a className="mobile-login" href={site.ownerLogin}><UserRound size={18} /> Owner login</a>
           </div>
         </div>
       )}

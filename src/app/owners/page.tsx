@@ -1,6 +1,6 @@
 import { OwnerCalculator } from "@/components/OwnerCalculator";
 import { rateTable } from "@/content/estimate";
-import { ArrowRight, Check, Mail, Phone } from "lucide-react";
+import { ArrowRight, Check, Mail, Phone, Sofa, UserRound } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqSection } from "@/components/FaqSection";
@@ -88,6 +88,11 @@ export default async function OwnersPage() {
             <p className="lead">The same calculator our owners use in the Recharge app, with nightly rates from the {homes.length} homes we run today.</p>
           </Reveal>
           <OwnerCalculator table={rateTable()} />
+          <Reveal className="tool-band">
+            <span className="row-ic"><Sofa size={20} /></span>
+            <div><strong>Furnishing it yourself?</strong><span>Get a room-by-room list of everything a guest-ready home needs, from bed linen to the fire blanket.</span></div>
+            <Link className="btn btn-ghost" href="/owners/furnishing-calculator">Furnishing calculator <ArrowRight size={18} /></Link>
+          </Reveal>
         </div>
       </section>
 
@@ -120,6 +125,7 @@ export default async function OwnersPage() {
             <Reveal delay={0.08}><p className="lead">Every owner gets their own login to the Recharge client portal. This is what you see in it.</p></Reveal>
           </div>
           <OwnerPortal />
+          <p className="portal-login">Already an owner with us? <a className="btn btn-primary" href={site.ownerLogin}><UserRound size={18} /> Owner login</a></p>
         </div>
       </section>
 

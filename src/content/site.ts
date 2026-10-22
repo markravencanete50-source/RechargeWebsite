@@ -16,6 +16,8 @@ export const site = {
   company: { legalName: "", number: "", registeredOffice: "" },
   // CONFIRM: the old home page offers 10% off for booking direct.
   directDiscount: "10%",
+  // Owners sign in to their client portal in the Recharge app.
+  ownerLogin: "https://app.rechargegroup.co.uk/sign-in",
   // The owner enquiry form lives in the Recharge app. Set NEXT_PUBLIC_ENQUIRY_API (for example
   // https://app.rechargegroup.co.uk) once the app accepts submissions from this website's origin,
   // and the form on the Owners page sends there directly instead of linking out.

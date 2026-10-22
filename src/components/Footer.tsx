@@ -28,17 +28,20 @@ export async function Footer() {
               <li><Link href="/properties">Properties</Link></li>
               <li><Link href="/stay">Stays</Link></li>
               <li><Link href="/support">24/7 support</Link></li>
+              <li><Link href="/support#report">Report a problem</Link></li>
               <li><Link href="/faq">FAQ</Link></li>
             </ul>
           </div>
           <div>
             <h3>Owners</h3>
             <ul>
+              <li><a href={site.ownerLogin}>Owner login</a></li>
               <li><Link href="/owners">Guaranteed rent</Link></li>
               <li><Link href="/owners">Full management</Link></li>
               <li><Link href="/app">The Recharge app</Link></li>
               <li><Link href="/app#tools">App tools</Link></li>
               <li><Link href="/owners#estimate">Free estimate</Link></li>
+              <li><Link href="/owners/furnishing-calculator">Furnishing calculator</Link></li>
             </ul>
           </div>
           <div>

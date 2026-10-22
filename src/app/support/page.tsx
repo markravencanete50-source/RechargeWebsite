@@ -8,6 +8,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
+import { ReportProblem } from "@/components/ReportProblem";
 import { RowList } from "@/components/RowList";
 import { Situations } from "@/components/Situations";
 import { SplitHero } from "@/components/SplitHero";
@@ -15,6 +16,7 @@ import { Steps } from "@/components/Steps";
 import { SupportClock } from "@/components/SupportClock";
 import { supportExtraFaqs, supportFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
+import { heading } from "@/content/home-utils";
 import { site } from "@/content/site";
 import { breadcrumbs, graph, organization } from "@/lib/schema";
 
@@ -44,7 +46,7 @@ export default async function SupportPage() {
       >
         <div className="hero-actions">
           <a className="btn btn-mint" href={site.phone.href}><Phone size={18} /> Call {site.phone.display}</a>
-          <a className="btn btn-line-light" href="#contact">Send a message</a>
+          <a className="btn btn-line-light" href="#report">Report a problem</a>
         </div>
       </SplitHero>
 
@@ -72,10 +74,21 @@ export default async function SupportPage() {
             <Reveal className="channel" delay={0.16}>
               <span className="row-ic"><MessageSquareText size={20} /></span>
               <p className="eyebrow">Owners</p>
-              <Link className="channel-big small" href="/owners#portal">Your client portal</Link>
-              <p>Bookings, statements, approvals and repairs, in one place.</p>
+              <a className="channel-big small" href={site.ownerLogin}>Owner login</a>
+              <p>Your client portal: bookings, statements, approvals and repairs, in one place.</p>
             </Reveal>
           </div>
+        </div>
+      </section>
+
+      <section className="section paper" id="report" style={{ scrollMarginTop: 80 }}>
+        <div className="wrap report-wrap">
+          <Reveal className="section-head">
+            <p className="eyebrow">Staying with us now?</p>
+            <h2 className="h2">Report a problem</h2>
+            <p className="lead">Tell us which home and what is wrong. It goes straight to the team on duty, and they reply in the same window.</p>
+          </Reveal>
+          <ReportProblem homes={homes.map((h) => ({ slug: h.slug, title: heading(h), town: h.town }))} contact={{ phone: site.phone, email: site.email }} />
         </div>
       </section>
 
