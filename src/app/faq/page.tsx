@@ -8,6 +8,7 @@ import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
 import { appFaqs, generalFaqs, guestFaqs, ownerFaqs, propertiesFaqs, supportExtraFaqs, supportFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
+import { showcase } from "@/content/showcase";
 import { site } from "@/content/site";
 import { breadcrumbs, faqPage, graph } from "@/lib/schema";
 
@@ -32,7 +33,7 @@ export default async function FaqPage() {
   return (
     <>
       <JsonLd data={graph(faqPage(all), breadcrumbs([{ name: "FAQ", path: "/faq" }]))} />
-      <PageHero eyebrow="FAQ" title="Questions and answers" lead={`${all.length} straight answers for guests, owners and neighbours. Search below, or call ${site.phone.display} at any hour.`}>
+      <PageHero photo={showcase.business} eyebrow="FAQ" title="Questions and answers" lead={`${all.length} straight answers for guests, owners and neighbours. Search below, or call ${site.phone.display} at any hour.`}>
         <nav className="link-cloud faq-nav" aria-label="Topics">{groups.map((g) => <a key={g.id} href={`#${g.id}`}>{g.t}</a>)}</nav>
       </PageHero>
 

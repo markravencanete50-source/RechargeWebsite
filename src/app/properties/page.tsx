@@ -8,6 +8,7 @@ import { PropertyResults } from "@/components/PropertyResults";
 import { propertiesFaqs } from "@/content/faqs";
 import { cardOf, getCatalog } from "@/content/catalog";
 import { heading, regionSlug } from "@/content/home-utils";
+import { showcase } from "@/content/showcase";
 import { site } from "@/content/site";
 import { abs, breadcrumbs, graph } from "@/lib/schema";
 
@@ -28,7 +29,7 @@ export default async function PropertiesPage() {
         { "@type": "ItemList", name: "Recharge homes", numberOfItems: homes.length, itemListElement: homes.map((h, i) => ({ "@type": "ListItem", position: i + 1, url: abs(`/properties/${h.slug}`), name: heading(h) })) },
         breadcrumbs([{ name: "Properties", path: "/properties" }]),
       )} />
-      <PageHero eyebrow="Properties" title="Find a Recharge home" lead="Search by area, dates and guests. Every home is cleaned, checked and supported 24/7." />
+      <PageHero photo={showcase.stayHero} eyebrow="Properties" title="Find a Recharge home" lead="Search by area, dates and guests. Every home is cleaned, checked and supported 24/7." />
       <section className="section" style={{ paddingTop: 48 }}>
         <div className="wrap">
           <Suspense fallback={<div style={{ minHeight: 400 }} />}>

@@ -1767,3 +1767,16 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .sl-foot strong { color: var(--cream); }
 @media (prefers-reduced-motion: reduce) { .sl-status i::after, .sl-typing i { animation: none; } }
 @media (max-width: 480px) { .sl { padding: 14px; border-radius: 22px; } .sl-chat { min-height: 250px; } .sl-time strong { font-size: 24px; } }
+
+/* Page hero with a photo of one of our homes behind it */
+.page-hero.has-photo { min-height: clamp(380px, 52vh, 560px); display: flex; align-items: flex-end; }
+.page-hero.has-photo .wrap { width: 100%; }
+.page-hero-photo { position: absolute; inset: 0; overflow: hidden; }
+.page-hero-photo img { object-fit: cover; animation: hero-drift 28s ease-in-out infinite alternate; transform-origin: 60% 40%; }
+.page-hero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(18 48 42 / 0.94) 0%, rgb(18 48 42 / 0.82) 38%, rgb(18 48 42 / 0.35) 75%, rgb(18 48 42 / 0.2) 100%), linear-gradient(0deg, rgb(18 48 42 / 0.75) 0%, rgb(18 48 42 / 0) 45%); }
+@keyframes hero-drift { from { scale: 1.04; translate: 0 0; } to { scale: 1.12; translate: -1.5% -1%; } }
+@media (prefers-reduced-motion: reduce) { .page-hero-photo img { animation: none; } }
+@media (max-width: 760px) {
+  .page-hero.has-photo { min-height: 0; }
+  .page-hero-photo::after { background: linear-gradient(0deg, rgb(18 48 42 / 0.95) 10%, rgb(18 48 42 / 0.7) 60%, rgb(18 48 42 / 0.45) 100%); }
+}

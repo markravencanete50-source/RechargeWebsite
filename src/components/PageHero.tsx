@@ -1,15 +1,18 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
+import type { Shot } from "@/content/showcase";
 import { Reveal } from "./Reveal";
 
-// The forest band at the top of every inner page, with slow drifting light and rings behind it.
-export function PageHero({ eyebrow, title, lead, children }: { eyebrow: string; title: ReactNode; lead?: string; children?: ReactNode }) {
+// The forest band at the top of every inner page. With a photo of one of our homes behind it, under a forest wash so the text
+// stays easy to read; the photo drifts very slowly, and stays still for anyone who has asked for less motion.
+export function PageHero({ eyebrow, title, lead, photo, children }: { eyebrow: string; title: ReactNode; lead?: string; photo?: Shot | null; children?: ReactNode }) {
   return (
-    <section className="page-hero dark on-dark">
-      <div className="hero-motion" aria-hidden>
-        <span className="glow g1" /><span className="glow g2" />
-        <span className="ring r1" /><span className="ring r2" /><span className="ring r3" />
-        <span className="dot d1" /><span className="dot d2" /><span className="dot d3" />
-      </div>
+    <section className={`page-hero dark on-dark${photo ? " has-photo" : ""}`}>
+      {photo && (
+        <div className="page-hero-photo" aria-hidden>
+          <Image src={photo.src} alt="" fill priority sizes="100vw" />
+        </div>
+      )}
       <div className="wrap">
         <Reveal><p className="eyebrow">{eyebrow}</p></Reveal>
         <Reveal delay={0.05}><h1 className="h1 page-title">{title}</h1></Reveal>
