@@ -15,7 +15,7 @@ import { RowList } from "@/components/RowList";
 import { ReasonList } from "@/components/WhyChoose";
 import { Steps } from "@/components/Steps";
 import { ownerFaqs } from "@/content/faqs";
-import { homes, regions, reviewTotal } from "@/content/properties";
+import { getCatalog } from "@/content/catalog";
 import { showcase } from "@/content/showcase";
 import { site } from "@/content/site";
 import { ownerReasons } from "@/content/why";
@@ -27,7 +27,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/owners" },
 };
 
-export default function OwnersPage() {
+export default async function OwnersPage() {
+  const { homes, regions, reviewTotal } = await getCatalog();
   const ld = graph(
     organization,
     {

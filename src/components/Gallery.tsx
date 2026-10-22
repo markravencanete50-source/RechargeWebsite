@@ -3,7 +3,7 @@
 import { ChevronLeft, ChevronRight, Images, X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import type { Photo as PhotoType } from "@/content/properties";
+import type { Photo as PhotoType } from "@/content/home-utils";
 import { Photo } from "./Photo";
 
 // The first five photos in a grid on larger screens, a swipeable strip on a phone;

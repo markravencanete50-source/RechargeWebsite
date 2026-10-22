@@ -15,7 +15,7 @@ import { SearchBar } from "@/components/SearchBar";
 import { Steps } from "@/components/Steps";
 import { TripGrid } from "@/components/TripGrid";
 import { guestFaqs } from "@/content/faqs";
-import { homes, regions, reviewTotal } from "@/content/properties";
+import { getCatalog } from "@/content/catalog";
 import { showcase } from "@/content/showcase";
 import { site } from "@/content/site";
 import { guestReasons } from "@/content/why";
@@ -27,12 +27,13 @@ export const metadata: Metadata = {
   alternates: { canonical: "/stay" },
 };
 
-export default function StayPage() {
+export default async function StayPage() {
+  const { homes, regions, towns, reviewTotal, priceSteps } = await getCatalog();
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Stays", path: "/stay" }]))} />
       <PhotoHero shot={showcase.stayHero} eyebrow="Stays" title={<>A whole home,<br />ready when you arrive</>} lead={`${homes.length} serviced homes across Scotland for city breaks, work trips and families. Book direct and save ${site.directDiscount}.`}>
-        <SearchBar />
+        <SearchBar data={{ regions, towns, priceSteps }} />
       </PhotoHero>
 
       <section className="section proof-band">

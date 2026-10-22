@@ -1,4 +1,4 @@
-import { homes } from "@/content/properties";
+import { getCatalog } from "@/content/catalog";
 import { hostawayConnected, quote } from "@/lib/hostaway";
 
 // A price for one home and a range of dates: every night's rate, the cleaning fee and the total,
@@ -7,6 +7,7 @@ const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
+  const { homes } = await getCatalog();
   const home = homes.find((h) => h.slug === url.searchParams.get("home"));
   const checkin = url.searchParams.get("checkin") ?? "";
   const checkout = url.searchParams.get("checkout") ?? "";

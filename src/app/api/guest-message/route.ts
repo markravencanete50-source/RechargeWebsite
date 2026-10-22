@@ -1,4 +1,4 @@
-import { homes } from "@/content/properties";
+import { getCatalog } from "@/content/catalog";
 
 // A guest's message from a property page, with their booking details if they were pricing a stay.
 // It goes to the Recharge app's guest inbox (the Stays Communication Centre) once the app's
@@ -20,6 +20,7 @@ export async function POST(request: Request) {
   // A hidden field people never fill in; bots usually do.
   if (text(body.website, 200)) return Response.json({ ok: true });
 
+  const { homes } = await getCatalog();
   const home = homes.find((h) => h.slug === text(body.home, 200));
   const booking = (body.booking ?? {}) as Record<string, unknown>;
   const message = {

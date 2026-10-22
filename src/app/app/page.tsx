@@ -11,7 +11,7 @@ import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
 import { ToolsShowcase } from "@/components/ToolsShowcase";
 import { appFaqs } from "@/content/faqs";
-import { homes } from "@/content/properties";
+import { getCatalog } from "@/content/catalog";
 import { teams, toolCount } from "@/content/tools";
 import { abs, breadcrumbs, graph, organization } from "@/lib/schema";
 
@@ -21,7 +21,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/app" },
 };
 
-export default function AppPage() {
+export default async function AppPage() {
+  const { homes } = await getCatalog();
   const ld = graph(
     organization,
     {

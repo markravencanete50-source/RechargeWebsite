@@ -14,7 +14,7 @@ import { SplitHero } from "@/components/SplitHero";
 import { Steps } from "@/components/Steps";
 import { SupportClock } from "@/components/SupportClock";
 import { supportExtraFaqs, supportFaqs } from "@/content/faqs";
-import { homes, regions } from "@/content/properties";
+import { getCatalog } from "@/content/catalog";
 import { site } from "@/content/site";
 import { breadcrumbs, graph, organization } from "@/lib/schema";
 
@@ -24,7 +24,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/support" },
 };
 
-export default function SupportPage() {
+export default async function SupportPage() {
+  const { homes, regions } = await getCatalog();
   const ld = graph(
     {
       ...organization,

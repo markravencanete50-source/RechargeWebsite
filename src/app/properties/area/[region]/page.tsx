@@ -9,16 +9,19 @@ import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import type { Faq } from "@/content/faqs";
 import { parseListing } from "@/content/listing";
-import { heading, homes, money, regionBySlug, regions, regionSlug } from "@/content/properties";
+import { heading, money, regionSlug } from "@/content/home-utils";
+import { getCatalog, regionIn, type Catalog } from "@/content/catalog";
 import { site } from "@/content/site";
 import { abs, breadcrumbs, faqPage, graph, organization } from "@/lib/schema";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const { regions } = await getCatalog();
   return regions.map((r) => ({ region: regionSlug(r.name) }));
 }
 
-function areaData(slug: string) {
-  const region = regionBySlug(slug);
+function areaData(c: Catalog, slug: string) {
+  const { homes } = c;
+  const region = regionIn(c, slug);
   if (!region) return null;
   const list = homes.filter((h) => h.region === region.name).sort((a, b) => Number(!!b.photos[0]?.src) - Number(!!a.photos[0]?.src) || b.reviews - a.reviews);
   const towns = [...new Set(list.map((h) => h.town))];
@@ -32,7 +35,7 @@ function areaData(slug: string) {
 const plural = (n: number, w: string) => `${n} ${w}${n === 1 ? "" : "s"}`;
 
 export async function generateMetadata({ params }: PageProps<"/properties/area/[region]">): Promise<Metadata> {
-  const d = areaData((await params).region);
+  const d = areaData(await getCatalog(), (await params).region);
   if (!d) return {};
   const title = `Serviced accommodation in ${d.region.name}`;
   const description = `${plural(d.list.length, "Recharge home")} in ${d.towns.slice(0, 4).join(", ")}${d.prices.length ? `, from around ${money(d.prices[0])} a night` : ""}. Book direct and save ${site.directDiscount}, with 24/7 support.`;
@@ -40,7 +43,9 @@ export async function generateMetadata({ params }: PageProps<"/properties/area/[
 }
 
 export default async function AreaPage({ params }: PageProps<"/properties/area/[region]">) {
-  const d = areaData((await params).region);
+  const catalog = await getCatalog();
+  const { regions } = catalog;
+  const d = areaData(catalog, (await params).region);
   if (!d) notFound();
   const name = d.region.name;
   const path = `/properties/area/${regionSlug(name)}`;

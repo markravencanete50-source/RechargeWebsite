@@ -1,9 +1,11 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { regions, regionSlug } from "@/content/properties";
+import { regionSlug } from "@/content/home-utils";
+import { getCatalog } from "@/content/catalog";
 
 // Every area as an index, like the contents page of a guide.
-export function AreaIndex({ limit }: { limit?: number }) {
+export async function AreaIndex({ limit }: { limit?: number }) {
+  const { regions } = await getCatalog();
   return (
     <ul className="area-index">
       {regions.slice(0, limit).map((r) => (

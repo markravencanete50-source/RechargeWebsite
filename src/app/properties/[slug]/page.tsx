@@ -14,7 +14,9 @@ import { wantsPhoto } from "@/lib/place-photo";
 import { Sheet } from "@/components/Sheet";
 import { homeFaqs } from "@/content/faqs";
 import { groupAmenities, parseListing, topAmenities, type Room } from "@/content/listing";
-import { distance, heading, homeBySlug, homes, money, regionSlug, tags } from "@/content/properties";
+import { distance, heading, money, regionSlug, tags } from "@/content/home-utils";
+import { getCatalog, homeIn } from "@/content/catalog";
+import type { Home } from "@/content/home-utils";
 import photoData from "@/content/place-photos.json";
 import { site } from "@/content/site";
 import { abs, breadcrumbs, faqPage, graph, organization } from "@/lib/schema";
@@ -32,18 +34,20 @@ function ruleIcon(rule: string): LucideIcon {
   return Info;
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const { homes } = await getCatalog();
   return homes.map((h) => ({ slug: h.slug }));
 }
 
-function summary(home: NonNullable<ReturnType<typeof homeBySlug>>) {
+function summary(home: Home) {
   const intro = parseListing(home.description, home.houseRules).intro.join(" ");
   const base = `${heading(home)}, ${home.region}. ${home.guests ? `Sleeps ${home.guests}. ` : ""}Book direct with Recharge and save ${site.directDiscount}.`;
   return (intro && intro.length > 60 ? intro.replace(/^Recharge Stays (is (proud|pleased) to present|proudly presents|presents)\s*/i, "").replace(/^./, (c) => c.toUpperCase()) : base).slice(0, 158);
 }
 
 export async function generateMetadata({ params }: PageProps<"/properties/[slug]">): Promise<Metadata> {
-  const home = homeBySlug((await params).slug);
+  const catalog = await getCatalog();
+  const home = homeIn(catalog, (await params).slug);
   if (!home) return {};
   const title = `${heading(home)}, ${home.region}`;
   return {
@@ -55,14 +59,15 @@ export async function generateMetadata({ params }: PageProps<"/properties/[slug]
 }
 
 export default async function PropertyPage({ params }: PageProps<"/properties/[slug]">) {
-  const home = homeBySlug((await params).slug);
+  const catalog = await getCatalog();
+  const home = homeIn(catalog, (await params).slug);
   if (!home) notFound();
   const l = parseListing(home.description, home.houseRules);
   const sleeping = l.rooms.filter((r) => r.kind === "bedroom" || r.sleeps);
   const inside = l.rooms.filter((r) => !sleeping.includes(r));
   const amenityGroups = groupAmenities(home.amenities);
   const faqs = homeFaqs(home, l);
-  const others = homes.filter((h) => h.slug !== home.slug && h.region === home.region).slice(0, 4);
+  const others = catalog.homes.filter((h) => h.slug !== home.slug && h.region === home.region).slice(0, 4);
   const facts = [
     home.guests && { icon: Users, text: `Sleeps ${home.guests}` },
     { icon: BedDouble, text: home.bedrooms === 0 ? "Studio" : `${home.bedrooms} bedroom${home.bedrooms === 1 ? "" : "s"}${home.beds ? `, ${home.beds} bed${home.beds === 1 ? "" : "s"}` : ""}` },

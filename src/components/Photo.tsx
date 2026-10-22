@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { Photo as PhotoType } from "@/content/properties";
+import type { Photo as PhotoType } from "@/content/home-utils";
 
 // A real property photo (from Hostaway, or Cloudinary), or a plain brand panel until the import brings one in.
 export function Photo({ photo, alt, sizes, priority }: { photo?: PhotoType; alt: string; sizes: string; priority?: boolean }) {

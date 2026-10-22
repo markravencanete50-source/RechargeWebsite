@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { regions, regionSlug } from "@/content/properties";
+import { regionSlug } from "@/content/home-utils";
+import { getCatalog } from "@/content/catalog";
 import { site } from "@/content/site";
 
 // Worked out when the site is built, so it updates with each deploy.
@@ -10,6 +11,7 @@ async function currentYear() {
 }
 
 export async function Footer() {
+  const { regions } = await getCatalog();
   const { company } = site;
   const year = await currentYear();
   return (

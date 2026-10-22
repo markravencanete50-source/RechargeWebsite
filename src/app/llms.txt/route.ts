@@ -1,11 +1,13 @@
 import { generalFaqs, guestFaqs, ownerFaqs } from "@/content/faqs";
-import { heading, homes, regions, regionSlug } from "@/content/properties";
+import { heading, regionSlug } from "@/content/home-utils";
+import { getCatalog } from "@/content/catalog";
 import { site } from "@/content/site";
 import { teams, toolCount } from "@/content/tools";
 import { abs } from "@/lib/schema";
 
 // A plain-text summary of the site for AI assistants and answer engines (llmstxt.org).
-export function GET() {
+export async function GET() {
+  const { homes, regions } = await getCatalog();
   const lines = [
     `# ${site.name}`,
     "",

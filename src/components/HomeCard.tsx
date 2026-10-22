@@ -1,6 +1,6 @@
 import { Bath, BedDouble, MapPin, Users } from "lucide-react";
 import Link from "next/link";
-import { heading, money, tags, type Home } from "@/content/properties";
+import { heading, money, tags, type Home } from "@/content/home-utils";
 import { AmenityIcon } from "./Amenity";
 import { Photo } from "./Photo";
 
@@ -16,7 +16,7 @@ export function HomeCard({ home, priority }: { home: Home; priority?: boolean })
           // A second photo fades in on hover, to give a feel for the home before opening it.
           <span className="home-photo-next" aria-hidden><Photo photo={home.photos[1]} alt="" sizes="(max-width: 980px) 50vw, 25vw" /></span>
         )}
-        {home.photos.length > 1 && <span className="home-count">{home.photos.length} photos</span>}
+        {(home.photoCount ?? home.photos.length) > 1 && <span className="home-count">{home.photoCount ?? home.photos.length} photos</span>}
       </div>
       <div className="home-body">
         <span className="home-area"><MapPin size={15} /> {home.district}, {home.region}</span>

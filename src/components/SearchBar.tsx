@@ -4,7 +4,7 @@ import { Loader2, MapPin, Search, SlidersHorizontal } from "lucide-react";
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState, useTransition, type FocusEvent, type FormEvent, type KeyboardEvent } from "react";
-import { money, priceSteps, regions, towns } from "@/content/properties";
+import { money } from "@/content/home-utils";
 
 const iso = (d: Date) => d.toISOString().slice(0, 10);
 
@@ -13,14 +13,17 @@ const FILTERS = ["beds", "baths", "min", "max"] as const;
 const ease = [0.2, 0.7, 0.2, 1] as const;
 
 type Option = { name: string; sub: string; count: number };
-const AREAS: Option[] = regions.map((r) => ({ name: r.name, sub: "Area", count: r.count }));
-const TOWNS: Option[] = towns.filter((t) => !regions.some((r) => r.name === t.name)).map((t) => ({ name: t.name, sub: t.region, count: t.count }));
+// What the search offers, from the homes on the site (passed in by the page, so no listing data is sent to the browser).
+export type SearchOptions = { regions: { name: string; count: number }[]; towns: { name: string; region: string; count: number }[]; priceSteps: number[] };
 const HINTS = ["Edinburgh", "Glasgow", "the Scottish Borders", "Aberdeen", "the Isle of Skye", "West Lothian"];
 
 // Where, check in, check out and guests, like the big booking sites, with bedrooms, bathrooms and
 // a price range under Filters. A highlight glides to whichever part you are in, "Where" suggests
 // areas and towns as you type, and the button shows the search running. Sends it to /properties.
-export function SearchBar({ initial, compact }: { initial?: SearchValues; compact?: boolean }) {
+export function SearchBar({ initial, compact, data }: { initial?: SearchValues; compact?: boolean; data: SearchOptions }) {
+  const { priceSteps } = data;
+  const AREAS = useMemo<Option[]>(() => data.regions.map((r) => ({ name: r.name, sub: "Area", count: r.count })), [data.regions]);
+  const TOWNS = useMemo<Option[]>(() => data.towns.filter((t) => !data.regions.some((r) => r.name === t.name)).map((t) => ({ name: t.name, sub: t.region, count: t.count })), [data]);
   const router = useRouter();
   const reduce = useReducedMotion();
   const uid = useId();
@@ -47,7 +50,7 @@ export function SearchBar({ initial, compact }: { initial?: SearchValues; compac
     const q = query.trim().toLowerCase();
     if (!q) return AREAS.slice(0, 7);
     return [...AREAS, ...TOWNS].filter((o) => o.name.toLowerCase().includes(q)).sort((a, b) => Number(!a.name.toLowerCase().startsWith(q)) - Number(!b.name.toLowerCase().startsWith(q)) || b.count - a.count).slice(0, 7);
-  }, [query]);
+  }, [query, AREAS, TOWNS]);
 
   const choose = (o: Option) => {
     setQuery(o.name);

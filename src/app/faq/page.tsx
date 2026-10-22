@@ -7,7 +7,7 @@ import { PageHero } from "@/components/PageHero";
 import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
 import { appFaqs, generalFaqs, guestFaqs, ownerFaqs, propertiesFaqs, supportExtraFaqs, supportFaqs } from "@/content/faqs";
-import { homes } from "@/content/properties";
+import { getCatalog } from "@/content/catalog";
 import { site } from "@/content/site";
 import { breadcrumbs, faqPage, graph } from "@/lib/schema";
 
@@ -26,7 +26,8 @@ const groups = [
   { id: "support", t: "Support", lead: "Reaching us, day or night.", items: [...supportFaqs, ...supportExtraFaqs] },
 ];
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const { homes } = await getCatalog();
   const all = groups.flatMap((g) => g.items).filter((f, i, a) => a.findIndex((x) => x.q === f.q) === i);
   return (
     <>

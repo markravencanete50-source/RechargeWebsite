@@ -6,17 +6,22 @@ import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { PropertyResults } from "@/components/PropertyResults";
 import { propertiesFaqs } from "@/content/faqs";
-import { heading, homes, regions, regionSlug } from "@/content/properties";
+import { cardOf, getCatalog } from "@/content/catalog";
+import { heading, regionSlug } from "@/content/home-utils";
 import { site } from "@/content/site";
 import { abs, breadcrumbs, graph } from "@/lib/schema";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  const { homes, regions } = await getCatalog();
+  return {
   title: "Properties",
   description: `${homes.length} serviced apartments and homes to book direct across Scotland, in ${regions.slice(0, 5).map((r) => r.name).join(", ")} and more. Save ${site.directDiscount} booking direct.`,
   alternates: { canonical: "/properties" },
-};
+  };
+}
 
-export default function PropertiesPage() {
+export default async function PropertiesPage() {
+  const { homes, regions, towns, priceSteps } = await getCatalog();
   return (
     <>
       <JsonLd data={graph(
@@ -27,7 +32,7 @@ export default function PropertiesPage() {
       <section className="section" style={{ paddingTop: 48 }}>
         <div className="wrap">
           <Suspense fallback={<div style={{ minHeight: 400 }} />}>
-            <PropertyResults />
+            <PropertyResults homes={homes.map(cardOf)} options={{ regions, towns, priceSteps }} />
           </Suspense>
         </div>
       </section>

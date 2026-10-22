@@ -1,8 +1,10 @@
 import type { MetadataRoute } from "next";
-import { homes, regions, regionSlug } from "@/content/properties";
+import { regionSlug } from "@/content/home-utils";
+import { getCatalog } from "@/content/catalog";
 import { abs } from "@/lib/schema";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const { homes, regions } = await getCatalog();
   const pages: [string, number][] = [["/", 1], ["/properties", 0.9], ["/owners", 0.9], ["/stay", 0.8], ["/app", 0.8], ["/support", 0.6], ["/faq", 0.6]];
   return [
     ...pages.map(([p, priority]) => ({ url: abs(p), changeFrequency: "weekly" as const, priority })),

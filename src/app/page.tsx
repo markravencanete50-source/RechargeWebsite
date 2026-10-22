@@ -15,7 +15,7 @@ import { SearchBar } from "@/components/SearchBar";
 import { ToolMarquee } from "@/components/ToolMarquee";
 import { WhyChoose } from "@/components/WhyChoose";
 import { generalFaqs } from "@/content/faqs";
-import { featured, homes, regions, reviewTotal } from "@/content/properties";
+import { getCatalog } from "@/content/catalog";
 import { showcase } from "@/content/showcase";
 import { site } from "@/content/site";
 import { toolCount } from "@/content/tools";
@@ -26,7 +26,8 @@ export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 const website = { "@type": "WebSite", "@id": abs("/#website"), url: site.url, name: site.name, inLanguage: "en-GB", publisher: { "@id": abs("/#organization") }, potentialAction: { "@type": "SearchAction", target: { "@type": "EntryPoint", urlTemplate: abs("/properties?area={area}") }, "query-input": "required name=area" } };
 
-export default function Home() {
+export default async function Home() {
+  const { featured, homes, regions, towns, reviewTotal, priceSteps } = await getCatalog();
   return (
     <>
       <JsonLd data={graph(organization, website)} />
@@ -37,7 +38,7 @@ export default function Home() {
         title={<>Find your stay.<br />Book direct.</>}
         lead={`${homes.length} serviced homes across Scotland, from Edinburgh and Glasgow to the Borders and Skye. Book direct with Recharge and save ${site.directDiscount}.`}
       >
-        <SearchBar />
+        <SearchBar data={{ regions, towns, priceSteps }} />
         <div className="quick-areas">
           <span>Popular:</span>
           {regions.slice(0, 6).map((r) => <Link key={r.name} href={`/properties?area=${encodeURIComponent(r.name)}`}>{r.name}</Link>)}

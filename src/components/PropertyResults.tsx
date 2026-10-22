@@ -4,18 +4,19 @@ import { SearchX, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { homes, money, regions } from "@/content/properties";
+import { money, type Home } from "@/content/home-utils";
 import { site } from "@/content/site";
 import { HomeCard } from "./HomeCard";
 import { RollingNumber } from "./RollingNumber";
 import { RevealCard, SearchSequence } from "./SearchSequence";
-import { SearchBar } from "./SearchBar";
+import { SearchBar, type SearchOptions } from "./SearchBar";
 
 const ease = [0.2, 0.7, 0.2, 1] as const;
 
 // The search, the filters and every matching home, driven by the address bar. When the search
 // changes, a sweep runs across the results, the count rolls and the homes glide to new places.
-export function PropertyResults() {
+export function PropertyResults({ homes, options }: { homes: Home[]; options: SearchOptions }) {
+  const { regions } = options;
   const params = useSearchParams();
   const reduce = useReducedMotion();
   const get = (k: string) => params.get(k) ?? "";
@@ -55,7 +56,7 @@ export function PropertyResults() {
 
   return (
     <>
-      <SearchBar key={params.toString()} initial={initial} compact />
+      <SearchBar key={params.toString()} initial={initial} compact data={options} />
       <div className="area-filter area-scroll" aria-label="Filter by area">
         <Link href={withArea("")} className="tab tab-glide" aria-current={!area ? "page" : undefined}>
           {!area && <motion.span layoutId="area-pill" className="tab-pill" transition={{ type: "spring", stiffness: 380, damping: 34 }} />}
