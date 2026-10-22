@@ -22,14 +22,34 @@ export const site = {
   enquiry: { formUrl: "https://app.rechargegroup.co.uk/enquiry", api: process.env.NEXT_PUBLIC_ENQUIRY_API ?? "" },
 } as const;
 
-export const nav = [
+export type NavLink = { href: string; label: string; text?: string };
+export type NavItem = NavLink & { children?: NavLink[] };
+
+// The main menu. Owners and Support open to the pages below them, so every key page is one step from any page.
+export const nav: NavItem[] = [
   { href: "/properties", label: "Properties" },
   { href: "/stay", label: "Stays" },
-  { href: "/owners", label: "Owners" },
+  {
+    href: "/owners", label: "Owners",
+    children: [
+      { href: "/owners", label: "For owners", text: "Two ways to work with us" },
+      { href: "/guaranteed-rent", label: "Guaranteed rent", text: "A fixed rent, paid every month" },
+      { href: "/owners#calculator", label: "Earnings calculator", text: "What could your property earn?" },
+      { href: "/owners#statement", label: "Example statement", text: "See where every pound goes" },
+      { href: "/owners/furnishing-calculator", label: "Furnishing calculator", text: "Everything a home needs, room by room" },
+    ],
+  },
   { href: "/app", label: "The app" },
-  { href: "/support", label: "Support" },
-  { href: "/faq", label: "FAQ" },
-] as const;
+  {
+    href: "/support", label: "Support",
+    children: [
+      { href: "/support", label: "24/7 support", text: "A real person, day and night" },
+      { href: "/support#report", label: "Report a problem", text: "For guests and neighbours" },
+      { href: "/faq", label: "Questions and answers", text: "Guests, owners and the app" },
+    ],
+  },
+  { href: "/about", label: "About" },
+];
 
 // The direct-booking saving is set in the dashboard (Discounts). Shared texts carry this mark where the figure goes, and each page
 // fills it in with withDirect from the live catalog, so changing the figure changes every page within a minute.
