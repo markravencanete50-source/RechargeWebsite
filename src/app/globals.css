@@ -1789,3 +1789,6 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .ap-options button { display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0 12px; border-radius: 999px; border: 1.5px dashed var(--line); background: #fff; color: var(--forest); font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; }
 .ap-options button:hover { border-style: solid; border-color: var(--moss); }
 .ap-options .ap-custom { border-style: solid; border-color: var(--forest); font-weight: 600; }
+.split-hero.has-photo .page-hero-photo::after { background: linear-gradient(90deg, rgb(18 48 42 / 0.93) 0%, rgb(18 48 42 / 0.8) 50%, rgb(18 48 42 / 0.62) 100%); }
+.split-hero.has-photo .sl { background: rgb(18 48 42 / 0.55); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.adm-panel + .adm-panel { margin-top: 12px; }

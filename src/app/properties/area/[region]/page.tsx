@@ -35,10 +35,11 @@ function areaData(c: Catalog, slug: string) {
 const plural = (n: number, w: string) => `${n} ${w}${n === 1 ? "" : "s"}`;
 
 export async function generateMetadata({ params }: PageProps<"/properties/area/[region]">): Promise<Metadata> {
-  const d = areaData(await getCatalog(), (await params).region);
+  const c = await getCatalog();
+  const d = areaData(c, (await params).region);
   if (!d) return {};
   const title = `Serviced accommodation in ${d.region.name}`;
-  const description = `${plural(d.list.length, "Recharge home")} in ${d.towns.slice(0, 4).join(", ")}${d.prices.length ? `, from around ${money(d.prices[0])} a night` : ""}. Book direct and save ${site.directDiscount}, with 24/7 support.`;
+  const description = `${plural(d.list.length, "Recharge home")} in ${d.towns.slice(0, 4).join(", ")}${d.prices.length ? `, from around ${money(d.prices[0])} a night` : ""}. Book direct and save ${c.direct}, with 24/7 support.`;
   return { title, description, alternates: { canonical: `/properties/area/${regionSlug(d.region.name)}` }, openGraph: { title, description } };
 }
 
@@ -53,7 +54,7 @@ export default async function AreaPage({ params }: PageProps<"/properties/area/[
   const photo = cover?.photos[0]?.src ? { src: cover.photos[0].src, href: `/properties/${cover.slug}`, caption: `${heading(cover)}, ${name}` } : null;
   const faqs: Faq[] = [
     { q: `How many Recharge homes are there in ${name}?`, a: `${plural(d.list.length, "home")}, in ${d.towns.join(", ")}. They range from ${d.minBeds === 0 ? "studios" : plural(d.minBeds, "bedroom")} to ${plural(d.maxBeds, "bedroom")}${d.guests ? `, and the largest sleeps ${d.guests}` : ""}.` },
-    ...(d.prices.length ? [{ q: `How much does a night cost in ${name}?`, a: `Nightly rates start at around ${money(d.prices[0])} and go up to around ${money(d.prices[d.prices.length - 1])}, depending on the home and the dates. Booking direct saves ${site.directDiscount}.` }] : []),
+    ...(d.prices.length ? [{ q: `How much does a night cost in ${name}?`, a: `Nightly rates start at around ${money(d.prices[0])} and go up to around ${money(d.prices[d.prices.length - 1])}, depending on the home and the dates. Booking direct saves ${catalog.direct}.` }] : []),
     ...(d.longStay ? [{ q: `Can I book a long stay in ${name}?`, a: `Yes. ${plural(d.longStay, "home")} here offer long-stay discounts on request, which suits contractors, relocations and insurance stays. Call ${site.phone.display} with your dates.` }] : []),
     { q: "What is included in every stay?", a: "A professionally cleaned home, fresh linen and towels, a stocked kitchen and 24/7 support from the Recharge team during your stay." },
   ];
@@ -67,7 +68,7 @@ export default async function AreaPage({ params }: PageProps<"/properties/area/[
   return (
     <>
       <JsonLd data={ld} />
-      <PageHero photo={photo} eyebrow={`Properties in ${name}`} title={`Places to stay in ${name}`} lead={`${plural(d.list.length, "serviced home")} in ${d.towns.slice(0, 5).join(", ")}${d.towns.length > 5 ? " and more" : ""}. Book direct with Recharge and save ${site.directDiscount}.`} />
+      <PageHero photo={photo} eyebrow={`Properties in ${name}`} title={`Places to stay in ${name}`} lead={`${plural(d.list.length, "serviced home")} in ${d.towns.slice(0, 5).join(", ")}${d.towns.length > 5 ? " and more" : ""}. Book direct with Recharge and save ${catalog.direct}.`} />
       <section className="section" style={{ paddingTop: 48 }}>
         <div className="wrap">
           <div className="stat-row">
