@@ -85,9 +85,9 @@ export default async function SupportPage() {
       <section className="section paper" id="report" style={{ scrollMarginTop: 80 }}>
         <div className="wrap report-wrap">
           <Reveal className="section-head">
-            <p className="eyebrow">Staying with us now?</p>
+            <p className="eyebrow">Guests and neighbours</p>
             <h2 className="h2">Report a problem</h2>
-            <p className="lead">Tell us which home and what is wrong. It goes straight to the team on duty, and they reply in the same window.</p>
+            <p className="lead">Staying in one of our homes, or living next to one? Tell us which home and what is wrong. It goes straight to the team on duty, and they reply in the same window.</p>
           </Reveal>
           <ReportProblem homes={homes.map((h) => ({ slug: h.slug, title: heading(h), town: h.town }))} contact={{ phone: site.phone, email: site.email }} />
         </div>
