@@ -6,6 +6,7 @@ import Link from "next/link";
 import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
 import { OwnerEnquiry } from "@/components/OwnerEnquiry";
+import { SampleStatement } from "@/components/SampleStatement";
 import { OwnerPortal } from "@/components/OwnerPortal";
 import { OwnerPlans } from "@/components/OwnerPlans";
 import { PhotoHero } from "@/components/PhotoHero";
@@ -126,6 +127,16 @@ export default async function OwnersPage() {
           </div>
           <OwnerPortal />
           <p className="portal-login">Already an owner with us? <a className="btn btn-primary" href={site.ownerLogin}><UserRound size={18} /> Owner login</a></p>
+        </div>
+      </section>
+
+      <section className="section paper" id="statement" style={{ scrollMarginTop: 80 }}>
+        <div className="wrap">
+          <div className="head-row">
+            <Reveal><p className="eyebrow">Your monthly statement</p><h2 className="h2">Every pound, accounted for.</h2></Reveal>
+            <Reveal delay={0.08}><p className="lead">This is how a statement from the Recharge app reads. Tap any line to follow the money from the booking to your account.</p></Reveal>
+          </div>
+          <SampleStatement />
         </div>
       </section>
 
