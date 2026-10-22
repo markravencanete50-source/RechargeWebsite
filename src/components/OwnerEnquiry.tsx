@@ -29,7 +29,8 @@ export const ASKS = [
 
 type Status = { kind: "idle" | "sending" | "ok" } | { kind: "err"; message: string };
 
-export function OwnerEnquiry() {
+// `proposal` is for the Guaranteed Rent page: the same form and the same fields, with the wording of a rent proposal.
+export function OwnerEnquiry({ proposal = false }: { proposal?: boolean }) {
   const api = site.enquiry.api.replace(/\/$/, "");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
 
@@ -37,11 +38,11 @@ export function OwnerEnquiry() {
     // Until the app accepts this website's origin, owners use the live form in the app.
     return (
       <div className="estimate-card">
-        <strong className="h3">Free performance estimate</strong>
-        <p>Fill in our short property form. A member of the team will be in touch with your free estimate.</p>
+        <strong className="h3">{proposal ? "Free guaranteed rent proposal" : "Free performance estimate"}</strong>
+        <p>Fill in our short property form. A member of the team will be in touch with your free {proposal ? "proposal" : "estimate"}.</p>
         <p className="estimate-sub">The form asks for:</p>
         <ul className="checks single">{ASKS.map((a) => <li key={a}><Check size={18} /> {a}</li>)}</ul>
-        <a className="btn btn-mint" href={site.enquiry.formUrl} target="_blank" rel="noopener">Start your free estimate <ArrowUpRight size={18} /></a>
+        <a className="btn btn-mint" href={site.enquiry.formUrl} target="_blank" rel="noopener">Start your free {proposal ? "proposal" : "estimate"} <ArrowUpRight size={18} /></a>
         <p className="estimate-alt">Prefer to talk? <a href={site.phone.href}><Phone size={15} /> {site.phone.display}</a> <a href={`mailto:${site.email}`}><Mail size={15} /> {site.email}</a></p>
       </div>
     );
@@ -72,7 +73,7 @@ export function OwnerEnquiry() {
     return (
       <div className="estimate-card" role="status">
         <strong className="h3">Thank you</strong>
-        <p>We have your property details. A member of the team will be in touch with your free performance estimate.</p>
+        <p>We have your property details. A member of the team will be in touch with your free {proposal ? "guaranteed rent proposal" : "performance estimate"}.</p>
       </div>
     );
   }
@@ -108,7 +109,7 @@ export function OwnerEnquiry() {
         <div className="field"><label htmlFor="enq-referral">Who referred you? <span className="opt">optional</span></label><input id="enq-referral" name="referral" maxLength={300} /></div>
       </div>
       <div className="field"><label htmlFor="enq-notes">Anything else we should know? <span className="opt">optional</span></label><textarea id="enq-notes" name="notes" rows={3} maxLength={3000} /></div>
-      <button className="btn btn-mint" type="submit" disabled={status.kind === "sending"}>{status.kind === "sending" ? "Sending" : "Get my free estimate"}</button>
+      <button className="btn btn-mint" type="submit" disabled={status.kind === "sending"}>{status.kind === "sending" ? "Sending" : proposal ? "Get my free proposal" : "Get my free estimate"}</button>
       {status.kind === "err" && <p className="form-note" role="alert">{status.message} <a href={site.enquiry.formUrl} target="_blank" rel="noopener">Open the form in the app</a></p>}
     </form>
   );
