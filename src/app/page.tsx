@@ -12,7 +12,7 @@ import { PhotoHero } from "@/components/PhotoHero";
 import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
 import { SearchBar } from "@/components/SearchBar";
-import { ToolMarquee } from "@/components/ToolMarquee";
+import { ToolExplorer } from "@/components/ToolExplorer";
 import { WhyChoose } from "@/components/WhyChoose";
 import { generalFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
@@ -94,14 +94,18 @@ export default async function Home() {
       </section>
 
       <section className="section dark on-dark tools-band">
-        <div className="wrap split-sticky">
-          <Reveal className="split-head">
-            <p className="eyebrow">Behind every home</p>
-            <h2 className="h2">{toolCount} tools. <span className="accent">One team.</span></h2>
-            <p className="lead">Pricing, guest messages, cleaning, repairs, licensing and statements all run inside the Recharge app. Owners see their own client portal.</p>
-            <Link className="btn btn-mint" href="/app#tools">See how the team works <ArrowRight size={18} /></Link>
-          </Reveal>
-          <ToolMarquee />
+        <div className="wrap">
+          <div className="head-row tx-head">
+            <Reveal>
+              <p className="eyebrow">Behind every home</p>
+              <h2 className="h2">{toolCount} tools. <span className="accent">One team.</span></h2>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p className="lead">Pricing, guest messages, cleaning, repairs, licensing and statements all run inside the Recharge app. Choose a team to see the tools it uses.</p>
+              <Link className="btn btn-mint" href="/app#tools">See how the team works <ArrowRight size={18} /></Link>
+            </Reveal>
+          </div>
+          <ToolExplorer />
         </div>
       </section>
 

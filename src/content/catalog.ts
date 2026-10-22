@@ -3,6 +3,7 @@
 // once when an admin saves (the dashboard calls updateTag("catalog")). If the website's database cannot be reached, the site
 // carries on with the Hostaway build alone.
 import { cacheLife, cacheTag } from "next/cache";
+import { hostawayConnected, hostawayPhotoUrls } from "@/lib/hostaway";
 import { SUPABASE_KEY, SUPABASE_URL } from "@/lib/supabase-config";
 import { homes as base } from "./properties";
 import { label, priceStepsFor, regionSlug, type Home } from "./home-utils";
@@ -38,22 +39,60 @@ function fromWebsite(l: WebsiteListing): Home | null {
   };
 }
 
+// Photos for the homes whose pictures changed in Hostaway since the import. The old addresses stop working when the team replaces
+// a listing's photos, so for those homes the site uses Hostaway's current list, in its order, without the branded tiles. Homes
+// whose photos are all still there keep the imported list as it is. Checked every few hours; if Hostaway cannot be reached the
+// imported photos stay.
+async function changedPhotos(): Promise<Record<number, string[]>> {
+  "use cache";
+  cacheTag("catalog-photos");
+  cacheLife({ stale: 3600, revalidate: 6 * 3600, expire: 7 * 24 * 3600 });
+  if (!hostawayConnected()) return {};
+  try {
+    const live = await hostawayPhotoUrls();
+    const known = new Set(base.flatMap((h) => h.photos.map((p) => p.src).filter(Boolean)));
+    const { isTile } = await import("@/lib/photo-tiles");
+    const out: Record<number, string[]> = {};
+    for (const h of base) {
+      const urls = live.get(h.hostawayId);
+      if (!urls?.length) continue;
+      const now = new Set(urls);
+      if (h.photos.every((p) => !p.src || now.has(p.src))) continue;
+      const unknown = urls.filter((u) => !known.has(u));
+      const tiles = new Set<string>();
+      for (let i = 0; i < unknown.length; i += 8) {
+        const checked = await Promise.all(unknown.slice(i, i + 8).map(async (u) => [u, await isTile(u).catch(() => true)] as const));
+        for (const [u, tile] of checked) if (tile) tiles.add(u);
+      }
+      const keep = urls.filter((u) => !tiles.has(u));
+      if (keep.length) out[h.hostawayId] = keep;
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
 export async function getCatalog(): Promise<Catalog> {
   "use cache";
   cacheTag("catalog");
   cacheLife({ stale: 60, revalidate: 60, expire: 3600 });
 
-  const [overrides, listings, settings, discounts] = await Promise.all([
+  const [overrides, listings, settings, discounts, photos] = await Promise.all([
     rows<Override>("listing_overrides?select=hostaway_id,published,featured_rank,title,description,amenities"),
     rows<WebsiteListing>("website_listings?select=id,slug,published,featured_rank,data&published=eq.true"),
     rows<{ direct_discount_pct: number }>("settings?select=direct_discount_pct"),
     rows<Discount>("discounts?select=id,kind,label,percent,starts_on,ends_on,region,active&active=eq.true"),
+    changedPhotos(),
   ]);
 
   const byId = new Map((overrides ?? []).map((o) => [o.hostaway_id, o]));
   const rank = new Map<string, number>();
   const homes: Home[] = [];
-  for (const h of base) {
+  for (const imported of base) {
+    const fresh = photos[imported.hostawayId];
+    const alt = imported.photos[0]?.alt ?? `${imported.title}, ${imported.town}`;
+    const h = fresh ? { ...imported, photos: fresh.map((src) => ({ src, alt })) } : imported;
     const o = byId.get(h.hostawayId);
     if (o && !o.published) continue;
     if (o?.featured_rank) rank.set(h.slug, o.featured_rank);

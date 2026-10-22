@@ -1,10 +1,9 @@
-import { ArrowRight, Camera, Clock, KeyRound, MessageSquareText, Sparkles } from "lucide-react";
+import { ArrowRight, Camera, Clock, MessageSquareText } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { AreaIndex } from "@/components/AreaIndex";
 import { FaqSection } from "@/components/FaqSection";
-import { FloatNotes } from "@/components/FloatNotes";
 import { JsonLd } from "@/components/JsonLd";
 import { PhotoHero } from "@/components/PhotoHero";
 import { Proof } from "@/components/Proof";
@@ -88,11 +87,6 @@ export default async function StayPage() {
         <div className="wrap media-split">
           <Reveal className="media-frame">
             {showcase.checked && <Image src={showcase.checked.src} alt={showcase.checked.caption} fill sizes="(max-width: 900px) 100vw, 50vw" />}
-            <FloatNotes notes={[
-              { icon: <Camera size={16} />, text: "Clean finished, photos uploaded" },
-              { icon: <Sparkles size={16} />, text: "Fresh linen and towels" },
-              { icon: <KeyRound size={16} />, text: "Access details sent" },
-            ]} />
           </Reveal>
           <div>
             <Reveal className="section-head">

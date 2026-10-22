@@ -111,3 +111,20 @@ export async function updateHostawayListing(listingId: number, change: HostawayC
   if (!res.ok || data.status !== "success") throw new Error(`Hostaway did not accept the change (${res.status}${data.message ? `: ${data.message}` : ""})`);
   return { sent, unmatched };
 }
+
+// ---------------------------------------------------------------- photos as they are in Hostaway now
+// Every listing's photo addresses, in Hostaway's order. When the team replaces a listing's photos, the old addresses stop
+// working, so the site checks this list rather than trusting the copy made at the last import.
+type ListingImages = { id: number; listingImages?: { url?: string; sortOrder?: number }[] };
+export async function hostawayPhotoUrls(): Promise<Map<number, string[]>> {
+  const out = new Map<number, string[]>();
+  for (let offset = 0; offset < 1000; offset += 100) {
+    const page = await get<ListingImages[]>(`/listings?limit=100&offset=${offset}&includeResources=1`);
+    for (const l of page) {
+      const urls = (l.listingImages ?? []).slice().sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0)).map((i) => i.url).filter((u): u is string => !!u);
+      out.set(Number(l.id), urls);
+    }
+    if (page.length < 100) break;
+  }
+  return out;
+}

@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ContactSection } from "@/components/ContactSection";
 import { FaqSection } from "@/components/FaqSection";
-import { FloatNotes } from "@/components/FloatNotes";
 import { JsonLd } from "@/components/JsonLd";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { Proof } from "@/components/Proof";
@@ -13,7 +12,7 @@ import { RowList } from "@/components/RowList";
 import { Situations } from "@/components/Situations";
 import { SplitHero } from "@/components/SplitHero";
 import { Steps } from "@/components/Steps";
-import { SupportClock } from "@/components/SupportClock";
+import { SupportLive } from "@/components/SupportLive";
 import { supportExtraFaqs, supportFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
 import { heading } from "@/content/home-utils";
@@ -42,7 +41,7 @@ export default async function SupportPage() {
         eyebrow="24/7 support"
         title={<>Someone is<br />always there</>}
         lead={`Guests, owners and neighbours can reach a real person at any hour. One number for everything: ${site.phone.display}.`}
-        visual={<div className="support-dial"><SupportClock /></div>}
+        visual={<SupportLive phone={site.phone.display} />}
       >
         <div className="hero-actions">
           <a className="btn btn-mint" href={site.phone.href}><Phone size={18} /> Call {site.phone.display}</a>
@@ -115,11 +114,6 @@ export default async function SupportPage() {
         <div className="wrap media-split">
           <Reveal className="support-phone">
             <PhoneFrame src="/app/stays.webp" alt="Recharge app: the guest support inbox" />
-            <FloatNotes notes={[
-              { icon: <Timer size={16} />, text: "Reply timer running" },
-              { icon: <ClipboardList size={16} />, text: "Repair job created" },
-              { icon: <BellRing size={16} />, text: "Escalated to maintenance" },
-            ]} />
           </Reveal>
           <div>
             <Reveal className="section-head">
