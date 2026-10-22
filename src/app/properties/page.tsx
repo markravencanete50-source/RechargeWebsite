@@ -9,14 +9,13 @@ import { propertiesFaqs } from "@/content/faqs";
 import { cardOf, getCatalog } from "@/content/catalog";
 import { heading, regionSlug } from "@/content/home-utils";
 import { showcase } from "@/content/showcase";
-import { site } from "@/content/site";
 import { abs, breadcrumbs, graph } from "@/lib/schema";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { homes, regions } = await getCatalog();
+  const { homes, regions, direct } = await getCatalog();
   return {
   title: "Properties",
-  description: `${homes.length} serviced apartments and homes to book direct across Scotland, in ${regions.slice(0, 5).map((r) => r.name).join(", ")} and more. Save ${site.directDiscount} booking direct.`,
+  description: `${homes.length} serviced apartments and homes to book direct across Scotland, in ${regions.slice(0, 5).map((r) => r.name).join(", ")} and more. Save ${direct} booking direct.`,
   alternates: { canonical: "/properties" },
   };
 }

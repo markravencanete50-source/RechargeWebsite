@@ -17,7 +17,7 @@ import { WhyChoose } from "@/components/WhyChoose";
 import { generalFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
 import { showcase } from "@/content/showcase";
-import { site } from "@/content/site";
+import { site, withDirect } from "@/content/site";
 import { toolCount } from "@/content/tools";
 import { guestReasons, ownerReasons } from "@/content/why";
 import { abs, graph, organization } from "@/lib/schema";
@@ -27,7 +27,7 @@ export const metadata: Metadata = { alternates: { canonical: "/" } };
 const website = { "@type": "WebSite", "@id": abs("/#website"), url: site.url, name: site.name, inLanguage: "en-GB", publisher: { "@id": abs("/#organization") }, potentialAction: { "@type": "SearchAction", target: { "@type": "EntryPoint", urlTemplate: abs("/properties?area={area}") }, "query-input": "required name=area" } };
 
 export default async function Home() {
-  const { featured, homes, regions, towns, reviewTotal, priceSteps } = await getCatalog();
+  const { featured, homes, regions, towns, reviewTotal, priceSteps, direct } = await getCatalog();
   return (
     <>
       <JsonLd data={graph(organization, website)} />
@@ -36,7 +36,7 @@ export default async function Home() {
         shots={showcase.homeHero}
         eyebrow="Serviced accommodation in Scotland"
         title={<>Find your stay.<br />Book direct.</>}
-        lead={`${homes.length} serviced homes across Scotland, from Edinburgh and Glasgow to the Borders and Skye. Book direct with Recharge and save ${site.directDiscount}.`}
+        lead={`${homes.length} serviced homes across Scotland, from Edinburgh and Glasgow to the Borders and Skye. Book direct with Recharge and save ${direct}.`}
       >
         <SearchBar data={{ regions, towns, priceSteps }} />
         <div className="quick-areas">
@@ -69,7 +69,7 @@ export default async function Home() {
             <Reveal><p className="eyebrow">Why Recharge</p><h2 className="h2">Chosen by owners. Booked by guests.</h2></Reveal>
             <Reveal delay={0.08}><p className="lead">One company runs both sides: the homes guests book and the service owners rely on. Here is why each of them picks us.</p></Reveal>
           </div>
-          <WhyChoose owners={ownerReasons} guests={guestReasons} ownerShot={showcase.owners} guestShot={showcase.guests} />
+          <WhyChoose owners={ownerReasons} guests={withDirect(guestReasons, direct)} ownerShot={showcase.owners} guestShot={showcase.guests} />
         </div>
       </section>
 
@@ -140,7 +140,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <FaqSection items={generalFaqs} title="Recharge in short" eyebrow="Questions" lead="Quick answers about who we are and how we work." tone="paper" />
+      <FaqSection items={withDirect(generalFaqs, direct)} title="Recharge in short" eyebrow="Questions" lead="Quick answers about who we are and how we work." tone="paper" />
     </>
   );
 }

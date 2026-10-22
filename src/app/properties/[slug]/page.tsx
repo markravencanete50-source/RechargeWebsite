@@ -18,7 +18,7 @@ import { distance, heading, money, regionSlug, tags } from "@/content/home-utils
 import { getCatalog, homeIn } from "@/content/catalog";
 import type { Home } from "@/content/home-utils";
 import photoData from "@/content/place-photos.json";
-import { site } from "@/content/site";
+import { site, withDirect } from "@/content/site";
 import { abs, breadcrumbs, faqPage, graph, organization } from "@/lib/schema";
 
 // Checked at build time: a photo, or null where Wikipedia has no clear match.
@@ -39,9 +39,9 @@ export async function generateStaticParams() {
   return homes.map((h) => ({ slug: h.slug }));
 }
 
-function summary(home: Home) {
+function summary(home: Home, direct: string) {
   const intro = parseListing(home.description, home.houseRules).intro.join(" ");
-  const base = `${heading(home)}, ${home.region}. ${home.guests ? `Sleeps ${home.guests}. ` : ""}Book direct with Recharge and save ${site.directDiscount}.`;
+  const base = `${heading(home)}, ${home.region}. ${home.guests ? `Sleeps ${home.guests}. ` : ""}Book direct with Recharge and save ${direct}.`;
   return (intro && intro.length > 60 ? intro.replace(/^Recharge Stays (is (proud|pleased) to present|proudly presents|presents)\s*/i, "").replace(/^./, (c) => c.toUpperCase()) : base).slice(0, 158);
 }
 
@@ -52,9 +52,9 @@ export async function generateMetadata({ params }: PageProps<"/properties/[slug]
   const title = `${heading(home)}, ${home.region}`;
   return {
     title,
-    description: summary(home),
+    description: summary(home, catalog.direct),
     alternates: { canonical: `/properties/${home.slug}` },
-    openGraph: { title, description: summary(home), url: `/properties/${home.slug}`, images: home.photos[0]?.src ? [home.photos[0].src] : undefined },
+    openGraph: { title, description: summary(home, catalog.direct), url: `/properties/${home.slug}`, images: home.photos[0]?.src ? [home.photos[0].src] : undefined },
   };
 }
 
@@ -66,7 +66,7 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
   const sleeping = l.rooms.filter((r) => r.kind === "bedroom" || r.sleeps);
   const inside = l.rooms.filter((r) => !sleeping.includes(r));
   const amenityGroups = groupAmenities(home.amenities);
-  const faqs = homeFaqs(home, l);
+  const faqs = withDirect(homeFaqs(home, l), catalog.direct);
   const others = catalog.homes.filter((h) => h.slug !== home.slug && h.region === home.region).slice(0, 4);
   const facts = [
     home.guests && { icon: Users, text: `Sleeps ${home.guests}` },
@@ -114,7 +114,7 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
       "@type": "VacationRental",
       "@id": abs(`/properties/${home.slug}#home`),
       name: heading(home),
-      description: summary(home),
+      description: summary(home, catalog.direct),
       url: abs(`/properties/${home.slug}`),
       image: home.photos.slice(0, 6).map((p) => p.src),
       address: { "@type": "PostalAddress", addressLocality: home.town, addressRegion: home.region, addressCountry: "GB" },
@@ -305,7 +305,7 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
             <aside className="book-card" aria-label="Book this home">
               <BookingPanel
                 home={{ slug: home.slug, title: heading(home), town: home.town, region: home.region, price: home.price, currency: home.currency, maxGuests: home.guests, checkIn: home.checkIn, bookingUrl: home.bookingUrl ?? site.bookingUrl, longStay: l.longStay }}
-                contact={{ phone: site.phone, email: site.email, discount: site.directDiscount }}
+                contact={{ phone: site.phone, email: site.email, discount: catalog.direct }}
                 discounts={catalog.discounts.filter((d) => !d.region || d.region === home.region)}
               />
               <ul className="facts">
@@ -322,7 +322,7 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
       <BookBar>
         <div>
           {home.price !== undefined ? <p><strong>{money(home.price, home.currency)}</strong> a night</p> : <p><strong>Book direct</strong></p>}
-          <span>Save {site.directDiscount} booking direct</span>
+          <span>Save {catalog.direct} booking direct</span>
         </div>
         <a className="btn btn-primary" href="#book">Check dates</a>
       </BookBar>

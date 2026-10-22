@@ -16,22 +16,25 @@ import { TripGrid } from "@/components/TripGrid";
 import { guestFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
 import { showcase } from "@/content/showcase";
-import { site } from "@/content/site";
+import { withDirect } from "@/content/site";
 import { guestReasons } from "@/content/why";
 import { breadcrumbs, graph } from "@/lib/schema";
 
-export const metadata: Metadata = {
-  title: "Stays",
-  description: `Serviced apartments and homes across Scotland for city breaks, work trips, contractors and families. Book direct and save ${site.directDiscount}.`,
-  alternates: { canonical: "/stay" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { direct } = await getCatalog();
+  return {
+    title: "Stays",
+    description: `Serviced apartments and homes across Scotland for city breaks, work trips, contractors and families. Book direct and save ${direct}.`,
+    alternates: { canonical: "/stay" },
+  };
+}
 
 export default async function StayPage() {
-  const { homes, regions, towns, reviewTotal, priceSteps } = await getCatalog();
+  const { homes, regions, towns, reviewTotal, priceSteps, direct } = await getCatalog();
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Stays", path: "/stay" }]))} />
-      <PhotoHero shot={showcase.stayHero} eyebrow="Stays" title={<>A whole home,<br />ready when you arrive</>} lead={`${homes.length} serviced homes across Scotland for city breaks, work trips and families. Book direct and save ${site.directDiscount}.`}>
+      <PhotoHero shot={showcase.stayHero} eyebrow="Stays" title={<>A whole home,<br />ready when you arrive</>} lead={`${homes.length} serviced homes across Scotland for city breaks, work trips and families. Book direct and save ${direct}.`}>
         <SearchBar data={{ regions, towns, priceSteps }} />
       </PhotoHero>
 
@@ -45,11 +48,11 @@ export default async function StayPage() {
         <div className="wrap split-sticky">
           <Reveal className="split-head">
             <p className="eyebrow">Why guests choose Recharge</p>
-            <h2 className="h2">Save <span className="big-figure">{site.directDiscount}</span> and deal with us, not a platform.</h2>
+            <h2 className="h2">Save <span className="big-figure">{direct}</span> and deal with us, not a platform.</h2>
             <p className="lead">Same home, same dates, a better rate. And the team that runs the home is the team you talk to.</p>
             <Link className="btn btn-primary" href="/properties">Find a home <ArrowRight size={18} /></Link>
           </Reveal>
-          <ReasonList items={guestReasons} />
+          <ReasonList items={withDirect(guestReasons, direct)} />
         </div>
       </section>
 
@@ -112,7 +115,7 @@ export default async function StayPage() {
         </div>
       </section>
 
-      <FaqSection items={guestFaqs} title="Before you book" eyebrow="Guest questions" tone="paper" />
+      <FaqSection items={withDirect(guestFaqs, direct)} title="Before you book" eyebrow="Guest questions" tone="paper" />
     </>
   );
 }

@@ -9,7 +9,7 @@ import { Reveal } from "@/components/Reveal";
 import { appFaqs, generalFaqs, guestFaqs, ownerFaqs, propertiesFaqs, supportExtraFaqs, supportFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
 import { showcase } from "@/content/showcase";
-import { site } from "@/content/site";
+import { site, withDirect } from "@/content/site";
 import { breadcrumbs, faqPage, graph } from "@/lib/schema";
 
 export const metadata: Metadata = {
@@ -28,8 +28,9 @@ const groups = [
 ];
 
 export default async function FaqPage() {
-  const { homes } = await getCatalog();
-  const all = groups.flatMap((g) => g.items).filter((f, i, a) => a.findIndex((x) => x.q === f.q) === i);
+  const { homes, direct } = await getCatalog();
+  const filled = groups.map((g) => ({ ...g, items: withDirect(g.items, direct) }));
+  const all = filled.flatMap((g) => g.items).filter((f, i, a) => a.findIndex((x) => x.q === f.q) === i);
   return (
     <>
       <JsonLd data={graph(faqPage(all), breadcrumbs([{ name: "FAQ", path: "/faq" }]))} />
@@ -45,7 +46,7 @@ export default async function FaqPage() {
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap">
-          <FaqExplorer groups={groups} phone={site.phone} />
+          <FaqExplorer groups={filled} phone={site.phone} />
         </div>
       </section>
 

@@ -1,19 +1,19 @@
 import { homes, regions } from "./properties";
-import { site } from "./site";
+import { DIRECT, site } from "./site";
 import { toolCount } from "./tools";
 
 export type Faq = { q: string; a: string };
 
 export const generalFaqs: Faq[] = [
   { q: "What is Recharge?", a: `Recharge is a Scottish serviced accommodation and short-let management company. We run ${homes.length} homes across ${regions.length} areas of Scotland, from Glasgow and Edinburgh to the Borders and Skye, through our own app with 24/7 support.` },
-  { q: "Can I book a Recharge home direct?", a: `Yes. Search our homes on the Properties page and book direct. Booking direct saves ${site.directDiscount} compared with booking the same home elsewhere.` },
+  { q: "Can I book a Recharge home direct?", a: `Yes. Search our homes on the Properties page and book direct. Booking direct saves ${DIRECT} compared with booking the same home elsewhere.` },
   { q: "Do you manage properties for owners?", a: "Yes. Owners choose guaranteed rent, where we pay a fixed monthly rent, or full management, where we run the property and you keep the income after our fee. Both are run through the Recharge app." },
   { q: "What makes Recharge different from other short-let managers?", a: `We built our own app with ${toolCount} tools. Owners, guest support, cleaners, maintenance and accounts all work from it, so every booking, clean, repair and payout has a record you can see.` },
   { q: "Is support really 24/7?", a: `Yes. Guests and owners can reach a real person at any hour on ${site.phone.display}. Urgent problems go straight to our maintenance team.` },
 ];
 
 export const guestFaqs: Faq[] = [
-  { q: "How do I book a stay?", a: `Search our homes on the Properties page and book direct. Booking direct gets you ${site.directDiscount} off your stay. You can also find our homes on the major booking platforms.` },
+  { q: "How do I book a stay?", a: `Search our homes on the Properties page and book direct. Booking direct gets you ${DIRECT} off your stay. You can also find our homes on the major booking platforms.` },
   { q: "When do I get my check-in details?", a: "Before you arrive. We send the address, access instructions and wifi details ahead of your stay." },
   { q: "What if something is wrong during my stay?", a: "Contact us at any hour. Support runs 24/7, and urgent problems are passed straight to our maintenance team." },
   { q: "Are your homes suitable for work trips?", a: "Yes. Our homes suit contractors, business travel and longer stays as well as city breaks and families." },
@@ -84,6 +84,6 @@ export function homeFaqs(
   if (has(/wi-?fi|internet/i)) out.push({ q: "Is there wifi?", a: "Yes. Wifi is included, and the details come with your check-in information." });
   if (extra.longStay) out.push({ q: "Can I book a long stay?", a: `Yes. Long-stay discounts are available on request. Call ${site.phone.display} or email ${site.email} with your dates.` });
   if (extra.places.length) out.push({ q: `What is near this home in ${home.town}?`, a: extra.places.slice(0, 4).map((p) => (p.time ? `${p.name} (${p.time})` : p.name)).join(", ") + "." });
-  out.push({ q: "How do I book this home direct?", a: `Choose Check dates and book. Booking direct with Recharge saves ${site.directDiscount}, and our team is on hand 24/7 during your stay.` });
+  out.push({ q: "How do I book this home direct?", a: `Choose Check dates and book. Booking direct with Recharge saves ${DIRECT}, and our team is on hand 24/7 during your stay.` });
   return out;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgePercent, Loader2, Pencil, Plus, Trash2, X } from "lucide-react";
+import { BadgePercent, Loader2, Pencil, Plus, Tag, Trash2, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import type { Discount } from "@/content/catalog";
 import { ukToday } from "@/content/discounts";
@@ -50,6 +50,7 @@ export function DiscountsPanel() {
         <button type="button" className="adm-btn primary" onClick={() => setEditing("new")}><Plus size={16} /> New offer</button>
       </header>
 
+      <DirectSaving />
       <NewGuest current={newGuest} onSaved={load} />
 
       <h2 className="adm-sub">Offers</h2>
@@ -76,6 +77,43 @@ export function DiscountsPanel() {
       )}
       {editing && <OfferEditor offer={editing === "new" ? null : editing} regions={regions} onClose={() => setEditing(null)} onSaved={async (text) => { await load(); setNote({ tone: "ok", text }); }} />}
     </section>
+  );
+}
+
+// The saving the website promises for booking direct ("Book direct and save 10%"), on every page that mentions it.
+function DirectSaving() {
+  const [percent, setPercent] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [note, setNote] = useState<Note>(null);
+  useEffect(() => {
+    supabase.from("settings").select("direct_discount_pct").eq("id", 1).single().then(({ data }) => setPercent(String(Number(data?.direct_discount_pct ?? 10))));
+  }, []);
+
+  async function save() {
+    const pct = Number(percent);
+    if (!(pct >= 1 && pct <= 50)) { setNote({ tone: "error", text: "Choose a saving between 1% and 50%." }); return; }
+    setBusy(true); setNote(null);
+    const { error } = await supabase.from("settings").update({ direct_discount_pct: pct, updated_at: new Date().toISOString() }).eq("id", 1);
+    if (!error) await refresh();
+    setBusy(false);
+    setNote(error ? { tone: "error", text: `Not saved: ${error.message}` } : { tone: "ok", text: `Saved. Every page now says "save ${pct}%" within a minute.` });
+  }
+
+  return (
+    <div className="adm-panel">
+      <div className="adm-panel-head">
+        <Tag />
+        <div>
+          <strong>Book direct saving</strong>
+          <small>The saving the website promises for booking direct instead of through a platform, as in &ldquo;Book direct and save {percent ?? "10"}%&rdquo;. It changes the wording on every page; it does not change prices in Hostaway.</small>
+        </div>
+      </div>
+      <div className="adm-switches">
+        <label className="adm-inline">Saving <input type="number" min={1} max={50} value={percent ?? ""} disabled={percent === null} onChange={(e) => setPercent(e.target.value)} /> %</label>
+        <button type="button" className="adm-btn primary" disabled={busy || percent === null} onClick={save}>{busy && <Loader2 size={16} className="spin" />} Save</button>
+      </div>
+      {note && <p className={`adm-note ${note.tone}`}>{note.text}</p>}
+    </div>
   );
 }
 

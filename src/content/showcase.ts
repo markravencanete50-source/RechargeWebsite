@@ -17,7 +17,9 @@ export const showcase = {
   business: pick("1-bedroom-home-in-edinburgh-2", 0),
   longStays: pick("2-bedroom-home-in-aberdeen", 0),
   homeHero: [pick("3-bedroom-home-in-edinburgh-4", 1), pick("1-bedroom-home-in-edinburgh-4", 0), pick("2-bedroom-home-in-livingston-4", 0)],
-  guests: pick("2-bedroom-home-in-edinburgh-3", 0),
-  owners: pick("2-bedroom-home-in-aberdeen", 1),
+  // A freshly made bed with rolled towels, and a front door: a stay that is ready, and a home that is looked after.
+  guests: pick("2-bedroom-home-in-livingston-4", 18),
+  owners: pick("2-bedroom-home-in-livingston-4", 12),
+  supportHero: pick("2-bedroom-home-in-edinburgh-3", 8),
 };
 export type Shot = NonNullable<ReturnType<typeof pick>>;

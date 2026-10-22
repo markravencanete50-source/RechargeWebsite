@@ -16,6 +16,8 @@ export type Town = { name: string; region: string; count: number };
 export type Catalog = {
   homes: Home[]; featured: Home[]; regions: Region[]; towns: Town[]; reviewTotal: number; priceSteps: number[];
   directDiscount: number; discounts: Discount[];
+  // The direct-booking saving as written on the pages, such as "10%".
+  direct: string;
 };
 
 async function rows<T>(path: string): Promise<T[] | null> {
@@ -125,6 +127,7 @@ export async function getCatalog(): Promise<Catalog> {
     reviewTotal: homes.reduce((n, h) => n + h.reviews, 0),
     priceSteps: priceStepsFor(homes),
     directDiscount: Number(settings?.[0]?.direct_discount_pct ?? 10),
+    direct: `${Number(settings?.[0]?.direct_discount_pct ?? 10)}%`,
     discounts: (discounts ?? []).map((d) => ({ ...d, percent: Number(d.percent) })),
   };
 }

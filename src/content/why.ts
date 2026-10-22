@@ -1,7 +1,7 @@
 import { BadgePercent, BadgeCheck, Camera, Car, ClipboardCheck, HandCoins, Headset, House, LayoutDashboard, MapPinned, ShieldCheck, Users, type LucideIcon } from "lucide-react";
 import { parseListing } from "./listing";
 import { homes, regions, reviewTotal } from "./properties";
-import { site } from "./site";
+import { DIRECT, site } from "./site";
 
 // Why people choose Recharge, from facts the site can stand behind: the listings and the app.
 export type Reason = { icon: LucideIcon; title: string; text: string };
@@ -21,7 +21,7 @@ export const ownerReasons: Reason[] = [
 ];
 
 export const guestReasons: Reason[] = [
-  { icon: BadgePercent, title: `Save ${site.directDiscount} booking direct`, text: "The same home costs less when you book with us rather than through a platform." },
+  { icon: BadgePercent, title: `Save ${DIRECT} booking direct`, text: "The same home costs less when you book with us rather than through a platform." },
   { icon: House, title: "A whole home, not a room", text: `${kitchens} of our ${homes.length} homes have a kitchen, so you can live normally, not out of a suitcase.` },
   { icon: Camera, title: "Checked before you arrive", text: "Every clean is finished with photo evidence in the Recharge app." },
   { icon: Headset, title: "A real person, 24/7", text: `Call ${site.phone.display} at any hour. Urgent problems go straight to maintenance.` },

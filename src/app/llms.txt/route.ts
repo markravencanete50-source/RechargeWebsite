@@ -1,17 +1,17 @@
 import { generalFaqs, guestFaqs, ownerFaqs } from "@/content/faqs";
 import { heading, regionSlug } from "@/content/home-utils";
 import { getCatalog } from "@/content/catalog";
-import { site } from "@/content/site";
+import { site, withDirect } from "@/content/site";
 import { teams, toolCount } from "@/content/tools";
 import { abs } from "@/lib/schema";
 
 // A plain-text summary of the site for AI assistants and answer engines (llmstxt.org).
 export async function GET() {
-  const { homes, regions } = await getCatalog();
+  const { homes, regions, direct } = await getCatalog();
   const lines = [
     `# ${site.name}`,
     "",
-    `> Serviced accommodation and short-let property management across Scotland. ${homes.length} homes in ${regions.length} areas, run through the Recharge app (${toolCount} tools) with 24/7 support. Book direct and save ${site.directDiscount}.`,
+    `> Serviced accommodation and short-let property management across Scotland. ${homes.length} homes in ${regions.length} areas, run through the Recharge app (${toolCount} tools) with 24/7 support. Book direct and save ${direct}.`,
     "",
     `Phone: ${site.phone.display}. Email: ${site.email}.`,
     "",
@@ -30,7 +30,7 @@ export async function GET() {
     ...teams.flatMap((t) => [`### ${t.name}`, ...t.tools.map((tool) => `- ${tool.name}: ${tool.does}`)]),
     "",
     "## Common questions",
-    ...[...generalFaqs, ...guestFaqs, ...ownerFaqs].flatMap((f) => [`### ${f.q}`, f.a]),
+    ...withDirect([...generalFaqs, ...guestFaqs, ...ownerFaqs], direct).flatMap((f) => [`### ${f.q}`, f.a]),
     "",
     "## Homes",
     ...homes.map((h) => `- [${heading(h)}, ${h.region}](${abs(`/properties/${h.slug}`)})${h.guests ? `: sleeps ${h.guests}` : ""}`),

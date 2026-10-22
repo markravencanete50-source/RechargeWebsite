@@ -14,8 +14,6 @@ export const site = {
   homesManaged: "100+",
   // CONFIRM: registered company name, number and office for the footer (UK trading disclosure rules).
   company: { legalName: "", number: "", registeredOffice: "" },
-  // CONFIRM: the old home page offers 10% off for booking direct.
-  directDiscount: "10%",
   // Owners sign in to their client portal in the Recharge app.
   ownerLogin: "https://app.rechargegroup.co.uk/sign-in",
   // The owner enquiry form lives in the Recharge app. Set NEXT_PUBLIC_ENQUIRY_API (for example
@@ -32,3 +30,9 @@ export const nav = [
   { href: "/support", label: "Support" },
   { href: "/faq", label: "FAQ" },
 ] as const;
+
+// The direct-booking saving is set in the dashboard (Discounts). Shared texts carry this mark where the figure goes, and each page
+// fills it in with withDirect from the live catalog, so changing the figure changes every page within a minute.
+export const DIRECT = "{direct}";
+export const withDirect = <T extends Record<string, unknown>>(items: T[], direct: string): T[] =>
+  items.map((it) => Object.fromEntries(Object.entries(it).map(([k, v]) => [k, typeof v === "string" ? v.replaceAll(DIRECT, direct) : v])) as T);
