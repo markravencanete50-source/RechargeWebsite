@@ -68,3 +68,46 @@ export async function quote(listingId: number, checkin: string, checkout: string
     maxGuests: listing.personCapacity,
   };
 }
+
+// ---------------------------------------------------------------- changes from the dashboard
+// The dashboard's edits, sent on to Hostaway (which passes them to Airbnb and Booking.com). Only what changed is sent: the
+// public title (externalListingName, never the team's internal name), the description, and the amenities as a difference,
+// so an amenity Hostaway has but the website does not show is never removed by accident.
+type HostawayAmenity = { id: number; name: string };
+let amenityList: { value: HostawayAmenity[]; until: number } | null = null;
+async function amenities() {
+  if (amenityList && amenityList.until > Date.now()) return amenityList.value;
+  amenityList = { value: await get<HostawayAmenity[]>("/amenities"), until: Date.now() + 6 * 60 * 60 * 1000 };
+  return amenityList.value;
+}
+
+export type HostawayChange = { title?: string; description?: string; addAmenities?: string[]; removeAmenities?: string[] };
+export type HostawayResult = { sent: string[]; unmatched: string[] };
+
+// labelOf turns a Hostaway amenity name into the website's wording, so the two can be matched.
+export async function updateHostawayListing(listingId: number, change: HostawayChange, labelOf: (name: string) => string): Promise<HostawayResult> {
+  const body: Record<string, unknown> = {};
+  const sent: string[] = [], unmatched: string[] = [];
+  if (change.title) { body.externalListingName = change.title; sent.push("title"); }
+  if (change.description) { body.description = change.description; sent.push("description"); }
+  if (change.addAmenities?.length || change.removeAmenities?.length) {
+    const all = await amenities();
+    const idOf = new Map(all.map((a) => [labelOf(a.name).toLowerCase(), a.id]));
+    const current = await get<{ listingAmenities?: { amenityId: number }[] }>(`/listings/${listingId}`);
+    const ids = new Set((current.listingAmenities ?? []).map((a) => a.amenityId));
+    for (const a of change.removeAmenities ?? []) { const id = idOf.get(a.toLowerCase()); if (id) ids.delete(id); }
+    for (const a of change.addAmenities ?? []) { const id = idOf.get(a.toLowerCase()); if (id) ids.add(id); else unmatched.push(a); }
+    body.listingAmenities = [...ids].map((amenityId) => ({ amenityId }));
+    sent.push("amenities");
+  }
+  if (!sent.length) return { sent, unmatched };
+  const res = await fetch(`${API}/listings/${listingId}`, {
+    method: "PUT",
+    headers: { authorization: `Bearer ${await accessToken()}`, "content-type": "application/json" },
+    body: JSON.stringify(body),
+    cache: "no-store",
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || data.status !== "success") throw new Error(`Hostaway did not accept the change (${res.status}${data.message ? `: ${data.message}` : ""})`);
+  return { sent, unmatched };
+}
