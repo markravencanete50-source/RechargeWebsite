@@ -2089,3 +2089,11 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .ab-cta .eyebrow { margin-bottom: 14px; }
 .ab-cta .h2 { margin-bottom: 14px; }
 .ab-cta .lead { max-width: 54ch; }
+
+/* ---- Properties: the area filter as underlined tabs; the underline glides between areas ---- */
+.area-filter { gap: 24px; margin: 28px 0 8px; padding-bottom: 0; border-bottom: 1px solid var(--line); scrollbar-width: none; }
+.area-filter::-webkit-scrollbar { display: none; }
+.area-filter .tab { min-height: 46px; padding: 0 0 4px; border: 0; border-radius: 0; background: none; color: var(--muted); font-weight: 600; }
+.area-filter .tab:hover { color: var(--forest); }
+.area-filter .tab-glide[aria-current="page"] { color: var(--forest); }
+.area-filter .tab-pill { inset: auto 0 -1px 0; height: 2px; border-radius: 0; background: var(--forest); }
