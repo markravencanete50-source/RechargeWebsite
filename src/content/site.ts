@@ -59,7 +59,17 @@ export const nav: NavItem[] = [
       { href: "/faq", label: "Questions and answers", text: "Guests, owners and the app" },
     ],
   },
-  { href: "/about", label: "About" },
+  {
+    href: "/about", label: "About",
+    children: [
+      { href: "/about", label: "About Recharge", text: "Who we are and how we started" },
+      { href: "/about/how-we-work", label: "How we work", text: "Reliability, transparency, results" },
+      { href: "/about/who-stays", label: "Who stays with us", text: "Work, leisure and life in between" },
+      { href: "/about/where-we-work", label: "Where we work", text: "Every area and town we cover" },
+      { href: "/about/partners", label: "Trusted partners", text: "Where our homes can be booked" },
+      { href: "/about/contact", label: "Contact us", text: "Phone, email and a message form" },
+    ],
+  },
 ];
 
 // The direct-booking saving is set in the dashboard (Discounts). Shared texts carry this mark where the figure goes, and each page

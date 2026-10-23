@@ -1,14 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { ContactSection } from "@/components/ContactSection";
 import { JsonLd } from "@/components/JsonLd";
 import { PhotoHero } from "@/components/PhotoHero";
 import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
+import { ChildIndex, SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
-import { partners } from "@/content/partners";
 import { showcase } from "@/content/showcase";
 import { abs, breadcrumbs, graph, organization } from "@/lib/schema";
 
@@ -17,18 +15,6 @@ export const metadata: Metadata = {
   description: "Recharge runs serviced accommodation and short lets across Scotland. We managed our own homes first, then opened the same service to owners. Meet the team and see how we work.",
   alternates: { canonical: "/about" },
 };
-
-const principles = [
-  { title: "Reliability", text: "Owners are paid on time and guests are looked after at any hour. We build the business so that it holds up on a bad day, not only a good one." },
-  { title: "Transparency", text: "Owners see every booking, cost and payout in their own portal. We ask before we spend, and we show our working." },
-  { title: "Results", text: "Prices are set from the market, not from habit. We review them every day and learn from every stay." },
-];
-
-const guests = [
-  { shot: showcase.business, label: "For work", title: "Business trips and contracts", text: "Quiet, well-equipped homes for people working away. Fast wifi, a proper desk and a kitchen that works." },
-  { shot: showcase.families, label: "For leisure", title: "Holidays and weekends", text: "Space for families and groups, close to what they came to see, with everything ready on arrival." },
-  { shot: showcase.longStays, label: "For life situations", title: "Moves, repairs and in-between", text: "A comfortable home for weeks or months while someone relocates, renovates or waits for the keys." },
-];
 
 export default async function AboutPage() {
   const { homes, regions, reviewTotal } = await getCatalog();
@@ -58,6 +44,7 @@ export default async function AboutPage() {
           <Link className="btn btn-line-light" href="/properties">See our homes</Link>
         </div>
       </PhotoHero>
+      <SubNav section="/about" current="/about" />
 
       <section className="section proof-band">
         <div className="wrap">
@@ -86,55 +73,10 @@ export default async function AboutPage() {
       <section className="section paper">
         <div className="wrap">
           <div className="head-row">
-            <Reveal><p className="eyebrow">How we work</p><h2 className="h2">What we hold to</h2></Reveal>
-            <Reveal delay={0.08}><p className="lead">Every decision we make comes back to one of these.</p></Reveal>
+            <Reveal><p className="eyebrow">About Recharge</p><h2 className="h2">More about us</h2></Reveal>
+            <Reveal delay={0.08}><p className="lead">How we work, who stays with us, where our homes are, and how to reach us.</p></Reveal>
           </div>
-          <div className="tenets">
-            {principles.map((p, i) => (
-              <Reveal key={p.title} delay={0.08 * i} className="tenet">
-                <h3>{p.title}</h3>
-                <p>{p.text}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="wrap">
-          <div className="head-row">
-            <Reveal><p className="eyebrow">Who stays with us</p><h2 className="h2">Guests with a reason to be here</h2></Reveal>
-            <Reveal delay={0.08}><p className="lead">Our homes suit people travelling for work, for a break, or because life has moved them for a while.</p></Reveal>
-          </div>
-          <div className="ab-guests">
-            {guests.map((g, i) => (
-              <Reveal key={g.title} delay={0.08 * i} className="ab-guest">
-                <div className="ab-guest-photo">{g.shot && <Image src={g.shot.src} alt={g.shot.caption} fill sizes="(max-width: 860px) 100vw, 33vw" />}</div>
-                <p className="ab-guest-label">{g.label}</p>
-                <h3>{g.title}</h3>
-                <p>{g.text}</p>
-              </Reveal>
-            ))}
-          </div>
-          <p className="gr-note"><Link className="text-link" href="/stay">Read about staying with us <ArrowRight size={16} /></Link></p>
-        </div>
-      </section>
-
-      <section className="section paper">
-        <div className="wrap ab-partners">
-          <Reveal className="ab-partners-copy">
-            <p className="eyebrow">Our trusted partners</p>
-            <h2 className="h2">Find us wherever you book</h2>
-            <p className="lead">Our homes are listed on the major booking platforms, and you can book direct on this website too.</p>
-            <Link className="text-link" href="/properties">Book direct and save <ArrowRight size={16} /></Link>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <ul className="ab-logos">
-              {partners.map((p) => (
-                <li key={p.name}>{p.logo ? <Image src={p.logo} alt={p.name} width={140} height={48} /> : p.name}</li>
-              ))}
-            </ul>
-          </Reveal>
+          <ChildIndex section="/about" />
         </div>
       </section>
 
@@ -154,7 +96,6 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <ContactSection title="Talk to the team" lead="Ask us anything about a stay, or tell us about your property. A real person will reply." />
     </>
   );
 }

@@ -61,7 +61,7 @@ export default async function FaqPage() {
           </Reveal>
           <Reveal delay={0.16} className="call-band-actions">
             <a className="btn btn-mint" href={site.phone.href}><Phone size={18} /> {site.phone.display}</a>
-            <Link className="btn btn-line-light" href="/support#contact">Send a message <ArrowRight size={18} /></Link>
+            <Link className="btn btn-line-light" href="/about/contact">Send a message <ArrowRight size={18} /></Link>
           </Reveal>
         </div>
       </section>

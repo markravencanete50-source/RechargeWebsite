@@ -2275,3 +2275,18 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .urgent-line { display: grid; gap: 6px; margin-top: 8px; padding-top: 16px; border-top: 2px solid var(--forest); }
 .urgent-line span { color: var(--muted); }
 .urgent-line a { color: var(--forest); font-weight: 600; }
+
+/* ---- Where we work: every area with its towns ---- */
+.region-list { border-top: 2px solid var(--forest); }
+.region-row { display: grid; grid-template-columns: minmax(0, 0.9fr) 110px minmax(0, 1.5fr) auto; gap: 6px 28px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.region-row h2 { margin: 0; font-size: clamp(20px, 2vw, 26px); font-weight: 600; letter-spacing: -0.02em; }
+.region-row h2 a { text-decoration: none; }
+.region-row h2 a:hover { color: var(--moss); }
+.region-count { margin: 0; color: var(--muted); }
+.region-count strong { font-size: 20px; color: var(--forest); font-variant-numeric: tabular-nums; }
+.region-towns { margin: 0; color: var(--muted); font-size: 15px; }
+@media (max-width: 860px) { .region-row { grid-template-columns: minmax(0, 1fr) auto; } .region-towns { grid-column: 1 / -1; } .region-row .text-link { grid-column: 1 / -1; justify-self: start; } }
+.ab-logos { flex-direction: column; align-items: stretch; border-bottom: 0; }
+.ab-logos li, .ab-logos li:first-child { padding: 22px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+.ab-logos li + li { border-left: 0; }
+.channel-big svg { display: inline-block; vertical-align: -2px; margin-right: 6px; }
