@@ -5,13 +5,13 @@ import type { Shot } from "@/content/showcase";
 import type { Reason } from "@/content/why";
 import { Reveal } from "./Reveal";
 
-// Reasons as an editorial list: icon, short title, one line. Used side by side on the homepage.
+// Reasons as an editorial list: a number, a short title, one line. Used side by side on the homepage.
 export function ReasonList({ items, columns = 1 }: { items: Reason[]; columns?: 1 | 2 }) {
   return (
     <ul className={`reasons${columns === 2 ? " two" : ""}`}>
       {items.map((r, i) => (
         <Reveal as="li" key={r.title} delay={i * 0.06} className="reason">
-          <span className="row-ic"><r.icon size={20} /></span>
+          <span className="reason-n">{String(i + 1).padStart(2, "0")}</span>
           <div><strong>{r.title}</strong><p>{r.text}</p></div>
         </Reveal>
       ))}

@@ -37,7 +37,7 @@ export function OwnerPortal() {
         {features.map((x, i) => (
           <li key={x.title}>
             <button type="button" aria-pressed={i === active} onClick={() => { setActive(i); setPaused(true); }} className={i === active ? "on" : undefined}>
-              <span className="row-ic"><x.icon size={20} /></span>
+              <span className="portal-n">{String(i + 1).padStart(2, "0")}</span>
               <span className="portal-text">
                 <strong>{x.title}</strong>
                 <span>{x.text}</span>

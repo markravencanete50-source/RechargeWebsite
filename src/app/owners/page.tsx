@@ -1,6 +1,6 @@
 import { OwnerCalculator } from "@/components/OwnerCalculator";
 import { rateTable } from "@/content/estimate";
-import { ArrowRight, Check, Mail, Phone, Sofa, UserRound } from "lucide-react";
+import { ArrowRight, Mail, Phone, UserRound } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqSection } from "@/components/FaqSection";
@@ -58,17 +58,6 @@ export default async function OwnersPage() {
         eyebrow="For property owners"
         title={<>Your property,<br />run properly</>}
         lead={`Guaranteed rent or full management across Scotland. We run ${homes.length} homes today, and you see every booking, repair and payout in your own client portal.`}
-        aside={
-          <div className="hero-card">
-            <strong>Free performance estimate</strong>
-            <ul className="checks single">
-              <li><Check size={18} /> What your property could earn</li>
-              <li><Check size={18} /> Guaranteed rent or full management</li>
-              <li><Check size={18} /> No obligation</li>
-            </ul>
-            <a className="btn btn-mint" href="#estimate">Get your estimate <ArrowRight size={18} /></a>
-          </div>
-        }
       >
         <div className="hero-actions">
           <a className="btn btn-mint" href="#estimate">Get your free estimate <ArrowRight size={18} /></a>
@@ -89,10 +78,9 @@ export default async function OwnersPage() {
             <p className="lead">The same calculator our owners use in the Recharge app, with nightly rates from the {homes.length} homes we run today.</p>
           </Reveal>
           <OwnerCalculator table={rateTable()} />
-          <Reveal className="tool-band">
-            <span className="row-ic"><Sofa size={20} /></span>
-            <div><strong>Furnishing it yourself?</strong><span>Get a room-by-room list of everything a guest-ready home needs, from bed linen to the fire blanket.</span></div>
-            <Link className="btn btn-ghost" href="/owners/furnishing-calculator">Furnishing calculator <ArrowRight size={18} /></Link>
+          <Reveal className="note-line">
+            <p><strong>Furnishing it yourself?</strong> Get a room-by-room list of everything a guest-ready home needs, from bed linen to the fire blanket.</p>
+            <Link className="text-link" href="/owners/furnishing-calculator">Furnishing calculator <ArrowRight size={16} /></Link>
           </Reveal>
         </div>
       </section>
