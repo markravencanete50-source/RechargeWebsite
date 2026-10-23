@@ -31,14 +31,14 @@ export function WhyChoose({ owners, guests, ownerShot, guestShot }: { owners: Re
         <ReasonList items={owners} />
         <Link className="btn btn-primary" href="/owners">Let us run your property <ArrowRight size={18} /></Link>
       </div>
-      <div className="why-col guests on-dark">
+      <div className="why-col guests">
         {guestShot && <Reveal className="why-photo"><Image src={guestShot.src} alt={guestShot.caption} fill sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>}
         <Reveal className="why-head">
           <p className="eyebrow">For guests</p>
           <h3 className="h2">Why guests choose Recharge</h3>
         </Reveal>
         <ReasonList items={guests} />
-        <Link className="btn btn-mint" href="/properties">Find your stay <ArrowRight size={18} /></Link>
+        <Link className="btn btn-primary" href="/properties">Find your stay <ArrowRight size={18} /></Link>
       </div>
     </div>
   );
