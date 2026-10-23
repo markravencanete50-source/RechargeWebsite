@@ -31,12 +31,9 @@ export function ToolsShowcase() {
                 animate={active === t.id ? { opacity: 1, y: 0 } : undefined}
                 transition={{ duration: 0.5, delay: i * 0.04, ease: [0.2, 0.7, 0.2, 1] }}
               >
-                <span className="ic"><tool.icon size={20} /></span>
-                <div>
-                  <strong>{tool.name}</strong>
-                  <p>{tool.does}</p>
-                  <span className="tool-for">{tool.for}</span>
-                </div>
+                <span className="tool-for">{tool.for}</span>
+                <strong>{tool.name}</strong>
+                <p>{tool.does}</p>
               </motion.li>
             ))}
           </ul>

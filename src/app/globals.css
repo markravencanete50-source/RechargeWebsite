@@ -1952,20 +1952,20 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .ab-logos li:first-child { padding-left: 0; }
 
 /* Stays: a stay from booking to check-out */
-.journey { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: relative; }
-.journey::before { content: ""; position: absolute; left: 0; right: 0; top: 66px; height: 1px; background: var(--line); }
-.journey-stop { position: relative; display: grid; align-content: start; gap: 10px; padding-right: clamp(12px, 2vw, 28px); }
-.journey-mark { font-size: clamp(30px, 3.2vw, 44px); font-weight: 600; letter-spacing: -0.03em; line-height: 1; height: 44px; display: flex; align-items: flex-end; font-variant-numeric: tabular-nums; }
-.journey-dot { width: 11px; height: 11px; margin: 11px 0 8px; border-radius: 50%; background: var(--forest); box-shadow: 0 0 0 5px var(--paper); position: relative; }
-.journey-stop strong { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
-.journey-stop p { margin: 0; color: var(--muted); font-size: 15px; }
-.journey-stop p a { color: var(--forest); font-weight: 600; white-space: nowrap; }
+.stay-line { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: relative; }
+.stay-line::before { content: ""; position: absolute; left: 0; right: 0; top: 66px; height: 1px; background: var(--line); }
+.stay-stop { position: relative; display: grid; align-content: start; gap: 10px; padding-right: clamp(12px, 2vw, 28px); }
+.stay-mark { font-size: clamp(30px, 3.2vw, 44px); font-weight: 600; letter-spacing: -0.03em; line-height: 1; height: 44px; display: flex; align-items: flex-end; font-variant-numeric: tabular-nums; }
+.stay-dot { width: 11px; height: 11px; margin: 11px 0 8px; border-radius: 50%; background: var(--forest); box-shadow: 0 0 0 5px var(--paper); position: relative; }
+.stay-stop strong { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
+.stay-stop p { margin: 0; color: var(--muted); font-size: 15px; }
+.stay-stop p a { color: var(--forest); font-weight: 600; white-space: nowrap; }
 @media (max-width: 900px) {
-  .journey { grid-template-columns: 1fr; padding-left: 28px; }
-  .journey::before { top: 8px; bottom: 8px; left: 5px; right: auto; width: 1px; height: auto; }
-  .journey-stop { padding: 0 0 30px; }
-  .journey-mark { height: auto; font-size: 30px; }
-  .journey-dot { position: absolute; left: -28px; top: 10px; margin: 0; }
+  .stay-line { grid-template-columns: 1fr; padding-left: 28px; }
+  .stay-line::before { top: 8px; bottom: 8px; left: 5px; right: auto; width: 1px; height: auto; }
+  .stay-stop { padding: 0 0 30px; }
+  .stay-mark { height: auto; font-size: 30px; }
+  .stay-dot { position: absolute; left: -28px; top: 10px; margin: 0; }
 }
 
 /* Stays: what the homes have, beside a real kitchen */
@@ -2069,3 +2069,20 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
   .tx-count { min-width: 0; font-size: 17px; }
 }
 @media (max-width: 600px) { .tx-tool { padding: 14px 0; } }
+
+/* ---- The app page: one booking, start to finish, without circles or pills ---- */
+.journey-num { align-self: start; width: 48px; height: auto; border: 0; border-radius: 0; background: var(--forest); padding: 8px 0; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; color: var(--mint); text-align: center; font-variant-numeric: tabular-nums; }
+.journey-step strong { margin-top: 2px; }
+.journey-tool { padding: 0; border-radius: 0; background: none; color: var(--mint); font-size: 13px; font-weight: 600; letter-spacing: 0.02em; }
+.journey-tool::before { content: "Tool: "; color: rgb(239 233 219 / 0.6); font-weight: 500; }
+
+/* The app page tools: underlined team tabs, a ruled list with a plain label for who uses each tool */
+.tools-tabs { gap: 26px; margin: 24px 0 8px; padding-bottom: 0; border-bottom: 1px solid var(--line); scrollbar-width: none; }
+.tools-tabs::-webkit-scrollbar { display: none; }
+.tools-tabs .tab { min-height: 48px; padding: 0 0 4px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: none; color: var(--muted); font-weight: 600; }
+.tools-tabs .tab[aria-selected="true"] { background: none; color: var(--forest); border-bottom-color: var(--forest); }
+.tools-tabs .tab-count { font-variant-numeric: tabular-nums; }
+.tool { display: grid; grid-template-columns: 1fr; gap: 4px; align-content: start; }
+.tool strong { margin-bottom: 0; }
+.tool p { margin: 0; }
+.tool-for { display: block; padding: 0; border-radius: 0; background: none; color: var(--moss); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
