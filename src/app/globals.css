@@ -2150,3 +2150,35 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .faq-side-call a { color: var(--forest); font-size: 20px; letter-spacing: -0.015em; text-decoration: none; }
 .faq-side-call a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .faq-side-call span { color: var(--muted); opacity: 1; }
+
+/* ---- Furnishing calculator: the same tool without boxes; rules and numbers carry it ---- */
+.furn-inputs { gap: 28px; }
+.furn-group { padding: 0; border: 0; border-radius: 0; background: none; }
+.furn-group legend { padding: 0 0 10px; margin: 0; }
+.furn-row { border-top: 1px solid var(--line); }
+.furn-row:first-of-type { border-top: 2px solid var(--forest); }
+.furn-step button { background: transparent; }
+
+.furn-result { gap: 18px; }
+.furn-total { gap: 0; padding: 0; border-radius: 0; background: none; color: var(--ink); border-top: 2px solid var(--forest); border-bottom: 1px solid var(--line); }
+.furn-total div { padding: 16px 16px 16px 0; }
+.furn-total div + div { padding-left: 16px; border-left: 1px solid var(--line); }
+.furn-total strong { font-size: clamp(34px, 4vw, 48px); color: var(--forest); }
+.furn-total span { color: var(--muted); }
+
+.furn-actions { gap: 6px 22px; }
+.furn-actions .btn { min-height: 40px; padding: 0 0 2px; border: 0; border-bottom: 1px solid var(--forest); border-radius: 0; background: none; box-shadow: none; }
+.furn-actions .btn:hover { color: var(--moss); border-bottom-color: var(--moss); background: none; transform: none; }
+
+.furn-cats { gap: 0; border-top: 2px solid var(--forest); }
+.furn-cat { border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: none; overflow: visible; }
+.furn-cat summary { padding: 0; min-height: 56px; font-size: 17px; letter-spacing: -0.01em; }
+.furn-cat summary em { padding: 0; border-radius: 0; background: none; color: var(--muted); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.furn-cat ul { padding: 0 0 14px; }
+
+.furn-cta { gap: 14px; margin-top: 10px; padding: 22px 0 0; border-radius: 0; background: none; color: var(--ink); border: 0; border-top: 2px solid var(--forest); }
+.furn-cta strong { font-size: clamp(20px, 2vw, 24px); letter-spacing: -0.02em; }
+.furn-cta span { color: var(--muted); font-size: 15px; max-width: 60ch; }
+.furn-cta .btn-mint { background: var(--forest); color: var(--cream); }
+.furn-cta .btn-mint:hover { background: var(--moss); }
+@media (max-width: 480px) { .furn-total { padding: 0; } .furn-total div { padding: 14px 10px 14px 0; } .furn-total div + div { padding-left: 10px; } }
