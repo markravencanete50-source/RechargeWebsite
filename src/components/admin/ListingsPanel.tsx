@@ -1,6 +1,6 @@
 "use client";
 
-import { EyeOff, Globe, Loader2, Plus, RotateCcw, Search, Star, X } from "lucide-react";
+import { Loader2, Plus, RotateCcw, Search, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { adminFetch, supabase } from "@/lib/supabase-browser";
 import { AmenityPicker } from "./AmenityPicker";
@@ -100,9 +100,9 @@ export function ListingsPanel() {
                     <small>{w.data.town}, {w.data.region} · {w.data.bedrooms ?? 0} bed{w.data.bedrooms === 1 ? "" : "s"}{w.data.price ? ` · around £${w.data.price}` : ""}</small>
                   </span>
                   <span className="adm-badges">
-                    <em><Globe size={13} /> Website only</em>
-                    {!w.published && <em className="hidden"><EyeOff size={13} /> Draft</em>}
-                    {w.featured_rank && <em className="featured"><Star size={13} /> Featured {w.featured_rank}</em>}
+                    <em>Website only</em>
+                    {!w.published && <em className="hidden">Draft</em>}
+                    {w.featured_rank && <em className="featured">Featured {w.featured_rank}</em>}
                   </span>
                 </button>
               </li>
@@ -125,8 +125,8 @@ export function ListingsPanel() {
                   <small>{b.town}, {b.region} · {b.bedrooms} bed{b.bedrooms === 1 ? "" : "s"}{b.price ? ` · around £${b.price}` : ""} · #{b.hostawayId}</small>
                 </span>
                 <span className="adm-badges">
-                  {o?.published === false && <em className="hidden"><EyeOff size={13} /> Hidden</em>}
-                  {o?.featured_rank && <em className="featured"><Star size={13} /> Featured {o.featured_rank}</em>}
+                  {o?.published === false && <em className="hidden">Hidden</em>}
+                  {o?.featured_rank && <em className="featured">Featured {o.featured_rank}</em>}
                   {(o?.title || o?.description || o?.amenities) && <em>Edited</em>}
                 </span>
               </button>

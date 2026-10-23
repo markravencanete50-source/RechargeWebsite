@@ -1,7 +1,7 @@
 "use client";
 
 import type { Session } from "@supabase/supabase-js";
-import { Activity, BadgePercent, Home, Loader2, LogOut, Users } from "lucide-react";
+import { Loader2, LogOut } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState, type FormEvent } from "react";
 import { supabase } from "@/lib/supabase-browser";
@@ -11,11 +11,11 @@ import { DiscountsPanel } from "./DiscountsPanel";
 import { ListingsPanel } from "./ListingsPanel";
 
 type Tab = "listings" | "discounts" | "admins" | "activity";
-const TABS: { id: Tab; label: string; icon: typeof Home }[] = [
-  { id: "listings", label: "Listings", icon: Home },
-  { id: "discounts", label: "Discounts", icon: BadgePercent },
-  { id: "admins", label: "Admins", icon: Users },
-  { id: "activity", label: "Activity", icon: Activity },
+const TABS: { id: Tab; label: string }[] = [
+  { id: "listings", label: "Listings" },
+  { id: "discounts", label: "Discounts" },
+  { id: "admins", label: "Admins" },
+  { id: "activity", label: "Activity" },
 ];
 
 // The dashboard: sign in, then manage the website. A person is let in only when the database says they are an admin; an invited
@@ -65,7 +65,7 @@ export function AdminApp() {
         <nav>
           {TABS.map((t) => (
             <button key={t.id} type="button" aria-current={tab === t.id ? "page" : undefined} onClick={() => setTab(t.id)}>
-              <t.icon size={18} /> {t.label}
+              {t.label}
             </button>
           ))}
         </nav>
