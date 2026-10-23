@@ -25,3 +25,9 @@ export const showcase = {
   kitchen: pick("1-bedroom-home-in-edinburgh-2", 7),
 };
 export type Shot = NonNullable<ReturnType<typeof pick>>;
+
+// Areas whose best-reviewed home opens its gallery with a floor plan or a detail shot get a chosen room instead, on the area
+// cards and the area page.
+export const areaCovers: Record<string, Shot | null> = {
+  "Scottish Borders": pick("2-bedroom-home-in-hawick-7", 2),
+};

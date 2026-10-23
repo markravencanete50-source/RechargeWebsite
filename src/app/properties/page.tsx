@@ -4,6 +4,7 @@ import { AreaIndex } from "@/components/AreaIndex";
 import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
+import { SubNav } from "@/components/SubNav";
 import { PropertyResults } from "@/components/PropertyResults";
 import { propertiesFaqs } from "@/content/faqs";
 import { cardOf, getCatalog } from "@/content/catalog";
@@ -29,6 +30,7 @@ export default async function PropertiesPage() {
         breadcrumbs([{ name: "Properties", path: "/properties" }]),
       )} />
       <PageHero photo={showcase.stayHero} eyebrow="Properties" title="Find a Recharge home" lead="Search by area, dates and guests. Every home is cleaned, checked and supported 24/7." />
+      <SubNav section="/properties" current="/properties" />
       <section className="section" style={{ paddingTop: 48 }}>
         <div className="wrap">
           <Suspense fallback={<div style={{ minHeight: 400 }} />}>
