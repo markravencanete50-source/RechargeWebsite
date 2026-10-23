@@ -44,7 +44,8 @@ export async function Footer() {
               <li><Link href="/guaranteed-rent">Guaranteed rent</Link></li>
               <li><Link href="/owners/full-management">Full management</Link></li>
               <li><Link href="/app">The Recharge app</Link></li>
-              <li><Link href="/app#tools">App tools</Link></li>
+              <li><Link href="/app/how-it-works">How the app works</Link></li>
+              <li><Link href="/app/owner-portal">Owner portal</Link></li>
               <li><Link href="/owners/earnings-calculator">Earnings calculator</Link></li>
               <li><Link href="/owners#estimate">Free estimate</Link></li>
               <li><Link href="/owners/furnishing-calculator">Furnishing calculator</Link></li>

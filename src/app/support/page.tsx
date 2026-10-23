@@ -149,7 +149,7 @@ export default async function SupportPage() {
           <div className="next-links">
             <Link href="/stay"><strong>Staying with us <ArrowRight size={16} /></strong><span>How a Recharge stay works.</span></Link>
             <Link href="/owners"><strong>For owners <ArrowRight size={16} /></strong><span>Guaranteed rent or full management.</span></Link>
-            <Link href="/app#journey"><strong>The app behind support <ArrowRight size={16} /></strong><span>One booking, followed start to finish.</span></Link>
+            <Link href="/app/how-it-works"><strong>The app behind support <ArrowRight size={16} /></strong><span>One booking, followed start to finish.</span></Link>
             <Link href="/faq"><strong>All questions <ArrowRight size={16} /></strong><span>Answers for guests, owners and neighbours.</span></Link>
           </div>
         </div>

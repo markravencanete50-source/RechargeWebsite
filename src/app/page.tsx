@@ -102,7 +102,7 @@ export default async function Home() {
             </Reveal>
             <Reveal delay={0.08}>
               <p className="lead">Pricing, guest messages, cleaning, repairs, licensing and statements all run inside the Recharge app. Choose a team to see the tools it uses.</p>
-              <Link className="btn btn-mint" href="/app#tools">See how the team works <ArrowRight size={18} /></Link>
+              <Link className="btn btn-mint" href="/app/how-it-works">See how the team works <ArrowRight size={18} /></Link>
             </Reveal>
           </div>
           <ToolExplorer />

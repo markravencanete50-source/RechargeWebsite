@@ -2290,3 +2290,15 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .ab-logos li, .ab-logos li:first-child { padding: 22px 0; border-left: 0; border-bottom: 1px solid var(--line); }
 .ab-logos li + li { border-left: 0; }
 .channel-big svg { display: inline-block; vertical-align: -2px; margin-right: 6px; }
+
+/* ---- App team pages ---- */
+.tool-who { display: block; margin-top: 4px; font-style: normal; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--moss); }
+.app-team { align-items: start; }
+.app-team .support-phone { position: sticky; top: 110px; }
+@media (max-width: 900px) { .app-team .support-phone { position: relative; top: 0; } }
+.fit-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 clamp(20px, 3vw, 40px); border-top: 2px solid var(--mint); }
+.fit-steps li { display: grid; gap: 8px; align-content: start; padding: 20px 0 24px; border-bottom: 1px solid rgb(239 233 219 / 0.16); }
+.fit-steps span { font-size: 13px; font-weight: 600; letter-spacing: 0.12em; color: var(--mint); }
+.fit-steps strong { font-size: clamp(20px, 2vw, 24px); font-weight: 600; letter-spacing: -0.02em; }
+.fit-steps p { margin: 0; color: rgb(239 233 219 / 0.78); }
+.fit-steps em { font-style: normal; font-size: 13px; font-weight: 600; color: var(--mint); }

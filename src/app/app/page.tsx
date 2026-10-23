@@ -2,14 +2,12 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AppShowcase } from "@/components/AppShowcase";
-import { DiffVideo } from "@/components/DiffVideo";
 import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
-import { Journey } from "@/components/Journey";
 import { AppHero } from "@/components/AppHero";
 import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
-import { ToolsShowcase } from "@/components/ToolsShowcase";
+import { ChildIndex, SubNav } from "@/components/SubNav";
 import { appFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
 import { teams, toolCount } from "@/content/tools";
@@ -46,11 +44,12 @@ export default async function AppPage() {
         <Reveal delay={0.12}><p className="lead">Owners, guest support, cleaners, maintenance and accounts all work from the same app. Every job has an owner, a status and a record.</p></Reveal>
         <Reveal delay={0.18}>
           <div className="hero-actions">
-            <a className="btn btn-mint" href="#journey">See how it works <ArrowRight size={18} /></a>
-            <Link className="btn btn-line-light" href="/owners#portal">The owner portal</Link>
+            <Link className="btn btn-mint" href="/app/how-it-works">See how it works <ArrowRight size={18} /></Link>
+            <Link className="btn btn-line-light" href="/app/owner-portal">The owner portal</Link>
           </div>
         </Reveal>
       </AppHero>
+      <SubNav section="/app" current="/app" />
 
       <section className="section proof-band">
         <div className="wrap">
@@ -68,34 +67,13 @@ export default async function AppPage() {
         </div>
       </section>
 
-      <section className="section dark on-dark" id="journey" style={{ scrollMarginTop: 80 }}>
-        <div className="wrap split-sticky">
-          <Reveal className="split-head">
-            <p className="eyebrow">How it works</p>
-            <h2 className="h2">One booking, start to finish</h2>
-            <p className="lead">Follow a single stay through the app. Each step is handled by a tool, so nothing depends on someone remembering.</p>
-          </Reveal>
-          <Journey />
-        </div>
-      </section>
-
-      <section className="section paper" id="tools" style={{ scrollMarginTop: 80 }}>
+      <section className="section paper">
         <div className="wrap">
           <div className="head-row">
-            <Reveal><p className="eyebrow">Behind the scenes</p><h2 className="h2">{toolCount} tools across five teams</h2></Reveal>
-            <Reveal delay={0.08}><p className="lead">The tools our team uses behind every home. Owners see their own client portal, shown under For owners.</p></Reveal>
+            <Reveal><p className="eyebrow">Inside the app</p><h2 className="h2">{toolCount} tools across five teams</h2></Reveal>
+            <Reveal delay={0.08}><p className="lead">How one booking moves through it, and a page for each team with every tool it uses.</p></Reveal>
           </div>
-          <ToolsShowcase />
-        </div>
-      </section>
-
-      <section className="section dark on-dark">
-        <div className="wrap">
-          <div className="head-row">
-            <Reveal><p className="eyebrow">Watch</p><h2 className="h2">Why Recharge is different</h2></Reveal>
-            <Reveal delay={0.08}><p className="lead">How the app keeps owners, guests, cleaners and maintenance on the same page.</p></Reveal>
-          </div>
-          <Reveal><DiffVideo /></Reveal>
+          <ChildIndex section="/app" />
         </div>
       </section>
 
