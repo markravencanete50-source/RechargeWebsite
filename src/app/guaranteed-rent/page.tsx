@@ -23,9 +23,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/guaranteed-rent" },
 };
 
-// Wide cards on a three-column grid: one wide and one narrow per row, alternating, so six cards fill three rows.
-const WIDE = [0, 3, 4];
-
 export default async function GuaranteedRentPage() {
   const { homes, regions, reviewTotal } = await getCatalog();
   const regionNames = regions.map((r) => r.name);
@@ -96,15 +93,15 @@ export default async function GuaranteedRentPage() {
             <Reveal><p className="eyebrow">What you get</p><h2 className="h2">Six reasons landlords choose it</h2></Reveal>
             <Reveal delay={0.08}><p className="lead">Every point below is written into the agreement, so you know it before you sign.</p></Reveal>
           </div>
-          <div className="gr-bento">
+          <ol className="clauses">
             {benefits.map((b, i) => (
-              <Reveal key={b.title} delay={0.06 * (i % 3)} className={`gr-card${WIDE.includes(i) ? " wide" : ""}${i === 0 ? " deep" : ""}`}>
-                <span className="gr-ic"><b.icon size={22} /></span>
+              <Reveal as="li" key={b.title} delay={0.05 * (i % 3)} className="clause">
+                <span className="clause-n">{String(i + 1).padStart(2, "0")}</span>
                 <h3>{b.title}</h3>
                 <p>{b.text}</p>
               </Reveal>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
@@ -114,14 +111,14 @@ export default async function GuaranteedRentPage() {
             <p className="eyebrow">Who pays for what</p>
             <h2 className="h2">We carry the costs. You keep the control.</h2>
           </Reveal>
-          <div className="gr-ledger">
-            <Reveal className="gr-side we">
-              <h3>We pay for</h3>
-              <ul>{wePay.map((t) => <li key={t}><Check size={18} /> {t}</li>)}</ul>
+          <div className="ledger">
+            <Reveal className="ledger-col">
+              <p className="ledger-head">We pay for</p>
+              <ul>{wePay.map((t) => <li key={t}>{t}</li>)}</ul>
             </Reveal>
-            <Reveal className="gr-side you" delay={0.1}>
-              <h3>You keep</h3>
-              <ul>{youKeep.map((t) => <li key={t}><Check size={18} /> {t}</li>)}</ul>
+            <Reveal className="ledger-col" delay={0.1}>
+              <p className="ledger-head">You keep</p>
+              <ul>{youKeep.map((t) => <li key={t}>{t}</li>)}</ul>
             </Reveal>
           </div>
         </div>

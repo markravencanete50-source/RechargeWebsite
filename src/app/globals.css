@@ -565,8 +565,6 @@ a.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-3); }
 .clamp p + p { margin-top: 12px; }
 .rooms-scroll { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(180px, 220px); gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; scrollbar-width: thin; }
 .rooms-scroll .room { scroll-snap-align: start; }
-.know { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 36px; }
-.know h3, .sheet-body h3 { margin: 0 0 12px; font-size: 16px; font-weight: 700; }
 .sheet { width: min(760px, 100vw); max-width: 100vw; max-height: min(86vh, 900px); padding: 0; border: 0; border-radius: 28px; background: var(--cream); color: var(--ink); box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.5); }
 .sheet::backdrop { background: rgb(11 23 20 / 0.55); }
 .sheet[open] { animation: sheet-in 320ms var(--ease); }
@@ -1888,54 +1886,12 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .gr-legend .bar { width: 16px; height: 16px; border-radius: 5px; background: var(--mint); }
 .gr-legend .rule { width: 16px; border-top: 2.5px dashed var(--forest); }
 
-.gr-bento { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.gr-card { display: grid; align-content: start; gap: 12px; padding: clamp(22px, 2.6vw, 32px); border-radius: 28px; background: var(--cream); border: 1.5px solid var(--line); transition: transform 400ms var(--ease), border-color 300ms, box-shadow 400ms; }
-.gr-card:hover { transform: translateY(-4px); border-color: var(--forest); box-shadow: var(--shadow-1); }
-.gr-card.wide { grid-column: span 2; }
-.gr-card.wide p { max-width: 52ch; }
-.gr-card.deep { background: var(--forest); color: var(--cream); border-color: var(--forest); }
-.gr-card.deep p { color: rgb(239 233 219 / 0.82); font-size: 18px; }
-.gr-card.deep .gr-ic { background: var(--mint); color: var(--forest-deep); }
-.gr-card h3 { margin: 0; font-size: clamp(19px, 1.8vw, 24px); line-height: 1.2; letter-spacing: -0.02em; font-weight: 600; }
-.gr-card p { margin: 0; color: var(--muted); }
-.gr-ic { display: inline-grid; place-items: center; width: 48px; height: 48px; border-radius: 16px; background: var(--mint-wash); color: var(--forest); }
-@media (max-width: 900px) { .gr-bento { grid-template-columns: 1fr 1fr; } .gr-card.wide { grid-column: auto; } .gr-card.deep { grid-column: span 2; } }
-@media (max-width: 600px) { .gr-bento { grid-template-columns: 1fr; } .gr-card.deep { grid-column: auto; } }
 
-.gr-ledger { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.gr-side { padding: clamp(24px, 3.4vw, 44px); border-radius: 32px; display: grid; gap: 18px; align-content: start; }
-.gr-side h3 { margin: 0; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.025em; font-weight: 600; }
-.gr-side ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
-.gr-side li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-top: 1px solid currentColor; border-top-color: rgb(127 148 138 / 0.35); }
-.gr-side li svg { flex: none; margin-top: 3px; }
-.gr-side.we { background: var(--forest); color: var(--cream); }
-.gr-side.we li svg { color: var(--mint); }
-.gr-side.you { background: var(--mint-wash); }
-.gr-side.you li svg { color: var(--moss); }
-@media (max-width: 800px) { .gr-ledger { grid-template-columns: 1fr; } }
 
-.voices { display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: auto auto; gap: 16px; }
-.voice { margin: 0; display: grid; align-content: space-between; gap: 22px; padding: clamp(24px, 3vw, 40px); border-radius: 28px; background: var(--cream); border: 1.5px solid var(--line); }
-.voice blockquote { margin: 0; }
-.voice blockquote p { margin: 0; font-size: clamp(16px, 1.35vw, 18px); line-height: 1.65; }
-.voice footer { display: grid; gap: 2px; font-size: 14px; color: var(--muted); }
-.voice footer strong { color: var(--ink); font-size: 16px; }
-.lead-voice { grid-row: span 2; background: var(--forest); color: var(--cream); border-color: var(--forest); position: relative; overflow: hidden; }
-.lead-voice blockquote { padding-top: clamp(48px, 5vw, 64px); }
-.lead-voice blockquote p { font-size: clamp(20px, 2.2vw, 28px); line-height: 1.4; letter-spacing: -0.015em; position: relative; }
-.lead-voice footer { color: rgb(239 233 219 / 0.7); }
-.lead-voice footer strong { color: var(--cream); }
-.voice-mark { position: absolute; top: -26px; left: 26px; font-size: 160px; line-height: 1; font-weight: 700; color: var(--mint); opacity: 0.22; pointer-events: none; }
-@media (max-width: 860px) { .voices { grid-template-columns: 1fr; } .lead-voice { grid-row: auto; } }
 
 .ab-story { display: grid; gap: 18px; font-size: clamp(17px, 1.5vw, 19px); line-height: 1.7; color: var(--muted); max-width: 62ch; }
 .ab-story p { margin: 0; }
 .ab-story .hero-actions { margin-top: 8px; }
-.ab-principles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.ab-principle { display: grid; align-content: start; gap: 12px; padding: clamp(24px, 3vw, 36px); border-radius: 28px; background: var(--cream); border: 1.5px solid var(--line); }
-.ab-principle h3 { margin: 6px 0 0; font-size: clamp(22px, 2vw, 28px); letter-spacing: -0.025em; font-weight: 600; }
-.ab-principle p { margin: 0; color: var(--muted); }
-@media (max-width: 860px) { .ab-principles { grid-template-columns: 1fr; } }
 
 .ab-guests { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .ab-guest { position: relative; aspect-ratio: 4 / 5; border-radius: 30px; overflow: hidden; background: var(--forest); color: var(--cream); isolation: isolate; }
@@ -1951,8 +1907,6 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .ab-partners { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 6vw, 80px); align-items: center; }
 .ab-partners-copy { display: grid; gap: 18px; justify-items: start; }
 .ab-partners-copy .eyebrow { margin: 0; }
-.ab-logos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
-.ab-logos li { display: grid; place-items: center; min-height: 96px; padding: 20px; border-radius: 24px; background: var(--cream); border: 1.5px solid var(--line); font-weight: 600; font-size: 20px; letter-spacing: -0.02em; color: var(--forest); }
 @media (max-width: 860px) { .ab-partners { grid-template-columns: 1fr; } }
 
 .ab-intro .split-head { position: static; }
@@ -1961,7 +1915,6 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .ab-cta .eyebrow { margin-bottom: 14px; }
 .ab-cta .lead { max-width: 54ch; }
 
-@media (prefers-reduced-motion: reduce) { .gr-card, .ab-guest img { transition: none; } .gr-card:hover { transform: none; } }
 
 /* The header runs the full width of the screen: the logo sits in the left corner, the menu in the middle, the actions on the right. */
 .header .header-bar { max-width: none; padding: 0 clamp(16px, 3vw, 48px); display: grid; grid-template-columns: auto 1fr auto; gap: 24px; }
@@ -1971,26 +1924,84 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 @media (max-width: 980px) { .header .header-bar { grid-template-columns: auto 1fr; } }
 
 /* ---- Stays: what our homes have, and good to know ---- */
-.essentials { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-@media (max-width: 1100px) { .essentials { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 520px) { .essentials { grid-template-columns: 1fr; } }
-.essential { display: grid; align-content: start; gap: 8px; padding: 22px; border-radius: 24px; background: var(--paper); border: 1.5px solid var(--line); }
-.essential .gr-ic { margin-bottom: 6px; }
-.essential strong { font-size: 18px; letter-spacing: -0.015em; }
-.essential > span:not(.gr-ic):not(.essential-meter) { color: var(--muted); font-size: 15px; }
-.essential-meter { display: block; height: 6px; margin-top: 8px; border-radius: 999px; background: var(--mint-wash); overflow: hidden; }
-.essential-meter i { display: block; height: 100%; border-radius: inherit; background: var(--moss); }
-.essential small { font-size: 13px; font-weight: 600; color: var(--moss); }
 
-.know { display: grid; grid-template-columns: 1.15fr 1fr 1fr 1fr; gap: 16px; }
-.know-times { display: grid; align-content: start; gap: 14px; padding: clamp(24px, 2.6vw, 32px); border-radius: 28px; background: var(--forest); color: var(--cream); }
-.know-times small { display: block; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mint); }
-.know-times strong { font-size: clamp(40px, 4.4vw, 56px); line-height: 1; letter-spacing: -0.03em; }
-.know-line { display: block; width: 2px; height: 28px; margin-left: 4px; background: repeating-linear-gradient(to bottom, var(--mint) 0 4px, transparent 4px 8px); }
-.know-times p { margin: 6px 0 0; color: rgb(239 233 219 / 0.78); font-size: 15px; }
-.know-card { display: grid; align-content: start; gap: 12px; padding: clamp(22px, 2.4vw, 28px); border-radius: 28px; background: var(--cream); border: 1.5px solid var(--line); }
-.know-card h3 { margin: 4px 0 0; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
-.know-card p { margin: 0; color: var(--muted); font-size: 15px; }
-.know-card a { color: var(--forest); font-weight: 600; }
-@media (max-width: 1100px) { .know { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 600px) { .know { grid-template-columns: 1fr; } }
+
+/* ---- Type-led layouts: no boxes, no icon tiles. Rules and numbers carry the structure. ---- */
+
+/* Guaranteed rent: the six terms, set like clauses */
+.clauses { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(24px, 4vw, 56px); }
+.clause { display: grid; align-content: start; gap: 10px; padding: 28px 0 36px; border-top: 1px solid var(--line); }
+.clause-n { font-size: 13px; font-weight: 600; letter-spacing: 0.12em; color: var(--moss); font-variant-numeric: tabular-nums; }
+.clause h3 { margin: 0; font-size: clamp(20px, 1.9vw, 24px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+.clause p { margin: 0; color: var(--muted); max-width: 38ch; }
+@media (max-width: 900px) { .clauses { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .clauses { grid-template-columns: 1fr; } .clause { padding: 22px 0 26px; } }
+
+/* Guaranteed rent: who pays, who keeps */
+.ledger { display: grid; grid-template-columns: 1fr 1fr; border-top: 2px solid var(--forest); }
+.ledger-col { padding: 24px clamp(0px, 3vw, 40px) 0 0; }
+.ledger-col + .ledger-col { padding: 24px 0 0 clamp(20px, 3vw, 40px); border-left: 1px solid var(--line); }
+.ledger-head { margin: 0 0 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--moss); }
+.ledger ul { list-style: none; margin: 0; padding: 0; }
+.ledger li { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: clamp(17px, 1.5vw, 20px); letter-spacing: -0.01em; }
+@media (max-width: 700px) { .ledger { grid-template-columns: 1fr; } .ledger-col + .ledger-col { padding-left: 0; border-left: 0; padding-top: 32px; } }
+
+/* Landlords' words */
+.quotes { display: grid; gap: clamp(40px, 5vw, 64px); }
+.quote { margin: 0; }
+.quote blockquote { margin: 0; }
+.quote blockquote p { margin: 0; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.65; }
+.quote-lead blockquote p { font-size: clamp(24px, 3vw, 40px); line-height: 1.28; letter-spacing: -0.02em; font-weight: 500; max-width: 30ch; }
+.quote-lead blockquote p::before { content: "\201C"; color: var(--moss); }
+.quote-lead blockquote p::after { content: "\201D"; color: var(--moss); }
+.quote-by { margin: 18px 0 0; font-size: 15px; color: var(--muted); }
+.quote-by strong { color: var(--ink); font-weight: 600; }
+.quote-pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); }
+.quote-pair .quote { padding-top: 24px; border-top: 1px solid var(--line); }
+@media (max-width: 760px) { .quote-pair { grid-template-columns: 1fr; } }
+
+/* About: the three things we hold to */
+.tenets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 4vw, 56px); }
+.tenet { padding-top: 22px; border-top: 2px solid var(--forest); display: grid; gap: 12px; align-content: start; }
+.tenet h3 { margin: 0; font-size: clamp(28px, 3vw, 40px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
+.tenet p { margin: 0; color: var(--muted); max-width: 36ch; }
+@media (max-width: 760px) { .tenets { grid-template-columns: 1fr; } }
+
+/* About: where to book, as a plain list */
+.ab-logos { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.ab-logos li { padding: 26px clamp(18px, 3vw, 36px); font-size: clamp(22px, 2.4vw, 30px); font-weight: 600; letter-spacing: -0.025em; color: var(--forest); }
+.ab-logos li + li { border-left: 1px solid var(--line); }
+.ab-logos li:first-child { padding-left: 0; }
+
+/* Stays: a stay from booking to check-out */
+.journey { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: relative; }
+.journey::before { content: ""; position: absolute; left: 0; right: 0; top: 66px; height: 1px; background: var(--line); }
+.journey-stop { position: relative; display: grid; align-content: start; gap: 10px; padding-right: clamp(12px, 2vw, 28px); }
+.journey-mark { font-size: clamp(30px, 3.2vw, 44px); font-weight: 600; letter-spacing: -0.03em; line-height: 1; height: 44px; display: flex; align-items: flex-end; font-variant-numeric: tabular-nums; }
+.journey-dot { width: 11px; height: 11px; margin: 11px 0 8px; border-radius: 50%; background: var(--forest); box-shadow: 0 0 0 5px var(--paper); position: relative; }
+.journey-stop strong { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
+.journey-stop p { margin: 0; color: var(--muted); font-size: 15px; }
+.journey-stop p a { color: var(--forest); font-weight: 600; white-space: nowrap; }
+@media (max-width: 900px) {
+  .journey { grid-template-columns: 1fr; padding-left: 28px; }
+  .journey::before { top: 8px; bottom: 8px; left: 5px; right: auto; width: 1px; height: auto; }
+  .journey-stop { padding: 0 0 30px; }
+  .journey-mark { height: auto; font-size: 30px; }
+  .journey-dot { position: absolute; left: -28px; top: 10px; margin: 0; }
+}
+
+/* Stays: what the homes have, beside a real kitchen */
+.spec { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 88px); align-items: start; }
+.spec-media { position: sticky; top: 110px; aspect-ratio: 1 / 1; border-radius: 28px; overflow: hidden; background: var(--sand); }
+.spec-media img { object-fit: cover; }
+.spec-body { display: grid; gap: clamp(28px, 4vw, 44px); }
+.spec-body .eyebrow { margin-bottom: 14px; }
+.spec-body .lead { margin-top: 18px; }
+.facts { margin: 0; display: grid; }
+.fact { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.fact dt { display: grid; gap: 2px; font-size: clamp(17px, 1.5vw, 20px); font-weight: 600; letter-spacing: -0.015em; }
+.fact dt span { font-size: 14px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.fact dd { margin: 0; color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fact dd strong { font-size: clamp(24px, 2.4vw, 30px); font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
+.fact i { position: absolute; left: 0; bottom: -1px; height: 2px; background: var(--moss); }
+@media (max-width: 900px) { .spec { grid-template-columns: 1fr; } .spec-media { position: relative; top: 0; aspect-ratio: 16 / 10; } }
