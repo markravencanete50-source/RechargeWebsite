@@ -109,12 +109,10 @@ export default async function AboutPage() {
           <div className="ab-guests">
             {guests.map((g, i) => (
               <Reveal key={g.title} delay={0.08 * i} className="ab-guest">
-                {g.shot && <Image src={g.shot.src} alt="" fill sizes="(max-width: 860px) 100vw, 33vw" />}
-                <div className="ab-guest-copy">
-                  <span className="eyebrow">{g.label}</span>
-                  <strong>{g.title}</strong>
-                  <span>{g.text}</span>
-                </div>
+                <div className="ab-guest-photo">{g.shot && <Image src={g.shot.src} alt={g.shot.caption} fill sizes="(max-width: 860px) 100vw, 33vw" />}</div>
+                <p className="ab-guest-label">{g.label}</p>
+                <h3>{g.title}</h3>
+                <p>{g.text}</p>
               </Reveal>
             ))}
           </div>
@@ -142,15 +140,15 @@ export default async function AboutPage() {
 
       <section className="section">
         <div className="wrap">
-          <div className="ab-cta on-dark">
+          <div className="ab-cta">
             <Reveal>
               <p className="eyebrow">Own a property in Scotland?</p>
               <h2 className="h2">Let your property with us</h2>
               <p className="lead">Take a fixed rent every month, or keep the earnings with full management. Either way, we run it and you stay informed.</p>
             </Reveal>
             <Reveal delay={0.1} className="hero-actions">
-              <Link className="btn btn-mint" href="/guaranteed-rent">Guaranteed rent <ArrowRight size={18} /></Link>
-              <Link className="btn btn-line-light" href="/owners">Compare your options</Link>
+              <Link className="btn btn-primary" href="/guaranteed-rent">Guaranteed rent <ArrowRight size={18} /></Link>
+              <Link className="btn btn-ghost" href="/owners">Compare your options</Link>
             </Reveal>
           </div>
         </div>
