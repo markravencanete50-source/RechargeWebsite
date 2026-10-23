@@ -2133,3 +2133,20 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 
 .book-card .facts { gap: 0; margin-top: 18px; border-top: 1px solid var(--line); }
 .book-card .facts li { display: block; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+
+/* ---- FAQ: plain topic links, plain counts, a bare plus that turns to a cross ---- */
+.faq summary .plus { width: 24px; height: 24px; border: 0; border-radius: 0; color: var(--moss); }
+.faq details[open] summary .plus { background: none; color: var(--forest); }
+.faq summary:hover .plus { color: var(--forest); }
+
+.faq-nav { gap: 6px 22px; }
+.faq-nav a { padding: 4px 0; border: 0; border-bottom: 1px solid rgb(239 233 219 / 0.35); border-radius: 0; font-weight: 500; }
+.faq-nav a:hover { border-bottom-color: var(--mint); color: var(--mint); }
+
+.faq-side nav span { padding: 0; border-radius: 0; background: none; color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; }
+.faq-side nav a.on span { color: var(--forest); }
+.faq-side-call { gap: 2px; padding: 18px 0 0; border-radius: 0; background: none; color: var(--ink); border-top: 2px solid var(--forest); }
+.faq-side-call strong { font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--moss); }
+.faq-side-call a { color: var(--forest); font-size: 20px; letter-spacing: -0.015em; text-decoration: none; }
+.faq-side-call a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.faq-side-call span { color: var(--muted); opacity: 1; }
