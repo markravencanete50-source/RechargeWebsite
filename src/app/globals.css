@@ -1969,3 +1969,28 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .header .header-nav { justify-self: center; }
 .header .header-actions { justify-self: end; }
 @media (max-width: 980px) { .header .header-bar { grid-template-columns: auto 1fr; } }
+
+/* ---- Stays: what our homes have, and good to know ---- */
+.essentials { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 1100px) { .essentials { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .essentials { grid-template-columns: 1fr; } }
+.essential { display: grid; align-content: start; gap: 8px; padding: 22px; border-radius: 24px; background: var(--paper); border: 1.5px solid var(--line); }
+.essential .gr-ic { margin-bottom: 6px; }
+.essential strong { font-size: 18px; letter-spacing: -0.015em; }
+.essential > span:not(.gr-ic):not(.essential-meter) { color: var(--muted); font-size: 15px; }
+.essential-meter { display: block; height: 6px; margin-top: 8px; border-radius: 999px; background: var(--mint-wash); overflow: hidden; }
+.essential-meter i { display: block; height: 100%; border-radius: inherit; background: var(--moss); }
+.essential small { font-size: 13px; font-weight: 600; color: var(--moss); }
+
+.know { display: grid; grid-template-columns: 1.15fr 1fr 1fr 1fr; gap: 16px; }
+.know-times { display: grid; align-content: start; gap: 14px; padding: clamp(24px, 2.6vw, 32px); border-radius: 28px; background: var(--forest); color: var(--cream); }
+.know-times small { display: block; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mint); }
+.know-times strong { font-size: clamp(40px, 4.4vw, 56px); line-height: 1; letter-spacing: -0.03em; }
+.know-line { display: block; width: 2px; height: 28px; margin-left: 4px; background: repeating-linear-gradient(to bottom, var(--mint) 0 4px, transparent 4px 8px); }
+.know-times p { margin: 6px 0 0; color: rgb(239 233 219 / 0.78); font-size: 15px; }
+.know-card { display: grid; align-content: start; gap: 12px; padding: clamp(22px, 2.4vw, 28px); border-radius: 28px; background: var(--cream); border: 1.5px solid var(--line); }
+.know-card h3 { margin: 4px 0 0; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+.know-card p { margin: 0; color: var(--muted); font-size: 15px; }
+.know-card a { color: var(--forest); font-weight: 600; }
+@media (max-width: 1100px) { .know { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .know { grid-template-columns: 1fr; } }

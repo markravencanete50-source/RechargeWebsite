@@ -7,9 +7,9 @@ import { JsonLd } from "./JsonLd";
 import { Reveal } from "./Reveal";
 
 // A page's own questions, with FAQPage structured data so answer engines can quote them.
-export function FaqSection({ items, title = "Questions", eyebrow = "FAQ", lead, tone = "", more = true }: { items: Faq[]; title?: string; eyebrow?: string; lead?: string; tone?: string; more?: boolean }) {
+export function FaqSection({ items, title = "Questions", eyebrow = "FAQ", lead, tone = "", more = true, id }: { items: Faq[]; title?: string; eyebrow?: string; lead?: string; tone?: string; more?: boolean; id?: string }) {
   return (
-    <section className={`section ${tone}`}>
+    <section className={`section ${tone}`} id={id} style={id ? { scrollMarginTop: 80 } : undefined}>
       <JsonLd data={graph(faqPage(items))} />
       <div className="wrap faq-grid">
         <Reveal className="section-head">
