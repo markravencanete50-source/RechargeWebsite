@@ -22,5 +22,6 @@ export const showcase = {
   owners: pick("2-bedroom-home-in-livingston-4", 12),
   supportHero: pick("2-bedroom-home-in-edinburgh-3", 8),
   aboutHero: pick("3-bedroom-home-in-edinburgh-2", 0),
+  kitchen: pick("1-bedroom-home-in-edinburgh-2", 7),
 };
 export type Shot = NonNullable<ReturnType<typeof pick>>;

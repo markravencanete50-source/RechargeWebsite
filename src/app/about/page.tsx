@@ -1,4 +1,4 @@
-import { ArrowRight, BarChart3, Eye, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 };
 
 const principles = [
-  { icon: ShieldCheck, title: "Reliability", text: "Owners are paid on time and guests are looked after at any hour. We build the business so that it holds up on a bad day, not only a good one." },
-  { icon: Eye, title: "Transparency", text: "Owners see every booking, cost and payout in their own portal. We ask before we spend, and we show our working." },
-  { icon: BarChart3, title: "Results", text: "Prices are set from the market, not from habit. We review them every day and learn from every stay." },
+  { title: "Reliability", text: "Owners are paid on time and guests are looked after at any hour. We build the business so that it holds up on a bad day, not only a good one." },
+  { title: "Transparency", text: "Owners see every booking, cost and payout in their own portal. We ask before we spend, and we show our working." },
+  { title: "Results", text: "Prices are set from the market, not from habit. We review them every day and learn from every stay." },
 ];
 
 const guests = [
@@ -86,13 +86,12 @@ export default async function AboutPage() {
       <section className="section paper">
         <div className="wrap">
           <div className="head-row">
-            <Reveal><p className="eyebrow">How we work</p><h2 className="h2">Three things we hold to</h2></Reveal>
+            <Reveal><p className="eyebrow">How we work</p><h2 className="h2">What we hold to</h2></Reveal>
             <Reveal delay={0.08}><p className="lead">Every decision we make comes back to one of these.</p></Reveal>
           </div>
-          <div className="ab-principles">
+          <div className="tenets">
             {principles.map((p, i) => (
-              <Reveal key={p.title} delay={0.08 * i} className="ab-principle">
-                <span className="gr-ic"><p.icon size={22} /></span>
+              <Reveal key={p.title} delay={0.08 * i} className="tenet">
                 <h3>{p.title}</h3>
                 <p>{p.text}</p>
               </Reveal>
@@ -134,9 +133,7 @@ export default async function AboutPage() {
           <Reveal delay={0.1}>
             <ul className="ab-logos">
               {partners.map((p) => (
-                <li key={p.name}>
-                  {p.logo ? <Image src={p.logo} alt={p.name} width={140} height={48} /> : <span>{p.name}</span>}
-                </li>
+                <li key={p.name}>{p.logo ? <Image src={p.logo} alt={p.name} width={140} height={48} /> : p.name}</li>
               ))}
             </ul>
           </Reveal>

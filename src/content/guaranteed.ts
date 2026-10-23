@@ -1,14 +1,13 @@
-import { Banknote, CalendarCheck, DoorOpen, Receipt, Sparkles, Wrench, type LucideIcon } from "lucide-react";
 import type { Faq } from "./faqs";
 
 // The Guaranteed Rent page. The facts come from Recharge's own guaranteed rent page; the wording is written for this site.
-export const benefits: { icon: LucideIcon; title: string; text: string }[] = [
-  { icon: Banknote, title: "Income you can plan around", text: "You are paid on time every month, whatever the bookings do. There are no empty months for you to cover, and your cash flow stays steady." },
-  { icon: DoorOpen, title: "An easy way out", text: "If we ever miss a payment, the contract lets you end the agreement the next day." },
-  { icon: Receipt, title: "We pay the bills", text: "Council tax, utilities and the other running costs are ours, as in a normal tenancy. So is keeping the property compliant." },
-  { icon: Wrench, title: "We look after repairs", text: "We maintain the property and its fittings. If a guest damages something, we pay to repair or replace it." },
-  { icon: CalendarCheck, title: "Clear, fixed terms", text: "The rent is fixed for the length of the agreement. It can renew when both of us agree." },
-  { icon: Sparkles, title: "A property kept in shape", text: "Regular cleans, a linen service and routine checks protect your property between stays." },
+export const benefits: { title: string; text: string }[] = [
+  { title: "Income you can plan around", text: "You are paid on time every month, whatever the bookings do. There are no empty months for you to cover, and your cash flow stays steady." },
+  { title: "An easy way out", text: "If we ever miss a payment, the contract lets you end the agreement the next day." },
+  { title: "We pay the bills", text: "Council tax, utilities and the other running costs are ours, as in a normal tenancy. So is keeping the property compliant." },
+  { title: "We look after repairs", text: "We maintain the property and its fittings. If a guest damages something, we pay to repair or replace it." },
+  { title: "Clear, fixed terms", text: "The rent is fixed for the length of the agreement. It can renew when both of us agree." },
+  { title: "A property kept in shape", text: "Regular cleans, a linen service and routine checks protect your property between stays." },
 ];
 
 export const wePay = [

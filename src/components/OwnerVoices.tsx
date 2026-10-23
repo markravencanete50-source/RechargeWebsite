@@ -1,22 +1,23 @@
 import type { landlords } from "@/content/guaranteed";
 import { Reveal } from "./Reveal";
 
-// What landlords say, in their own words: one large quote and two smaller ones beside it.
+// What landlords say, in their own words: one quote set large, two beneath it.
 export function OwnerVoices({ items }: { items: typeof landlords }) {
   const [first, ...rest] = items;
   return (
-    <div className="voices">
-      <Reveal className="voice lead-voice">
-        <span className="voice-mark" aria-hidden>“</span>
+    <div className="quotes">
+      <Reveal as="div" className="quote quote-lead">
         <blockquote><p>{first.quote}</p></blockquote>
-        <footer><strong>{first.name}</strong><span>Landlord, {first.place}</span></footer>
+        <p className="quote-by"><strong>{first.name}</strong>, landlord in {first.place}</p>
       </Reveal>
-      {rest.map((v, i) => (
-        <Reveal key={v.name} className="voice" delay={0.08 * (i + 1)}>
-          <blockquote><p>{v.quote}</p></blockquote>
-          <footer><strong>{v.name}</strong><span>Landlord, {v.place}</span></footer>
-        </Reveal>
-      ))}
+      <div className="quote-pair">
+        {rest.map((v, i) => (
+          <Reveal key={v.name} className="quote" delay={0.08 * (i + 1)}>
+            <blockquote><p>{v.quote}</p></blockquote>
+            <p className="quote-by"><strong>{v.name}</strong>, landlord in {v.place}</p>
+          </Reveal>
+        ))}
+      </div>
     </div>
   );
 }
