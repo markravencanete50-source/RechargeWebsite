@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgePercent, Loader2, Pencil, Plus, Tag, Trash2, X } from "lucide-react";
+import { Loader2, Pencil, Plus, Trash2, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import type { Discount } from "@/content/catalog";
 import { ukToday } from "@/content/discounts";
@@ -102,7 +102,6 @@ function DirectSaving() {
   return (
     <div className="adm-panel">
       <div className="adm-panel-head">
-        <Tag />
         <div>
           <strong>Book direct saving</strong>
           <small>The saving the website promises for booking direct instead of through a platform, as in &ldquo;Book direct and save {percent ?? "10"}%&rdquo;. It changes the wording on every page; it does not change prices in Hostaway.</small>
@@ -141,7 +140,6 @@ function NewGuest({ current, onSaved }: { current?: Discount; onSaved: () => Pro
   return (
     <div className="adm-panel">
       <div className="adm-panel-head">
-        <BadgePercent />
         <div>
           <strong>New guest discount</strong>
           <small>Given the first time an email address sends a booking request from the website. The team sees it in the request.</small>
