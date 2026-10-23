@@ -1,8 +1,7 @@
-import { ArrowUpRight, Bath, ChevronRight, MessageSquareText, BedDouble, Bus, Check, CigaretteOff, Clock, CookingPot, DoorOpen, House, IdCard, Info, Landmark, LogOut, MapPin, Package, Percent, Phone, Pill, Plane, ShoppingCart, Sofa, TrainFront, Trees, TriangleAlert, Users, UtensilsCrossed, VolumeX, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Check, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AmenityIcon } from "@/components/Amenity";
 import { BookBar } from "@/components/BookBar";
 import { BookingPanel } from "@/components/BookingPanel";
 import { FaqList } from "@/components/FaqList";
@@ -13,7 +12,7 @@ import { NearbyMap, type PlacePhoto } from "@/components/NearbyMap";
 import { wantsPhoto } from "@/lib/place-photo";
 import { Sheet } from "@/components/Sheet";
 import { homeFaqs } from "@/content/faqs";
-import { groupAmenities, parseListing, topAmenities, type Room } from "@/content/listing";
+import { groupAmenities, parseListing, topAmenities } from "@/content/listing";
 import { distance, heading, money, regionSlug, tags } from "@/content/home-utils";
 import { getCatalog, homeIn } from "@/content/catalog";
 import type { Home } from "@/content/home-utils";
@@ -23,16 +22,7 @@ import { abs, breadcrumbs, faqPage, graph, organization } from "@/lib/schema";
 
 // Checked at build time: a photo, or null where Wikipedia has no clear match.
 const placePhotos = photoData as Record<string, PlacePhoto | null>;
-const NEARBY_ICON: Record<string, LucideIcon> = { station: TrainFront, bus: Bus, supermarket: ShoppingCart, pharmacy: Pill, restaurant: UtensilsCrossed, park: Trees, attraction: Landmark, airport: Plane };
-const ROOM_ICON: Record<Room["kind"], LucideIcon> = { bedroom: BedDouble, living: Sofa, kitchen: CookingPot, bathroom: Bath, dining: UtensilsCrossed, other: Package };
 
-function ruleIcon(rule: string): LucideIcon {
-  if (/smok|vap/i.test(rule)) return CigaretteOff;
-  if (/part|noise|music|quiet/i.test(rule)) return VolumeX;
-  if (/damage|mess|charge/i.test(rule)) return TriangleAlert;
-  if (/\bid\b|registration|verif|form/i.test(rule)) return IdCard;
-  return Info;
-}
 
 export async function generateStaticParams() {
   const { homes } = await getCatalog();
@@ -69,10 +59,10 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
   const faqs = withDirect(homeFaqs(home, l), catalog.direct);
   const others = catalog.homes.filter((h) => h.slug !== home.slug && h.region === home.region).slice(0, 4);
   const facts = [
-    home.guests && { icon: Users, text: `Sleeps ${home.guests}` },
-    { icon: BedDouble, text: home.bedrooms === 0 ? "Studio" : `${home.bedrooms} bedroom${home.bedrooms === 1 ? "" : "s"}${home.beds ? `, ${home.beds} bed${home.beds === 1 ? "" : "s"}` : ""}` },
-    home.bathrooms && { icon: Bath, text: `${home.bathrooms} bathroom${home.bathrooms === 1 ? "" : "s"}` },
-  ].filter(Boolean) as { icon: LucideIcon; text: string }[];
+    home.guests ? `Sleeps ${home.guests}` : "",
+    home.bedrooms === 0 ? "Studio" : `${home.bedrooms} bedroom${home.bedrooms === 1 ? "" : "s"}${home.beds ? `, ${home.beds} bed${home.beds === 1 ? "" : "s"}` : ""}`,
+    home.bathrooms ? `${home.bathrooms} bathroom${home.bathrooms === 1 ? "" : "s"}` : "",
+  ].filter(Boolean);
   const sections = [
     { id: "overview", label: "Overview", show: l.intro.length > 0 || l.highlights.length > 0 },
     { id: "rooms", label: "Rooms", show: sleeping.length > 0 },
@@ -91,19 +81,15 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
     <ul className="places">
       {places.map((p) => (
         <li key={p.name + p.time}>
-          <span className="ic"><MapPin size={18} /></span>
           <div><strong>{p.name}</strong>{p.note && <span>{p.note}</span>}</div>
-          {p.time && <em><Clock size={14} /> {p.time}</em>}
+          {p.time && <em>{p.time}</em>}
         </li>
       ))}
     </ul>
   );
   const osmList = home.nearby && home.nearby.length > 0 && (
     <ul className="nearby">
-      {home.nearby.map((n) => {
-        const Icon = NEARBY_ICON[n.kind] ?? MapPin;
-        return <li key={n.kind}><span className="ic"><Icon size={20} /></span><div><strong>{n.name || n.label}</strong><span>{n.name ? `${n.label}, ` : ""}{distance(n.metres)}</span></div></li>;
-      })}
+      {home.nearby.map((n) => <li key={n.kind}><div><strong>{n.name || n.label}</strong><span>{n.name ? `${n.label}, ` : ""}{distance(n.metres)}</span></div></li>)}
     </ul>
   );
   const areaHref = `/properties/area/${regionSlug(home.region)}`;
@@ -141,12 +127,9 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
         <div className="wrap">
           <nav className="crumbs" aria-label="Breadcrumb"><Link href="/properties">Properties</Link> / <Link href={areaHref}>{home.region}</Link> / <span>{home.town}</span></nav>
           <h1 className="h2 prop-title">{heading(home)}</h1>
-          <p className="prop-place"><span><MapPin size={17} /> {home.town}, {home.region} {home.district}</span>{home.reviews > 0 && <span><MessageSquareText size={16} /> {home.reviews} guest reviews</span>}</p>
+          <p className="prop-place"><span>{home.town}, {home.region} {home.district}</span>{home.reviews > 0 && <span>{home.reviews} guest reviews</span>}</p>
           {(tags(home).length > 0 || l.longStay) && (
-            <div className="home-tags prop-tags">
-              {l.longStay && <span className="tag-strong"><Percent size={13} /> Long-stay discounts</span>}
-              {tags(home).map((t) => <span key={t}>{t}</span>)}
-            </div>
+            <p className="prop-tags">{[l.longStay ? "Long-stay discounts" : "", ...tags(home)].filter(Boolean).join(" · ")}</p>
           )}
           <Gallery photos={home.photos} title={heading(home)} />
 
@@ -156,7 +139,7 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
 
           <div className="prop">
             <div className="prop-main">
-              <ul className="prop-facts">{facts.map((f) => <li key={f.text}><f.icon size={20} /> {f.text}</li>)}</ul>
+              <ul className="prop-facts">{facts.map((f) => <li key={f}>{f}</li>)}</ul>
 
               {(l.intro.length > 0 || l.highlights.length > 0) && (
                 <section className="prop-block" id="overview">
@@ -173,15 +156,12 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
                         <>
                           <h3>The space</h3>
                           <div className="sheet-rooms">
-                            {l.rooms.map((r) => {
-                              const Icon = ROOM_ICON[r.kind];
-                              return (
-                                <div key={r.name}>
-                                  <strong><Icon size={18} /> {r.name}</strong>
-                                  <ul>{r.items.map((it) => <li key={it}>{labelled(it)}</li>)}</ul>
-                                </div>
-                              );
-                            })}
+                            {l.rooms.map((r) => (
+                              <div key={r.name}>
+                                <strong>{r.name}</strong>
+                                <ul>{r.items.map((it) => <li key={it}>{labelled(it)}</li>)}</ul>
+                              </div>
+                            ))}
                           </div>
                         </>
                       )}
@@ -201,11 +181,9 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
                   <h2 className="h3">Where you will sleep</h2>
                   <ul className="sleep-list">
                     {sleeping.map((r) => {
-                      const Icon = ROOM_ICON[r.kind];
                       const beds = r.items.filter((it) => /bed|sofa|cot|bunk/i.test(it) && it.length < 70);
                       return (
                         <li key={r.name}>
-                          <Icon size={22} strokeWidth={1.6} />
                           <strong>{r.name}</strong>
                           <span>{(beds.length ? beds : r.items.slice(0, 1)).map((it) => it.replace(/\s*\(sleeps \d+\)/i, "")).join(", ")}</span>
                           {r.sleeps && <em>Sleeps {r.sleeps}</em>}
@@ -219,14 +197,14 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
               {home.amenities.length > 0 && (
                 <section className="prop-block" id="amenities">
                   <h2 className="h3">What this home offers</h2>
-                  <ul className="amenities top">{popular.map((a) => <li key={a}><AmenityIcon name={a} /> {a}</li>)}</ul>
+                  <ul className="amenities top">{popular.map((a) => <li key={a}>{a}</li>)}</ul>
                   {home.amenities.length > popular.length && (
                     <Sheet label={`Show all ${home.amenities.length} amenities`} title="What this home offers">
                       <div className="amenity-groups">
                         {amenityGroups.map((g) => (
                           <div key={g.name}>
                             <h3>{g.name}</h3>
-                            <ul className="amenities">{g.items.map((a) => <li key={a}><AmenityIcon name={a} /> {a}</li>)}</ul>
+                            <ul className="amenities">{g.items.map((a) => <li key={a}>{a}</li>)}</ul>
                           </div>
                         ))}
                       </div>
@@ -255,19 +233,16 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
                   <div>
                     <h3>Arriving and leaving</h3>
                     <ul className="rules">
-                      {home.checkIn && <li><DoorOpen size={18} /> Check in from {home.checkIn}</li>}
-                      {home.checkOut && <li><LogOut size={18} /> Check out by {home.checkOut}</li>}
-                      <li><Phone size={18} /> Support 24/7 during your stay</li>
+                      {home.checkIn && <li>Check in from {home.checkIn}</li>}
+                      {home.checkOut && <li>Check out by {home.checkOut}</li>}
+                      <li>Support 24/7 during your stay</li>
                     </ul>
                   </div>
                   {l.rules.length > 0 && (
                     <div>
                       <h3>House rules</h3>
                       <ul className="rules">
-                        {l.rules.slice(0, 3).map((r) => {
-                          const Icon = ruleIcon(r);
-                          return <li key={r}><Icon size={18} /> {r}</li>;
-                        })}
+                        {l.rules.slice(0, 3).map((r) => <li key={r}>{r}</li>)}
                       </ul>
                     </div>
                   )}
@@ -276,17 +251,14 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
                   <Sheet label={<>Show more <ChevronRight size={16} /></>} title="Good to know">
                     <h3>House rules</h3>
                     <ul className="rules">
-                      {l.rules.map((r) => {
-                        const Icon = ruleIcon(r);
-                        return <li key={r}><Icon size={18} /> {r}</li>;
-                      })}
+                      {l.rules.map((r) => <li key={r}>{r}</li>)}
                     </ul>
                     {(l.details.length > 0 || l.included.length > 0) && (
                       <>
                         <h3>Included</h3>
-                        <ul className="checks single">
-                          {l.details.map((d) => <li key={d.text}><House size={18} /> <span>{d.label && <b>{d.label}: </b>}{d.text}</span></li>)}
-                          {l.included.map((d) => <li key={d}><Check size={18} /> {d}</li>)}
+                        <ul className="rules">
+                          {l.details.map((d) => <li key={d.text}><span>{d.label && <b>{d.label}: </b>}{d.text}</span></li>)}
+                          {l.included.map((d) => <li key={d}>{d}</li>)}
                         </ul>
                       </>
                     )}
@@ -309,10 +281,10 @@ export default async function PropertyPage({ params }: PageProps<"/properties/[s
                 discounts={catalog.discounts.filter((d) => !d.region || d.region === home.region)}
               />
               <ul className="facts">
-                {facts.map((f) => <li key={f.text}><f.icon size={18} /> {f.text}</li>)}
-                {home.checkIn && <li><DoorOpen size={18} /> Check in from {home.checkIn}</li>}
-                <li><Clock size={18} /> Support 24/7 during your stay</li>
-                {l.longStay && <li><Percent size={18} /> Long-stay discounts on request</li>}
+                {facts.map((f) => <li key={f}>{f}</li>)}
+                {home.checkIn && <li>Check in from {home.checkIn}</li>}
+                <li>Support 24/7 during your stay</li>
+                {l.longStay && <li>Long-stay discounts on request</li>}
               </ul>
               {home.licence && <p className="licence">Short-term let licence: {home.licence}</p>}
             </aside>
