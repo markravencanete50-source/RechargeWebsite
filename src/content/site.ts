@@ -28,7 +28,17 @@ export type NavItem = NavLink & { children?: NavLink[] };
 // The main menu. Owners and Support open to the pages below them, so every key page is one step from any page.
 export const nav: NavItem[] = [
   { href: "/properties", label: "Properties" },
-  { href: "/stay", label: "Stays" },
+  {
+    href: "/stay", label: "Stays",
+    children: [
+      { href: "/stay", label: "Staying with us", text: "Whole homes across Scotland" },
+      { href: "/stay#book-direct", label: "Book direct and save", text: "A better rate than the booking sites" },
+      { href: "/stay#trips", label: "Trips we suit", text: "Families, contractors, work and long stays" },
+      { href: "/stay#every-home", label: "What our homes have", text: "Kitchen, wifi, linen and more" },
+      { href: "/stay#good-to-know", label: "Check-in and house rules", text: "Times, ID checks and the rules" },
+      { href: "/stay#questions", label: "Guest questions", text: "Answers before you book" },
+    ],
+  },
   {
     href: "/owners", label: "Owners",
     children: [

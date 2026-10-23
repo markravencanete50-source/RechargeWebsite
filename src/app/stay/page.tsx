@@ -1,9 +1,10 @@
-import { ArrowRight, Camera, Clock, MessageSquareText } from "lucide-react";
+import { ArrowRight, Baby, BedDouble, Camera, Car, Clock, CookingPot, Flame, IdCard, MessageSquareText, ShieldCheck, Shirt, Wifi } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { AreaIndex } from "@/components/AreaIndex";
 import { FaqSection } from "@/components/FaqSection";
+import { HomeEssentials } from "@/components/HomeEssentials";
 import { JsonLd } from "@/components/JsonLd";
 import { PhotoHero } from "@/components/PhotoHero";
 import { Proof } from "@/components/Proof";
@@ -16,7 +17,7 @@ import { TripGrid } from "@/components/TripGrid";
 import { guestFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
 import { showcase } from "@/content/showcase";
-import { withDirect } from "@/content/site";
+import { site, withDirect } from "@/content/site";
 import { guestReasons } from "@/content/why";
 import { breadcrumbs, graph } from "@/lib/schema";
 
@@ -29,8 +30,29 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+// The most common value in a list, and how many homes differ from it.
+function usual(values: string[]) {
+  const tally = new Map<string, number>();
+  for (const v of values) if (v) tally.set(v, (tally.get(v) ?? 0) + 1);
+  const [value = "", n = 0] = [...tally].sort((a, b) => b[1] - a[1])[0] ?? [];
+  return { value, others: values.length - n };
+}
+
 export default async function StayPage() {
   const { homes, regions, towns, reviewTotal, priceSteps, direct } = await getCatalog();
+  const has = (re: RegExp) => homes.filter((h) => h.amenities.some((a) => re.test(a))).length;
+  const essentials = [
+    { icon: CookingPot, title: "A kitchen", text: "Cook a proper meal. Most come with an oven, microwave, kettle and toaster.", count: has(/kitchen/i) },
+    { icon: Wifi, title: "Wifi", text: "Details are sent with your check-in information.", count: has(/wi-?fi|wireless|internet/i) },
+    { icon: BedDouble, title: "Fresh linen and towels", text: "Beds made up and towels laid out before you arrive.", count: has(/linen|towel|essentials/i) },
+    { icon: Shirt, title: "A washing machine", text: "Useful for longer stays, work trips and families.", count: has(/washing machine|washer/i) },
+    { icon: Flame, title: "Heating and hot water", text: "Warm rooms and a hot shower, whatever the Scottish weather.", count: has(/heating/i) },
+    { icon: Car, title: "Parking", text: "Free, private or street parking. Each home shows which.", count: has(/parking/i) },
+    { icon: Baby, title: "Suitable for children", text: "Check the beds in every room on the home's page.", count: has(/child|famil/i) },
+    { icon: ShieldCheck, title: "Smoke alarm", text: "Most homes also have a carbon monoxide alarm, a fire extinguisher and a first aid kit.", count: has(/smoke/i) },
+  ].filter((e) => e.count > 0).sort((a, b) => b.count - a.count);
+  const checkIn = usual(homes.map((h) => h.checkIn ?? ""));
+  const checkOut = usual(homes.map((h) => h.checkOut ?? ""));
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Stays", path: "/stay" }]))} />
@@ -44,7 +66,7 @@ export default async function StayPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" id="book-direct" style={{ scrollMarginTop: 80 }}>
         <div className="wrap split-sticky">
           <Reveal className="split-head">
             <p className="eyebrow">Why guests choose Recharge</p>
@@ -56,7 +78,7 @@ export default async function StayPage() {
         </div>
       </section>
 
-      <section className="section paper">
+      <section className="section paper" id="trips" style={{ scrollMarginTop: 80 }}>
         <div className="wrap">
           <div className="head-row">
             <Reveal><p className="eyebrow">Who stays with us</p><h2 className="h2">Homes for every kind of trip</h2></Reveal>
@@ -105,6 +127,48 @@ export default async function StayPage() {
         </div>
       </section>
 
+      <section className="section" id="every-home" style={{ scrollMarginTop: 80 }}>
+        <div className="wrap">
+          <div className="head-row">
+            <Reveal><p className="eyebrow">In the home</p><h2 className="h2">What our homes have</h2></Reveal>
+            <Reveal delay={0.08}><p className="lead">Counted from our own listings, so the numbers are real. Each home&apos;s page lists everything it has.</p></Reveal>
+          </div>
+          <HomeEssentials items={essentials} total={homes.length} />
+        </div>
+      </section>
+
+      <section className="section paper" id="good-to-know" style={{ scrollMarginTop: 80 }}>
+        <div className="wrap">
+          <Reveal className="section-head">
+            <p className="eyebrow">Good to know</p>
+            <h2 className="h2">Check-in, check-out and house rules</h2>
+          </Reveal>
+          <div className="know">
+            <Reveal className="know-times">
+              <div><small>Check in from</small><strong>{checkIn.value}</strong></div>
+              <span className="know-line" aria-hidden />
+              <div><small>Check out by</small><strong>{checkOut.value}</strong></div>
+              <p>{checkIn.others || checkOut.others ? "These are the usual times. A few homes differ, and each home's page shows its own." : "The same at every home."}</p>
+            </Reveal>
+            <Reveal className="know-card" delay={0.06}>
+              <span className="gr-ic"><IdCard size={22} /></span>
+              <h3>Before you arrive</h3>
+              <p>We send the address, access instructions and wifi before your stay. Some homes ask each guest to complete a short registration and ID check through a secure link.</p>
+            </Reveal>
+            <Reveal className="know-card" delay={0.12}>
+              <span className="gr-ic"><ShieldCheck size={22} /></span>
+              <h3>House rules</h3>
+              <p>No parties or loud music. No smoking or vaping, inside or outside the home. Please treat the home and the neighbours with care.</p>
+            </Reveal>
+            <Reveal className="know-card" delay={0.18}>
+              <span className="gr-ic"><Clock size={22} /></span>
+              <h3>Need more time?</h3>
+              <p>To extend your stay, or ask about a long-stay rate, call <a href={site.phone.href}>{site.phone.display}</a> or message us. We check the dates and come back to you.</p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       <section className="section">
         <div className="wrap">
           <div className="head-row">
@@ -115,7 +179,7 @@ export default async function StayPage() {
         </div>
       </section>
 
-      <FaqSection items={withDirect(guestFaqs, direct)} title="Before you book" eyebrow="Guest questions" tone="paper" />
+      <FaqSection items={withDirect(guestFaqs, direct)} title="Before you book" eyebrow="Guest questions" tone="paper" id="questions" />
     </>
   );
 }
