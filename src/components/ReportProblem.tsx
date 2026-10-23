@@ -64,11 +64,11 @@ export function ReportProblem({ homes, contact }: { homes: ReportHome[]; contact
   return (
     <div className="report">
       <div className="report-who" role="radiogroup" aria-label="Who is reporting">
-        <button type="button" role="radio" aria-checked={!neighbour} onClick={() => choose("guest")}>I am staying in a Recharge home</button>
+        <button type="button" role="radio" aria-checked={!neighbour} onClick={() => choose("guest")}>I am a guest</button>
         <button type="button" role="radio" aria-checked={neighbour} onClick={() => choose("neighbour")}>I am a neighbour</button>
       </div>
       <div className="report-step">
-        <span className="report-num">1</span>
+        <span className="report-num">01</span>
         <div>
           <h3>{neighbour ? "Which home is it about?" : "Where are you staying?"}</h3>
           {home ? (
@@ -89,7 +89,7 @@ export function ReportProblem({ homes, contact }: { homes: ReportHome[]; contact
       </div>
 
       <div className="report-step">
-        <span className="report-num">2</span>
+        <span className="report-num">02</span>
         <div>
           <h3>{neighbour ? "What is happening?" : "What is wrong?"}</h3>
           <div className="report-chips">
@@ -111,7 +111,7 @@ export function ReportProblem({ homes, contact }: { homes: ReportHome[]; contact
       </div>
 
       <div className="report-step">
-        <span className="report-num">3</span>
+        <span className="report-num">03</span>
         <div>
           <h3>Tell us more</h3>
           <textarea rows={4} maxLength={2000} value={details} onChange={(e) => setDetails(e.target.value)} placeholder={neighbour ? "For example: loud music from the top floor flat since 11pm." : "For example: the shower runs cold since this morning. The boiler shows a red light."} aria-label="Details" />

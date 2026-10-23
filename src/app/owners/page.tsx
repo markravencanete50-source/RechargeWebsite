@@ -1,6 +1,6 @@
 import { OwnerCalculator } from "@/components/OwnerCalculator";
 import { rateTable } from "@/content/estimate";
-import { ArrowRight, Mail, Phone, UserRound } from "lucide-react";
+import { ArrowRight, UserRound } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqSection } from "@/components/FaqSection";
@@ -170,8 +170,8 @@ export default async function OwnersPage() {
               <p className="lead">Tell us about your property and a member of the team will be in touch with a free performance estimate. There is no obligation.</p>
             </div>
             <div className="contact-lines">
-              <a href={site.phone.href}><span className="ic"><Phone size={20} /></span>{site.phone.display}</a>
-              <a href={`mailto:${site.email}`}><span className="ic"><Mail size={20} /></span>{site.email}</a>
+              <a href={site.phone.href}>{site.phone.display}</a>
+              <a href={`mailto:${site.email}`}>{site.email}</a>
             </div>
           </Reveal>
           <Reveal delay={0.1}><OwnerEnquiry /></Reveal>

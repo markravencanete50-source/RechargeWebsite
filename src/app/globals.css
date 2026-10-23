@@ -220,7 +220,6 @@ a { color: inherit; }
 .contact { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
 .contact-lines { display: grid; gap: 14px; margin-top: 32px; }
 .contact-lines a { display: inline-flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 600; text-decoration: none; }
-.contact-lines a span.ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: rgb(239 233 219 / 0.08); color: var(--mint); }
 .form { display: grid; gap: 16px; padding: clamp(24px, 4vw, 40px); border-radius: 32px; background: var(--paper); color: var(--ink); box-shadow: var(--shadow-3); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .field { display: grid; gap: 8px; }
@@ -1001,11 +1000,10 @@ a.card:hover .ic, .tool:hover .ic, .row-item:hover .row-ic { transform: rotate(-
 /* Situations guide */
 .situations { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; border-top: 1px solid var(--line); }
 .situation { display: grid; gap: 10px; padding: 24px 0; border-bottom: 1px solid var(--line); }
-.situation-q { display: flex; align-items: center; gap: 16px; }
+.situation-q { display: grid; gap: 2px; }
 .situation-q em { display: block; font-style: normal; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--moss); margin-bottom: 2px; }
 .situation-q strong { font-size: clamp(18px, 1.6vw, 21px); letter-spacing: -0.01em; }
-.situation p { margin: 0 0 0 64px; color: var(--muted); max-width: 48ch; }
-.situation:hover .row-ic { transform: rotate(-8deg) scale(1.06); }
+.situation p { margin: 0; color: var(--muted); max-width: 48ch; }
 @media (max-width: 860px) { .situations { grid-template-columns: 1fr; } .situation p { margin-left: 0; } }
 
 /* Support inbox phone */
@@ -2025,3 +2023,16 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .next-links strong svg { transition: transform 300ms var(--ease); }
 .next-links a:hover strong svg { transform: translateX(4px); }
 .next-links span { font-size: 15px; color: var(--muted); }
+
+/* ---- Support: no icon tiles, no boxed steps ---- */
+.contact-lines { gap: 0; border-top: 1px solid rgb(239 233 219 / 0.16); }
+.contact-lines a { display: block; padding: 16px 0; border-bottom: 1px solid rgb(239 233 219 / 0.16); font-size: clamp(19px, 1.8vw, 24px); letter-spacing: -0.015em; overflow-wrap: anywhere; transition: color 300ms; }
+.contact-lines a:hover { color: var(--mint); }
+
+.report { gap: 0; }
+.report-step { grid-template-columns: 40px minmax(0, 1fr); padding: 24px 0; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; }
+.report-step:last-of-type { border-bottom: 1px solid var(--line); }
+.report-num { width: auto; height: auto; display: block; padding-top: 6px; border-radius: 0; background: none; color: var(--moss); font-size: 13px; font-weight: 600; letter-spacing: 0.12em; font-variant-numeric: tabular-nums; }
+.report-who { display: flex; gap: 28px; padding: 0; margin-bottom: 8px; border: 0; border-radius: 0; background: none; }
+.report-who button { min-height: 44px; padding: 0 0 6px; border-radius: 0; border-bottom: 2px solid transparent; color: var(--muted); font-size: 15px; }
+.report-who button[aria-checked="true"] { background: none; color: var(--forest); border-bottom-color: var(--forest); }

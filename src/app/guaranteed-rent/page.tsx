@@ -1,4 +1,4 @@
-import { ArrowRight, Mail, Phone } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqSection } from "@/components/FaqSection";
@@ -153,8 +153,8 @@ export default async function GuaranteedRentPage() {
               <p className="lead">Tell us about your property. A member of the team will come back with a guaranteed rent proposal. It is free, and there is no obligation.</p>
             </div>
             <div className="contact-lines">
-              <a href={site.phone.href}><span className="ic"><Phone size={20} /></span>{site.phone.display}</a>
-              <a href={`mailto:${site.email}`}><span className="ic"><Mail size={20} /></span>{site.email}</a>
+              <a href={site.phone.href}>{site.phone.display}</a>
+              <a href={`mailto:${site.email}`}>{site.email}</a>
             </div>
           </Reveal>
           <Reveal delay={0.1}><OwnerEnquiry proposal /></Reveal>
