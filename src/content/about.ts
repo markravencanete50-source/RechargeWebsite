@@ -1,5 +1,5 @@
 // Shared wording for the About pages.
-import { showcase } from "./showcase";
+import { packShot } from "./showcase";
 
 export const principles = [
   {
@@ -17,7 +17,7 @@ export const principles = [
 ];
 
 export const guestGroups = [
-  { id: "business", trip: "business", shot: showcase.business, label: "For work", title: "Business trips and contracts", text: "Well-equipped homes for people working away, with wifi and a kitchen that works." },
-  { id: "families", trip: "families", shot: showcase.families, label: "For leisure", title: "Holidays and weekends", text: "Space for families and groups, close to what they came to see, with everything ready on arrival." },
-  { id: "long-stays", trip: "long-stays", shot: showcase.longStays, label: "For life situations", title: "Moves, repairs and in-between", text: "A comfortable home for weeks or months while someone relocates, renovates or waits for the keys." },
+  { id: "business", trip: "business", shot: packShot("S06"), tall: true, label: "For work", title: "Business trips and contracts", text: "Well-equipped homes for people working away, with wifi and a kitchen that works." },
+  { id: "families", trip: "families", shot: packShot("S04"), tall: false, label: "For leisure", title: "Holidays and weekends", text: "Space for families and groups, close to what they came to see, with everything ready on arrival." },
+  { id: "long-stays", trip: "long-stays", shot: packShot("S05"), tall: true, label: "For life situations", title: "Moves, repairs and in-between", text: "A comfortable home for weeks or months while someone relocates, renovates or waits for the keys." },
 ];

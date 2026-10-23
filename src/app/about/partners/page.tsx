@@ -10,7 +10,7 @@ import { RowList } from "@/components/RowList";
 import { SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
 import { partners } from "@/content/partners";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { breadcrumbs, graph } from "@/lib/schema";
 
 const path = "/about/partners";
@@ -31,7 +31,7 @@ export default async function PartnersPage() {
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "About", path: "/about" }, { name: "Trusted partners", path }]))} />
-      <PageHero photo={showcase.business} eyebrow="About" title="Our trusted partners" lead={`Our ${homes.length} homes are listed on the major booking platforms, and on this website, where booking direct costs ${direct} less.`} />
+      <PageHero photo={packShot("R01")} eyebrow="About" title="Our trusted partners" lead={`Our ${homes.length} homes are listed on the major booking platforms, and on this website, where booking direct costs ${direct} less.`} />
       <SubNav section="/about" current={path} />
 
       <section className="section">

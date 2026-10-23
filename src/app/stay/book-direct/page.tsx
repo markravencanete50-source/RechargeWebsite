@@ -10,7 +10,7 @@ import { Steps } from "@/components/Steps";
 import { SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
 import { ukToday } from "@/content/discounts";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { site } from "@/content/site";
 import { breadcrumbs, graph } from "@/lib/schema";
 
@@ -60,7 +60,7 @@ export default async function BookDirectPage() {
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Stays", path: "/stay" }, { name: "Book direct", path }]))} />
-      <PageHero photo={showcase.guests} eyebrow="Stays" title={<>Book direct and save {direct}</>} lead="The same homes are on the big booking sites. Booking here costs less, and you deal with the people who run the home." />
+      <PageHero photo={packShot("R08")} eyebrow="Stays" title={<>Book direct and save {direct}</>} lead="The same homes are on the big booking sites. Booking here costs less, and you deal with the people who run the home." />
       <SubNav section="/stay" current={path} />
 
       <section className="section">

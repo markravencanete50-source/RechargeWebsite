@@ -13,7 +13,7 @@ import { Steps } from "@/components/Steps";
 import { SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
 import { PLATFORM_FEE } from "@/content/estimate-sums";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { site } from "@/content/site";
 import { abs, breadcrumbs, graph, organization } from "@/lib/schema";
 
@@ -38,7 +38,7 @@ export default async function FullManagementPage() {
   return (
     <>
       <JsonLd data={graph(organization, { "@type": "Service", name: "Full short-let management", serviceType: "Serviced accommodation management", provider: { "@id": abs("/#organization") }, areaServed: regions.map((r) => ({ "@type": "Place", name: `${r.name}, Scotland` })), url: abs(path) }, breadcrumbs([{ name: "Owners", path: "/owners" }, { name: "Full management", path }]))} />
-      <PageHero photo={showcase.ownerHero} eyebrow="For owners" title="Full management" lead="We run your property as a short let from start to finish. You keep the earnings after our fee, and you see every booking, cost and payout in the app." />
+      <PageHero photo={packShot("R05")} eyebrow="For owners" title="Full management" lead="We run your property as a short let from start to finish. You keep the earnings after our fee, and you see every booking, cost and payout in the app." />
       <SubNav section="/owners" current={path} />
 
       <section className="section proof-band">

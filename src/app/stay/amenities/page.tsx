@@ -10,7 +10,7 @@ import { Reveal } from "@/components/Reveal";
 import { RowList } from "@/components/RowList";
 import { SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { extraFacts, homeFacts, safetyFacts } from "@/content/stay";
 import { breadcrumbs, graph } from "@/lib/schema";
 
@@ -34,13 +34,13 @@ export default async function AmenitiesPage() {
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Stays", path: "/stay" }, { name: "What our homes have", path }]))} />
-      <PageHero photo={showcase.kitchen} eyebrow="Stays" title="What our homes have" lead={`Counted from the listings of all ${total} homes we run, so the numbers are real. Each home's page lists everything it has.`} />
+      <PageHero photo={packShot("R06")} eyebrow="Stays" title="What our homes have" lead={`Counted from the listings of all ${total} homes we run, so the numbers are real. Each home's page lists everything it has.`} />
       <SubNav section="/stay" current={path} />
 
       <section className="section">
         <div className="wrap spec">
           <Reveal className="spec-media">
-            {showcase.kitchen && <Image src={showcase.kitchen.src} alt={showcase.kitchen.caption} fill sizes="(max-width: 900px) 100vw, 45vw" />}
+            <Image src={packShot("R09").src} alt={packShot("R09").alt ?? ""} fill sizes="(max-width: 900px) 100vw, 45vw" />
           </Reveal>
           <div className="spec-body">
             <Reveal>
@@ -80,6 +80,7 @@ export default async function AmenitiesPage() {
           <Reveal className="split-head">
             <p className="eyebrow">Every stay</p>
             <h2 className="h2">Ready when you arrive</h2>
+            <div className="split-photo"><Image src={packShot("R04").src} alt={packShot("R04").alt ?? ""} fill sizes="(max-width: 860px) 100vw, 40vw" /></div>
           </Reveal>
           <RowList items={[
             { title: "A professional clean", text: "Every clean is finished with photo evidence in the Recharge app." },

@@ -8,7 +8,7 @@ import { HomeCard } from "@/components/HomeCard";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { Proof } from "@/components/Proof";
-import { areaCovers } from "@/content/showcase";
+import { areaCovers, regionPhotos } from "@/content/showcase";
 import { SubNav } from "@/components/SubNav";
 import { Reveal } from "@/components/Reveal";
 import type { Faq } from "@/content/faqs";
@@ -54,7 +54,7 @@ export default async function AreaPage({ params }: PageProps<"/properties/area/[
   const name = d.region.name;
   const path = `/properties/area/${regionSlug(name)}`;
   const cover = d.list.find((h) => h.photos[0]?.src);
-  const photo = areaCovers[name] ?? (cover?.photos[0]?.src ? { src: cover.photos[0].src, href: `/properties/${cover.slug}`, caption: `${heading(cover)}, ${name}` } : null);
+  const photo = regionPhotos[name] ?? areaCovers[name] ?? (cover?.photos[0]?.src ? { src: cover.photos[0].src, href: `/properties/${cover.slug}`, caption: `${heading(cover)}, ${name}` } : null);
   const faqs: Faq[] = [
     { q: `How many Recharge homes are there in ${name}?`, a: `${plural(d.list.length, "home")}, in ${d.towns.join(", ")}. They range from ${d.minBeds === 0 ? "studios" : plural(d.minBeds, "bedroom")} to ${plural(d.maxBeds, "bedroom")}${d.guests ? `, and the largest sleeps ${d.guests}` : ""}.` },
     ...(d.prices.length ? [{ q: `How much does a night cost in ${name}?`, a: `Nightly rates start at around ${money(d.prices[0])} and go up to around ${money(d.prices[d.prices.length - 1])}, depending on the home and the dates. Booking direct saves ${catalog.direct}.` }] : []),

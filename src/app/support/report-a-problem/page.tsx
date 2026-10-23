@@ -9,7 +9,7 @@ import { Situations } from "@/components/Situations";
 import { SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
 import { heading } from "@/content/home-utils";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { site } from "@/content/site";
 import { houseRules } from "@/content/stay";
 import { breadcrumbs, graph } from "@/lib/schema";
@@ -35,7 +35,7 @@ export default async function ReportPage() {
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Support", path: "/support" }, { name: "Report a problem", path }]))} />
-      <PageHero photo={showcase.supportHero} eyebrow="Support" title="Report a problem" lead="Staying in one of our homes, or living next to one? Tell us which home and what is wrong. It goes straight to the team on duty, and they reply in the same window." />
+      <PageHero photo={packShot("S03", "60% 50%")} eyebrow="Support" title="Report a problem" lead="Staying in one of our homes, or living next to one? Tell us which home and what is wrong. It goes straight to the team on duty, and they reply in the same window." />
       <SubNav section="/support" current={path} />
 
       <section className="section">

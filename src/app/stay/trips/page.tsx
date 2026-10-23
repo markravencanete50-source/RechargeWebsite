@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { FaqSection } from "@/components/FaqSection";
 import { HomeCard } from "@/components/HomeCard";
@@ -8,11 +9,19 @@ import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
-import { showcase } from "@/content/showcase";
+import { packShot, showcase, type Shot } from "@/content/showcase";
 import { trips } from "@/content/stay";
 import { breadcrumbs, graph } from "@/lib/schema";
 
 const path = "/stay/trips";
+
+// A photo beside each kind of trip. Stock photos illustrate the trip; the homes below are the real ones.
+const photos: Record<string, { shot: Shot; tall: boolean }> = {
+  families: { shot: packShot("S04"), tall: false },
+  contractors: { shot: packShot("R08"), tall: false },
+  business: { shot: packShot("S06"), tall: true },
+  "long-stays": { shot: packShot("R03"), tall: false },
+};
 
 export const metadata: Metadata = {
   title: "Homes for families, contractors, work trips and long stays",
@@ -41,16 +50,23 @@ export default async function TripsPage() {
       {list.map((t, i) => (
         <section key={t.id} id={t.id} className={`section trip-block${i % 2 ? " paper" : ""}`} style={{ scrollMarginTop: 80 }}>
           <div className="wrap">
-            <div className="trip-head">
-              <Reveal>
-                <p className="eyebrow">{String(i + 1).padStart(2, "0")}</p>
-                <h2 className="h2">{t.title}</h2>
-                <p className="lead">{t.lead}</p>
-              </Reveal>
-              <Reveal delay={0.08}>
-                <ul className="trip-points">{t.points.map((p) => <li key={p}>{p}</li>)}</ul>
-                <Link className="text-link" href={t.href}>{t.cta} <ArrowRight size={16} /></Link>
-              </Reveal>
+            <div className="spec trip-intro">
+              {photos[t.id] && (
+                <Reveal className={`spec-media${photos[t.id].tall ? " tall" : ""}`}>
+                  <Image src={photos[t.id].shot.src} alt={photos[t.id].shot.alt ?? ""} fill sizes="(max-width: 900px) 100vw, 45vw" />
+                </Reveal>
+              )}
+              <div className="spec-body">
+                <Reveal>
+                  <p className="eyebrow">{String(i + 1).padStart(2, "0")}</p>
+                  <h2 className="h2">{t.title}</h2>
+                  <p className="lead" style={{ marginTop: 16 }}>{t.lead}</p>
+                </Reveal>
+                <Reveal delay={0.08}>
+                  <ul className="trip-points">{t.points.map((p) => <li key={p}>{p}</li>)}</ul>
+                  <Link className="text-link" href={t.href}>{t.cta} <ArrowRight size={16} /></Link>
+                </Reveal>
+              </div>
             </div>
             {t.homes.length > 0 && <div className="homes">{t.homes.map((h) => <Reveal key={h.slug}><HomeCard home={h} /></Reveal>)}</div>}
           </div>

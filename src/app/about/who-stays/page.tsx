@@ -41,7 +41,7 @@ export default async function WhoStaysPage() {
         return (
           <section key={g.id} className={`section${i % 2 ? "" : " paper"}`}>
             <div className="wrap spec">
-              <Reveal className="spec-media">{g.shot && <Image src={g.shot.src} alt={g.shot.caption} fill sizes="(max-width: 900px) 100vw, 45vw" />}</Reveal>
+              <Reveal className={`spec-media${g.tall ? " tall" : ""}`}>{g.shot && <Image src={g.shot.src} alt={g.shot.alt ?? g.shot.caption} fill sizes="(max-width: 900px) 100vw, 45vw" />}</Reveal>
               <div className="spec-body">
                 <Reveal>
                   <p className="eyebrow">{g.label}</p>

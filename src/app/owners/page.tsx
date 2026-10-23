@@ -14,7 +14,7 @@ import { Steps } from "@/components/Steps";
 import { ChildIndex, SubNav } from "@/components/SubNav";
 import { ownerFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { site } from "@/content/site";
 import { ownerReasons } from "@/content/why";
 import { abs, breadcrumbs, graph, organization } from "@/lib/schema";
@@ -51,7 +51,7 @@ export default async function OwnersPage() {
     <>
       <JsonLd data={ld} />
       <PhotoHero
-        shot={showcase.ownerHero}
+        shot={packShot("R07")}
         eyebrow="For property owners"
         title={<>Your property,<br />run properly</>}
         lead={`Guaranteed rent or full management across Scotland. We run ${homes.length} homes today, and you see every booking, repair and payout in your own client portal.`}

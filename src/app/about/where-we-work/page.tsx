@@ -8,7 +8,7 @@ import { Reveal } from "@/components/Reveal";
 import { SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
 import { regionSlug } from "@/content/home-utils";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { abs, breadcrumbs, graph } from "@/lib/schema";
 
 const path = "/about/where-we-work";
@@ -31,7 +31,7 @@ export default async function WhereWeWorkPage() {
   return (
     <>
       <JsonLd data={ld} />
-      <PageHero photo={showcase.homeHero[1]} eyebrow="About" title="Where we work" lead={`We run ${homes.length} homes in ${regions.length} areas of Scotland. Every area and town is listed below, with the number of homes in each.`} />
+      <PageHero photo={packShot("L05")} eyebrow="About" title="Where we work" lead={`We run ${homes.length} homes in ${regions.length} areas of Scotland. Every area and town is listed below, with the number of homes in each.`} />
       <SubNav section="/about" current={path} />
 
       <section className="section proof-band">

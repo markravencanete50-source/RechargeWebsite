@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { SubNav } from "@/components/SubNav";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { site } from "@/content/site";
 import { abs, breadcrumbs, graph, organization } from "@/lib/schema";
 
@@ -27,7 +27,7 @@ export default function ContactPage() {
   return (
     <>
       <JsonLd data={ld} />
-      <PageHero photo={showcase.supportHero} eyebrow="About" title="Contact us" lead={`One number for everything, answered at any hour: ${site.phone.display}. Or email us, or send a message below.`} />
+      <PageHero photo={packShot("S03", "60% 50%")} eyebrow="About" title="Contact us" lead={`One number for everything, answered at any hour: ${site.phone.display}. Or email us, or send a message below.`} />
       <SubNav section="/about" current={path} />
 
       <section className="section">
