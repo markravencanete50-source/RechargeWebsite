@@ -108,7 +108,7 @@ export function OwnerCalculator({ table }: { table: RateTable }) {
                 <strong>Want a professional estimate?</strong>
                 <span>Our team prices your actual home with live market data, comparable homes and local events. Free, with no obligation.</span>
               </div>
-              <a className="btn btn-mint" href="#estimate">Get my free estimate <ArrowRight size={18} /></a>
+              <a className="btn btn-mint" href="/owners#estimate">Get my free estimate <ArrowRight size={18} /></a>
             </div>
           </>
         ) : (

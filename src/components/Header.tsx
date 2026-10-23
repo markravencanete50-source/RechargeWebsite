@@ -9,9 +9,9 @@ import { useEffect, useRef, useState } from "react";
 import { nav, site, type NavItem } from "@/content/site";
 
 const isHere = (pathname: string, href: string) => { const path = href.split("#")[0]; return pathname === path || pathname.startsWith(path + "/"); };
-// A sub-page marks its menu item as current, unless it is another top-level page (Report a problem is on Support, not Stays).
-const tops = nav.map((n) => n.href);
-const inItem = (pathname: string, item: NavItem) => isHere(pathname, item.href) || !!item.children?.some((c) => !tops.includes(c.href.split("#")[0]) && isHere(pathname, c.href));
+// A sub-page marks its menu item as current. A link to a section of another page (Guest questions, on the FAQ) does not, so
+// only one item is ever marked.
+const inItem = (pathname: string, item: NavItem) => isHere(pathname, item.href) || !!item.children?.some((c) => !c.href.includes("#") && isHere(pathname, c.href));
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);

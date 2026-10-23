@@ -7,15 +7,14 @@ import { JsonLd } from "@/components/JsonLd";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
-import { ReportProblem } from "@/components/ReportProblem";
 import { RowList } from "@/components/RowList";
 import { Situations } from "@/components/Situations";
 import { SplitHero } from "@/components/SplitHero";
+import { SubNav } from "@/components/SubNav";
 import { Steps } from "@/components/Steps";
 import { SupportLive } from "@/components/SupportLive";
 import { supportExtraFaqs, supportFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
-import { heading } from "@/content/home-utils";
 import { showcase } from "@/content/showcase";
 import { site } from "@/content/site";
 import { breadcrumbs, graph, organization } from "@/lib/schema";
@@ -47,9 +46,10 @@ export default async function SupportPage() {
       >
         <div className="hero-actions">
           <a className="btn btn-mint" href={site.phone.href}><Phone size={18} /> Call {site.phone.display}</a>
-          <a className="btn btn-line-light" href="#report">Report a problem</a>
+          <Link className="btn btn-line-light" href="/support/report-a-problem">Report a problem</Link>
         </div>
       </SplitHero>
+      <SubNav section="/support" current="/support" />
 
       <section className="section proof-band">
         <div className="wrap">
@@ -79,14 +79,12 @@ export default async function SupportPage() {
         </div>
       </section>
 
-      <section className="section paper" id="report" style={{ scrollMarginTop: 80 }}>
-        <div className="wrap report-wrap">
-          <Reveal className="section-head">
-            <p className="eyebrow">Guests and neighbours</p>
-            <h2 className="h2">Report a problem</h2>
-            <p className="lead">Staying in one of our homes, or living next to one? Tell us which home and what is wrong. It goes straight to the team on duty, and they reply in the same window.</p>
-          </Reveal>
-          <ReportProblem homes={homes.map((h) => ({ slug: h.slug, title: heading(h), town: h.town }))} contact={{ phone: site.phone, email: site.email }} />
+      <section className="section paper">
+        <div className="wrap">
+          <div className="note-line" style={{ marginTop: 0 }}>
+            <p><strong>Something wrong with a stay or a home next door?</strong> Tell us which home and what is wrong, and the team on duty replies.</p>
+            <Link className="text-link" href="/support/report-a-problem">Report a problem <ArrowRight size={16} /></Link>
+          </div>
         </div>
       </section>
 

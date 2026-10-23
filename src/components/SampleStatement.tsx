@@ -125,7 +125,7 @@ export function SampleStatement() {
           <li><Check size={18} /> Nothing is spent on repairs or furnishing until you approve the quote in the app.</li>
           <li><Check size={18} /> Your statement is in your client portal, line by line, every month.</li>
         </ul>
-        <a className="btn btn-primary" href="#estimate">Get your free estimate <ArrowRight size={18} /></a>
+        <a className="btn btn-primary" href="/owners#estimate">Get your free estimate <ArrowRight size={18} /></a>
         <p className="fine">An example with made-up figures. Your statement shows your own bookings, fees and costs.</p>
       </div>
     </div>

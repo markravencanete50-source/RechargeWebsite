@@ -5,6 +5,7 @@ import { FaqSection } from "@/components/FaqSection";
 import { FurnishingCalculator } from "@/components/FurnishingCalculator";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
+import { SubNav } from "@/components/SubNav";
 import type { Faq } from "@/content/faqs";
 import { showcase } from "@/content/showcase";
 import { breadcrumbs, graph } from "@/lib/schema";
@@ -28,10 +29,11 @@ export default function FurnishingCalculatorPage() {
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Owners", path: "/owners" }, { name: "Furnishing calculator", path }]))} />
       <PageHero photo={showcase.families} eyebrow="For owners" title="Furnishing calculator" lead="Tell us your rooms and beds. See everything a guest-ready home needs, room by room, with the reason for every number." />
+      <SubNav section="/owners" current={path} />
       <section className="section" style={{ paddingTop: 48 }}>
         <div className="wrap">
           <FurnishingCalculator />
-          <p className="fine furn-more">Want to know what the home could earn once it is ready? <Link className="text-link" href="/owners#calculator">Try the earnings calculator <ArrowRight size={16} /></Link></p>
+          <p className="fine furn-more">Want to know what the home could earn once it is ready? <Link className="text-link" href="/owners/earnings-calculator">Try the earnings calculator <ArrowRight size={16} /></Link></p>
         </div>
       </section>
       <FaqSection items={faqs} title="About the calculator" eyebrow="Questions" tone="paper" />
