@@ -50,7 +50,18 @@ export const nav: NavItem[] = [
       { href: "/owners/furnishing-calculator", label: "Furnishing calculator", text: "Everything a home needs, room by room" },
     ],
   },
-  { href: "/app", label: "The app" },
+  {
+    href: "/app", label: "The app",
+    children: [
+      { href: "/app", label: "The Recharge app", text: "One app runs every home" },
+      { href: "/app/how-it-works", label: "How it works", text: "One booking, start to finish" },
+      { href: "/app/owner-portal", label: "Owner portal", text: "Bookings, statements and approvals" },
+      { href: "/app/bookings-and-guests", label: "Bookings and guests", text: "Pricing, listings and the guest inbox" },
+      { href: "/app/cleaning", label: "Cleaning", text: "Every turnover planned and checked" },
+      { href: "/app/maintenance", label: "Maintenance and setup", text: "Repairs, inspections and furnishing" },
+      { href: "/app/accounts", label: "Accounts", text: "Payouts matched before anyone is paid" },
+    ],
+  },
   {
     href: "/support", label: "Support",
     children: [
