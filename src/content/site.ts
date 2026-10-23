@@ -27,7 +27,19 @@ export type NavItem = NavLink & { children?: NavLink[] };
 
 // The main menu. Owners and Support open to the pages below them, so every key page is one step from any page.
 export const nav: NavItem[] = [
-  { href: "/properties", label: "Properties" },
+  {
+    href: "/properties", label: "Properties",
+    children: [
+      { href: "/properties", label: "All homes", text: "Search by area, dates and guests" },
+      { href: "/properties/areas", label: "Browse by area", text: "Every area, with photos and prices" },
+      { href: "/properties/collection/one-bedroom", label: "1-bedroom homes", text: "For one or two" },
+      { href: "/properties/collection/two-bedroom", label: "2-bedroom homes", text: "Families, couples and small crews" },
+      { href: "/properties/collection/three-bedrooms-plus", label: "3 bedrooms or more", text: "Houses and large flats" },
+      { href: "/properties/collection/large-groups", label: "Homes for groups", text: "Sleeps six or more" },
+      { href: "/properties/collection/free-parking", label: "Free parking", text: "Parking at no charge" },
+      { href: "/properties/collection/city-centre", label: "City centre", text: "Close to shops, food and transport" },
+    ],
+  },
   {
     href: "/stay", label: "Stays",
     children: [

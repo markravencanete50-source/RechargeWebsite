@@ -26,6 +26,8 @@ export async function Footer() {
             <h3>Guests</h3>
             <ul>
               <li><Link href="/properties">Properties</Link></li>
+              <li><Link href="/properties/areas">Browse by area</Link></li>
+              <li><Link href="/properties/collection/large-groups">Homes for groups</Link></li>
               <li><Link href="/stay">Stays</Link></li>
               <li><Link href="/stay/book-direct">Book direct and save</Link></li>
               <li><Link href="/stay/check-in">Check-in and house rules</Link></li>

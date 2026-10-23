@@ -7,6 +7,9 @@ import { FaqList } from "@/components/FaqList";
 import { HomeCard } from "@/components/HomeCard";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
+import { Proof } from "@/components/Proof";
+import { areaCovers } from "@/content/showcase";
+import { SubNav } from "@/components/SubNav";
 import { Reveal } from "@/components/Reveal";
 import type { Faq } from "@/content/faqs";
 import { parseListing } from "@/content/listing";
@@ -51,7 +54,7 @@ export default async function AreaPage({ params }: PageProps<"/properties/area/[
   const name = d.region.name;
   const path = `/properties/area/${regionSlug(name)}`;
   const cover = d.list.find((h) => h.photos[0]?.src);
-  const photo = cover?.photos[0]?.src ? { src: cover.photos[0].src, href: `/properties/${cover.slug}`, caption: `${heading(cover)}, ${name}` } : null;
+  const photo = areaCovers[name] ?? (cover?.photos[0]?.src ? { src: cover.photos[0].src, href: `/properties/${cover.slug}`, caption: `${heading(cover)}, ${name}` } : null);
   const faqs: Faq[] = [
     { q: `How many Recharge homes are there in ${name}?`, a: `${plural(d.list.length, "home")}, in ${d.towns.join(", ")}. They range from ${d.minBeds === 0 ? "studios" : plural(d.minBeds, "bedroom")} to ${plural(d.maxBeds, "bedroom")}${d.guests ? `, and the largest sleeps ${d.guests}` : ""}.` },
     ...(d.prices.length ? [{ q: `How much does a night cost in ${name}?`, a: `Nightly rates start at around ${money(d.prices[0])} and go up to around ${money(d.prices[d.prices.length - 1])}, depending on the home and the dates. Booking direct saves ${catalog.direct}.` }] : []),
@@ -69,14 +72,15 @@ export default async function AreaPage({ params }: PageProps<"/properties/area/[
     <>
       <JsonLd data={ld} />
       <PageHero photo={photo} eyebrow={`Properties in ${name}`} title={`Places to stay in ${name}`} lead={`${plural(d.list.length, "serviced home")} in ${d.towns.slice(0, 5).join(", ")}${d.towns.length > 5 ? " and more" : ""}. Book direct with Recharge and save ${catalog.direct}.`} />
+      <SubNav section="/properties" current="/properties/areas" />
       <section className="section" style={{ paddingTop: 48 }}>
         <div className="wrap">
-          <div className="stat-row">
-            <div><strong>{d.list.length}</strong><span>homes</span></div>
-            <div><strong>{d.towns.length}</strong><span>{d.towns.length === 1 ? "town" : "towns"}</span></div>
-            {d.prices.length > 0 && <div><strong>{money(d.prices[0])}</strong><span>from, a night</span></div>}
-            {d.guests > 0 && <div><strong>{d.guests}</strong><span>guests in the largest home</span></div>}
-          </div>
+          <Proof items={[
+            [String(d.list.length), d.list.length === 1 ? "home" : "homes"],
+            [String(d.towns.length), d.towns.length === 1 ? "town" : "towns"],
+            ...(d.prices.length > 0 ? [[money(d.prices[0]), "a night, from"] as [string, string]] : []),
+            ...(d.guests > 0 ? [[String(d.guests), "guests in the largest home"] as [string, string]] : []),
+          ]} />
           <div className="homes" style={{ marginTop: 32 }}>
             {d.list.map((h, i) => <Reveal key={h.slug} delay={(i % 4) * 0.05}><HomeCard home={h} /></Reveal>)}
           </div>
