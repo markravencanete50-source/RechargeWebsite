@@ -1,4 +1,4 @@
-import { ArrowRight, BellRing, ClipboardList, DoorClosed, FileText, Hammer, KeyRound, Mail, MessageSquareText, PackagePlus, Phone, Timer, Wrench } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ContactSection } from "@/components/ContactSection";
@@ -61,19 +61,16 @@ export default async function SupportPage() {
         <div className="wrap">
           <div className="channels">
             <Reveal className="channel">
-              <span className="row-ic"><Phone size={20} /></span>
               <p className="eyebrow">Urgent or during a stay</p>
               <a className="channel-big" href={site.phone.href}>{site.phone.display}</a>
               <p>Answered 24 hours a day. The fastest way to reach us.</p>
             </Reveal>
             <Reveal className="channel" delay={0.08}>
-              <span className="row-ic"><Mail size={20} /></span>
               <p className="eyebrow">Bookings and general questions</p>
               <a className="channel-big small" href={`mailto:${site.email}`}>{site.email}</a>
               <p>For anything that can wait for a written reply.</p>
             </Reveal>
             <Reveal className="channel" delay={0.16}>
-              <span className="row-ic"><MessageSquareText size={20} /></span>
               <p className="eyebrow">Owners</p>
               <a className="channel-big small" href={site.ownerLogin}>Owner login</a>
               <p>Your client portal: bookings, statements, approvals and repairs, in one place.</p>
@@ -100,14 +97,14 @@ export default async function SupportPage() {
             <Reveal delay={0.08}><p className="lead">The common reasons people get in touch, and exactly what happens next.</p></Reveal>
           </div>
           <Situations items={[
-            { icon: KeyRound, who: "Guests", situation: "I cannot get in", answer: `Call ${site.phone.display} straight away. We talk you through access and arrange help if it is needed.` },
-            { icon: Wrench, who: "Guests", situation: "Something in the home is broken", answer: "Tell us and it becomes a repair job in the app. Urgent faults go straight to our maintenance team." },
-            { icon: PackagePlus, who: "Guests", situation: "We are running low on supplies", answer: "Let us know what you need. Supplies that run low are tracked until they are replaced." },
-            { icon: DoorClosed, who: "Guests", situation: "I do not have my check-in details", answer: "Call or email us and we send the address and access instructions again." },
-            { icon: Timer, who: "Guests", situation: "I want to stay longer", answer: "We check whether the home is free for the extra nights and how a longer stay is priced." },
-            { icon: BellRing, who: "Neighbours", situation: "I have a concern about a Recharge home", answer: "Call at any hour. Your concern is logged and passed to the team responsible for that home." },
-            { icon: FileText, who: "Owners", situation: "I have a question about my statement", answer: "Our accounts team can show how each figure was matched to platform payouts and bank receipts." },
-            { icon: Hammer, who: "Owners", situation: "A repair needs my approval", answer: "The quote appears in your client portal. Approve it with a tap and see the photos when the work is done." },
+            { who: "Guests", situation: "I cannot get in", answer: `Call ${site.phone.display} straight away. We talk you through access and arrange help if it is needed.` },
+            { who: "Guests", situation: "Something in the home is broken", answer: "Tell us and it becomes a repair job in the app. Urgent faults go straight to our maintenance team." },
+            { who: "Guests", situation: "We are running low on supplies", answer: "Let us know what you need. Supplies that run low are tracked until they are replaced." },
+            { who: "Guests", situation: "I do not have my check-in details", answer: "Call or email us and we send the address and access instructions again." },
+            { who: "Guests", situation: "I want to stay longer", answer: "We check whether the home is free for the extra nights and how a longer stay is priced." },
+            { who: "Neighbours", situation: "I have a concern about a Recharge home", answer: "Call at any hour. Your concern is logged and passed to the team responsible for that home." },
+            { who: "Owners", situation: "I have a question about my statement", answer: "Our accounts team can show how each figure was matched to platform payouts and bank receipts." },
+            { who: "Owners", situation: "A repair needs my approval", answer: "The quote appears in your client portal. Approve it with a tap and see the photos when the work is done." },
           ]} />
         </div>
       </section>
@@ -124,9 +121,9 @@ export default async function SupportPage() {
               <p className="lead">Every call and message is logged in the Recharge app, so nothing is lost between shifts.</p>
             </Reveal>
             <RowList items={[
-              { icon: <MessageSquareText size={18} />, title: "One inbox", text: "Every guest conversation in one place, with the guest's stay and history beside it." },
-              { icon: <Timer size={18} />, title: "Live response timers", text: "Each message shows how long it has waited, so none is left unanswered." },
-              { icon: <ClipboardList size={18} />, title: "Problems become jobs", text: "A fault becomes a repair job with an owner and a status, followed to the finish." },
+              { title: "One inbox", text: "Every guest conversation in one place, with the guest's stay and history beside it." },
+              { title: "Live response timers", text: "Each message shows how long it has waited, so none is left unanswered." },
+              { title: "Problems become jobs", text: "A fault becomes a repair job with an owner and a status, followed to the finish." },
             ]} />
           </div>
         </div>
