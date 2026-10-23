@@ -9,7 +9,7 @@ import { RowList } from "@/components/RowList";
 import { SampleStatement } from "@/components/SampleStatement";
 import { SubNav } from "@/components/SubNav";
 import { PLATFORM_FEE } from "@/content/estimate-sums";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { site } from "@/content/site";
 import { breadcrumbs, graph } from "@/lib/schema";
 
@@ -31,7 +31,7 @@ export default function ExampleStatementPage() {
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Owners", path: "/owners" }, { name: "Example statement", path }]))} />
-      <PageHero photo={showcase.owners} eyebrow="For owners" title="Example statement" lead="This is how a monthly statement from the Recharge app reads. Tap any line to follow the money from the booking to your account." />
+      <PageHero photo={packShot("R08")} eyebrow="For owners" title="Example statement" lead="This is how a monthly statement from the Recharge app reads. Tap any line to follow the money from the booking to your account." />
       <SubNav section="/owners" current={path} />
 
       <section className="section">

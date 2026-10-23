@@ -15,7 +15,7 @@ import { Steps } from "@/components/Steps";
 import { SupportLive } from "@/components/SupportLive";
 import { supportExtraFaqs, supportFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { site } from "@/content/site";
 import { breadcrumbs, graph, organization } from "@/lib/schema";
 
@@ -42,7 +42,7 @@ export default async function SupportPage() {
         title={<>Someone is<br />always there</>}
         lead={`Guests, owners and neighbours can reach a real person at any hour. One number for everything: ${site.phone.display}.`}
         visual={<SupportLive phone={site.phone.display} />}
-        photo={showcase.supportHero}
+        photo={packShot("S03", "60% 50%")}
       >
         <div className="hero-actions">
           <a className="btn btn-mint" href={site.phone.href}><Phone size={18} /> Call {site.phone.display}</a>

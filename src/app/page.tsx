@@ -1,5 +1,6 @@
 import { ArrowRight, Phone } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { AppShowcase } from "@/components/AppShowcase";
 import { AreaIndex } from "@/components/AreaIndex";
@@ -16,7 +17,8 @@ import { ToolExplorer } from "@/components/ToolExplorer";
 import { WhyChoose } from "@/components/WhyChoose";
 import { generalFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
-import { showcase } from "@/content/showcase";
+import { regionSlug } from "@/content/home-utils";
+import { packShot, regionPhotos, showcase } from "@/content/showcase";
 import { site, withDirect } from "@/content/site";
 import { toolCount } from "@/content/tools";
 import { guestReasons, ownerReasons } from "@/content/why";
@@ -33,7 +35,7 @@ export default async function Home() {
       <JsonLd data={graph(organization, website)} />
       <PhotoHero
         className="home"
-        shots={showcase.homeHero}
+        shots={[packShot("R01"), showcase.homeHero[1], showcase.homeHero[2]]}
         eyebrow="Serviced accommodation in Scotland"
         title={<>Find your stay.<br />Book direct.</>}
         lead={`${homes.length} serviced homes across Scotland, from Edinburgh and Glasgow to the Borders and Skye. Book direct with Recharge and save ${direct}.`}
@@ -69,7 +71,7 @@ export default async function Home() {
             <Reveal><p className="eyebrow">Why Recharge</p><h2 className="h2">Chosen by owners. Booked by guests.</h2></Reveal>
             <Reveal delay={0.08}><p className="lead">One company runs both sides: the homes guests book and the service owners rely on. Here is why each of them picks us.</p></Reveal>
           </div>
-          <WhyChoose owners={ownerReasons} guests={withDirect(guestReasons, direct)} ownerShot={showcase.owners} guestShot={showcase.guests} />
+          <WhyChoose owners={ownerReasons} guests={withDirect(guestReasons, direct)} ownerShot={packShot("R07")} guestShot={packShot("R03")} />
         </div>
       </section>
 
@@ -123,8 +125,24 @@ export default async function Home() {
         <div className="wrap">
           <div className="head-row">
             <Reveal><p className="eyebrow">Where we are</p><h2 className="h2">From the Borders to Skye</h2></Reveal>
-            <Reveal delay={0.08}><Link className="text-link" href="/stay">All {regions.length} areas <ArrowRight size={18} /></Link></Reveal>
+            <Reveal delay={0.08}><Link className="text-link" href="/properties/areas">All {regions.length} areas <ArrowRight size={18} /></Link></Reveal>
           </div>
+          <ul className="dest-strip">
+            {["Glasgow", "Edinburgh", "Aberdeen", "Dunbartonshire", "Fife"].map((name, i) => {
+              const r = regions.find((x) => x.name === name);
+              const shot = regionPhotos[name];
+              if (!r || !shot) return null;
+              return (
+                <Reveal as="li" key={name} delay={i * 0.05}>
+                  <Link href={`/properties/area/${regionSlug(name)}`}>
+                    <span className="dest-photo"><Image src={shot.src} alt={shot.alt ?? ""} fill sizes="(max-width: 700px) 70vw, 20vw" style={shot.position ? { objectPosition: shot.position } : undefined} /></span>
+                    <strong>{name}</strong>
+                    <span>{r.count} {r.count === 1 ? "home" : "homes"}</span>
+                  </Link>
+                </Reveal>
+              );
+            })}
+          </ul>
           <AreaIndex limit={10} />
         </div>
       </section>

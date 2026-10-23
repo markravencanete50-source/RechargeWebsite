@@ -4,7 +4,7 @@ import { appFaqs, ownerFaqs, supportExtraFaqs } from "./faqs";
 import { journey, teams } from "./tools";
 
 export type AppPage = {
-  slug: string; team: string; title: string; lead: string; screen?: string; screenAlt?: string;
+  slug: string; team: string; title: string; lead: string; screen?: string; screenAlt?: string; photo?: "S01" | "S02";
   who: string[]; steps: string[]; faqs: Faq[]; links: { href: string; label: string; text: string }[];
 };
 
@@ -30,7 +30,7 @@ export const appPages: AppPage[] = [
     links: [{ href: "/support", label: "24/7 support", text: "How the team behind the inbox helps." }, { href: "/stay/book-direct", label: "Book direct", text: "Why direct bookings cost guests less." }],
   },
   {
-    slug: "cleaning", team: "cleans", title: "Cleaning",
+    slug: "cleaning", team: "cleans", title: "Cleaning", photo: "S01",
     lead: "How every turnover is planned, checked and paid, so each guest arrives to a home that is ready.",
     screen: "/app/cleaner.webp", screenAlt: "Recharge app: a cleaner's home with the clean calendar",
     who: ["Our cleaners, who see only the cleans assigned to them", "The team that checks quality by cleaner and by property"],
@@ -39,7 +39,7 @@ export const appPages: AppPage[] = [
     links: [{ href: "/stay/amenities", label: "What our homes have", text: "What every clean leaves ready." }],
   },
   {
-    slug: "maintenance", team: "ready", title: "Maintenance and setup",
+    slug: "maintenance", team: "ready", title: "Maintenance and setup", photo: "S02",
     lead: "How repairs, inspections and furnishing get done, from the first quote to photos of the finished work.",
     screen: "/app/ready.webp", screenAlt: "Recharge app: the maintenance team home with repairs and inspections",
     who: ["Our maintenance team", "The setup team that gets a new property ready for its first guest"],

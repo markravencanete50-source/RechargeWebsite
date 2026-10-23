@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
+import { PhoneFrame } from "@/components/PhoneFrame";
 import { Reveal } from "@/components/Reveal";
 import { RowList } from "@/components/RowList";
 import { SubNav } from "@/components/SubNav";
@@ -53,6 +54,8 @@ export default function HowWeWorkPage() {
             <h2 className="h2">Everyone works from the same app</h2>
             <p className="lead">Owners, guest support, cleaners, maintenance and accounts all use the Recharge app, so nothing depends on someone remembering.</p>
             <Link className="text-link" href="/app">See the app <ArrowRight size={16} /></Link>
+            <div className="split-phone"><PhoneFrame src="/app/owner.webp" alt="Recharge owner app showing properties, approvals, messages and earnings with sample data." /></div>
+            <p className="fine">The owner screen from the Recharge app, shown with sample data.</p>
           </Reveal>
           <RowList items={[
             { title: "Guest support", text: "Every message in one inbox, with a live response timer and the guest's stay beside it." },

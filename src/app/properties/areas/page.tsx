@@ -9,7 +9,7 @@ import { Reveal } from "@/components/Reveal";
 import { SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
 import { money, regionSlug } from "@/content/home-utils";
-import { areaCovers, showcase } from "@/content/showcase";
+import { areaCovers, regionPhotos, showcase } from "@/content/showcase";
 import { abs, breadcrumbs, graph } from "@/lib/schema";
 
 const path = "/properties/areas";
@@ -21,6 +21,12 @@ export async function generateMetadata(): Promise<Metadata> {
     description: `${homes.length} serviced homes in ${regions.length} areas of Scotland, including ${regions.slice(0, 5).map((r) => r.name).join(", ")}. Browse by area and book direct.`,
     alternates: { canonical: path },
   };
+}
+
+// A photo of the place itself where the image pack has one, then a chosen room, then the area's best-reviewed home.
+function pickCover(name: string) {
+  const s = regionPhotos[name] ?? areaCovers[name];
+  return s ? { src: s.src, alt: s.alt ?? s.caption } : undefined;
 }
 
 export default async function AreasPage() {
@@ -55,7 +61,7 @@ export default async function AreasPage() {
             {rows.map((r, i) => (
               <Reveal as="li" key={r.name} delay={(i % 3) * 0.06}>
                 <Link href={`/properties/area/${r.slug}`}>
-                  <span className="area-card-photo"><Photo photo={areaCovers[r.name] ? { src: areaCovers[r.name]!.src, alt: areaCovers[r.name]!.caption } : r.cover?.photos[0]} alt={`A Recharge home in ${r.name}`} sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 33vw" priority={i < 3} /></span>
+                  <span className="area-card-photo"><Photo photo={pickCover(r.name) ?? r.cover?.photos[0]} alt={`A Recharge home in ${r.name}`} sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 33vw" priority={i < 3} /></span>
                   <strong>{r.name}</strong>
                   <span className="area-card-meta">{r.count} {r.count === 1 ? "home" : "homes"}{r.from ? ` · from ${money(r.from)} a night` : ""}</span>
                   <span className="area-card-towns">{r.towns.slice(0, 5).join(" · ")}{r.towns.length > 5 ? " and more" : ""}</span>

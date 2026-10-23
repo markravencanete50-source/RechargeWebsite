@@ -8,7 +8,7 @@ export function SplitHero({ eyebrow, title, lead, children, visual, photo }: { e
   return (
     <section className={`app-hero split-hero dark on-dark${photo ? " has-photo" : ""}`}>
       {photo ? (
-        <div className="page-hero-photo" aria-hidden><Image src={photo.src} alt="" fill priority sizes="100vw" /></div>
+        <div className="page-hero-photo" aria-hidden><Image src={photo.src} alt="" fill priority sizes="100vw" style={photo.position ? { objectPosition: photo.position } : undefined} /></div>
       ) : (
         <div className="hero-motion" aria-hidden>
           <span className="glow g1" /><span className="glow g2" />

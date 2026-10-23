@@ -7,7 +7,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { SubNav } from "@/components/SubNav";
 import type { Faq } from "@/content/faqs";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { breadcrumbs, graph } from "@/lib/schema";
 
 export const metadata: Metadata = {
@@ -28,7 +28,7 @@ export default function FurnishingCalculatorPage() {
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Owners", path: "/owners" }, { name: "Furnishing calculator", path }]))} />
-      <PageHero photo={showcase.families} eyebrow="For owners" title="Furnishing calculator" lead="Tell us your rooms and beds. See everything a guest-ready home needs, room by room, with the reason for every number." />
+      <PageHero photo={packShot("R05")} eyebrow="For owners" title="Furnishing calculator" lead="Tell us your rooms and beds. See everything a guest-ready home needs, room by room, with the reason for every number." />
       <SubNav section="/owners" current={path} />
       <section className="section" style={{ paddingTop: 48 }}>
         <div className="wrap">

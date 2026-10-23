@@ -12,7 +12,7 @@ export function PhotoHero({ shot, shots, eyebrow, title, lead, children, aside, 
     <section className={`photo-hero on-dark ${set.length > 1 ? "is-cycling" : ""} ${className}`}>
       {set.map((s, i) => (
         <div className="photo-hero-img" key={s.src} style={{ animationDelay: `${i * 7}s` }}>
-          <Image src={s.src} alt="" fill priority={i === 0} sizes="100vw" />
+          <Image src={s.src} alt="" fill priority={i === 0} sizes="100vw" style={s.position ? { objectPosition: s.position } : undefined} />
         </div>
       ))}
       <div className="photo-hero-shade" />
@@ -25,7 +25,7 @@ export function PhotoHero({ shot, shots, eyebrow, title, lead, children, aside, 
         </div>
         {aside && <Reveal delay={0.25} className="photo-hero-aside">{aside}</Reveal>}
       </div>
-      {set.length === 1 && <Link className="photo-hero-credit" href={set[0].href}>{set[0].caption}</Link>}
+      {set.length === 1 && set[0].href && <Link className="photo-hero-credit" href={set[0].href}>{set[0].caption}</Link>}
     </section>
   );
 }

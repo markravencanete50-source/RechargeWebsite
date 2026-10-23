@@ -10,7 +10,7 @@ export function PageHero({ eyebrow, title, lead, photo, children }: { eyebrow: s
     <section className={`page-hero dark on-dark${photo ? " has-photo" : ""}`}>
       {photo && (
         <div className="page-hero-photo" aria-hidden>
-          <Image src={photo.src} alt="" fill priority sizes="100vw" />
+          <Image src={photo.src} alt="" fill priority sizes="100vw" style={photo.position ? { objectPosition: photo.position } : undefined} />
         </div>
       )}
       <div className="wrap">

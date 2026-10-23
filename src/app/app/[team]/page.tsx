@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaqSection } from "@/components/FaqSection";
@@ -11,6 +12,7 @@ import { Reveal } from "@/components/Reveal";
 import { RowList } from "@/components/RowList";
 import { SubNav } from "@/components/SubNav";
 import { appPage, appPages, stepsOf, teamOf } from "@/content/app-pages";
+import { packShot } from "@/content/showcase";
 import { site } from "@/content/site";
 import { breadcrumbs, graph } from "@/lib/schema";
 
@@ -37,6 +39,7 @@ export default async function AppTeamPage({ params }: { params: Promise<{ team: 
   const steps = stepsOf(p);
   const i = appPages.indexOf(p);
   const next = appPages[(i + 1) % appPages.length];
+  const photo = p.photo ? { shot: packShot(p.photo), tall: p.photo === "S01" } : null;
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "The app", path: "/app" }, { name: p.title, path }]))} />
@@ -81,13 +84,20 @@ export default async function AppTeamPage({ params }: { params: Promise<{ team: 
       )}
 
       <section className={`section${p.team === "owners" ? "" : " paper"}`}>
-        <div className="wrap split-sticky">
-          <Reveal className="split-head">
-            <p className="eyebrow">Who uses it</p>
-            <h2 className="h2">Each person sees what they need</h2>
-            <p className="lead">For the homes and jobs they look after, and nothing else.</p>
-          </Reveal>
-          <ul className="trip-points">{p.who.map((w) => <li key={w}>{w}</li>)}</ul>
+        <div className={`wrap ${photo ? "spec" : "split-sticky"}`}>
+          {photo && (
+            <Reveal className={`spec-media${photo.tall ? " tall" : ""}`}>
+              <Image src={photo.shot.src} alt={photo.shot.alt ?? ""} fill sizes="(max-width: 900px) 100vw, 45vw" />
+            </Reveal>
+          )}
+          <div className={photo ? "spec-body" : "split-sticky-pair"}>
+            <Reveal className={photo ? undefined : "split-head"}>
+              <p className="eyebrow">Who uses it</p>
+              <h2 className="h2">Each person sees what they need</h2>
+              <p className="lead" style={{ marginTop: 16 }}>For the homes and jobs they look after, and nothing else.</p>
+            </Reveal>
+            <ul className="trip-points">{p.who.map((w) => <li key={w}>{w}</li>)}</ul>
+          </div>
         </div>
       </section>
 

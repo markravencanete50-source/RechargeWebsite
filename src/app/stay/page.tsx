@@ -15,7 +15,7 @@ import { ChildIndex, SubNav } from "@/components/SubNav";
 import { TripGrid } from "@/components/TripGrid";
 import { guestFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
-import { showcase } from "@/content/showcase";
+import { packShot, showcase } from "@/content/showcase";
 import { withDirect } from "@/content/site";
 import { guestReasons } from "@/content/why";
 import { breadcrumbs, graph } from "@/lib/schema";
@@ -34,7 +34,7 @@ export default async function StayPage() {
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Stays", path: "/stay" }]))} />
-      <PhotoHero shot={showcase.stayHero} eyebrow="Stays" title={<>A whole home,<br />ready when you arrive</>} lead={`${homes.length} serviced homes across Scotland for city breaks, work trips and families. Book direct and save ${direct}.`}>
+      <PhotoHero shot={packShot("R02")} eyebrow="Stays" title={<>A whole home,<br />ready when you arrive</>} lead={`${homes.length} serviced homes across Scotland for city breaks, work trips and families. Book direct and save ${direct}.`}>
         <SearchBar data={{ regions, towns, priceSteps }} />
       </PhotoHero>
       <SubNav section="/stay" current="/stay" />
@@ -87,8 +87,8 @@ export default async function StayPage() {
 
       <section className="section dark on-dark">
         <div className="wrap media-split">
-          <Reveal className="media-frame">
-            {showcase.checked && <Image src={showcase.checked.src} alt={showcase.checked.caption} fill sizes="(max-width: 900px) 100vw, 50vw" />}
+          <Reveal className="media-frame tall">
+            <Image src={packShot("S01").src} alt={packShot("S01").alt ?? ""} fill sizes="(max-width: 900px) 100vw, 50vw" />
           </Reveal>
           <div>
             <Reveal className="section-head">

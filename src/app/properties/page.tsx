@@ -9,7 +9,7 @@ import { PropertyResults } from "@/components/PropertyResults";
 import { propertiesFaqs } from "@/content/faqs";
 import { cardOf, getCatalog } from "@/content/catalog";
 import { heading } from "@/content/home-utils";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { abs, breadcrumbs, graph } from "@/lib/schema";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -29,7 +29,7 @@ export default async function PropertiesPage() {
         { "@type": "ItemList", name: "Recharge homes", numberOfItems: homes.length, itemListElement: homes.map((h, i) => ({ "@type": "ListItem", position: i + 1, url: abs(`/properties/${h.slug}`), name: heading(h) })) },
         breadcrumbs([{ name: "Properties", path: "/properties" }]),
       )} />
-      <PageHero photo={showcase.stayHero} eyebrow="Properties" title="Find a Recharge home" lead="Search by area, dates and guests. Every home is cleaned, checked and supported 24/7." />
+      <PageHero photo={packShot("L02")} eyebrow="Properties" title="Find a Recharge home" lead="Search by area, dates and guests. Every home is cleaned, checked and supported 24/7." />
       <SubNav section="/properties" current="/properties" />
       <section className="section" style={{ paddingTop: 48 }}>
         <div className="wrap">

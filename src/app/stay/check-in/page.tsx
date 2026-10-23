@@ -10,7 +10,7 @@ import { RowList } from "@/components/RowList";
 import { StayTimeline } from "@/components/StayTimeline";
 import { SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { site } from "@/content/site";
 import { houseRules, usual } from "@/content/stay";
 import { breadcrumbs, graph } from "@/lib/schema";
@@ -46,7 +46,7 @@ export default async function CheckInPage() {
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Stays", path: "/stay" }, { name: "Check-in and house rules", path }]))} />
-      <PageHero photo={showcase.checked} eyebrow="Stays" title="Check-in and house rules" lead="What happens from the day you book to the day you leave, and the few rules that keep our homes good for guests and neighbours." />
+      <PageHero photo={packShot("S07")} eyebrow="Stays" title="Check-in and house rules" lead="What happens from the day you book to the day you leave, and the few rules that keep our homes good for guests and neighbours." />
       <SubNav section="/stay" current={path} />
 
       <section className="section">

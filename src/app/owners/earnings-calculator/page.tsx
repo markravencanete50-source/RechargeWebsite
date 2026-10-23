@@ -11,7 +11,7 @@ import { SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
 import { rateTable } from "@/content/estimate";
 import { AVAILABLE_NIGHTS, MANAGEMENT_FEES, PLATFORM_FEE } from "@/content/estimate-sums";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { breadcrumbs, graph } from "@/lib/schema";
 
 const path = "/owners/earnings-calculator";
@@ -37,7 +37,7 @@ export default async function EarningsCalculatorPage() {
   return (
     <>
       <JsonLd data={graph(breadcrumbs([{ name: "Owners", path: "/owners" }, { name: "Earnings calculator", path }]))} />
-      <PageHero photo={showcase.ownerHero} eyebrow="For owners" title="Earnings calculator" lead={`What could your property earn as a short let? Choose the area and bedrooms. The nightly rates come from the ${homes.length} homes we run today.`} />
+      <PageHero photo={packShot("R07")} eyebrow="For owners" title="Earnings calculator" lead={`What could your property earn as a short let? Choose the area and bedrooms. The nightly rates come from the ${homes.length} homes we run today.`} />
       <SubNav section="/owners" current={path} />
 
       <section className="section">

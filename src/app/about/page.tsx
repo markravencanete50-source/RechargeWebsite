@@ -7,7 +7,7 @@ import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
 import { ChildIndex, SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { abs, breadcrumbs, graph, organization } from "@/lib/schema";
 
 export const metadata: Metadata = {
@@ -34,7 +34,7 @@ export default async function AboutPage() {
     <>
       <JsonLd data={ld} />
       <PhotoHero
-        shot={showcase.aboutHero}
+        shot={packShot("R02")}
         eyebrow="About Recharge"
         title={<>Homes run<br />properly</>}
         lead="We look after serviced accommodation across Scotland. We started with our own homes, and now we do the same for owners."

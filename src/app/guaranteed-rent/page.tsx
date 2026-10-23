@@ -14,7 +14,7 @@ import { Steps } from "@/components/Steps";
 import { SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
 import { benefits, guaranteedFaqs, landlords, rentSteps, wePay, youKeep } from "@/content/guaranteed";
-import { showcase } from "@/content/showcase";
+import { packShot } from "@/content/showcase";
 import { site } from "@/content/site";
 import { abs, breadcrumbs, graph, organization } from "@/lib/schema";
 
@@ -47,7 +47,7 @@ export default async function GuaranteedRentPage() {
     <>
       <JsonLd data={ld} />
       <PhotoHero
-        shot={showcase.ownerHero}
+        shot={packShot("S07")}
         eyebrow="Guaranteed rent"
         title={<>Paid on time,<br />every month</>}
         lead="A fixed rent for your property, whether it is booked or not. We pay the bills, look after repairs and run the home as serviced accommodation."

@@ -23,7 +23,7 @@ export function WhyChoose({ owners, guests, ownerShot, guestShot }: { owners: Re
   return (
     <div className="why">
       <div className="why-col">
-        {ownerShot && <Reveal className="why-photo"><Image src={ownerShot.src} alt={ownerShot.caption} fill sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>}
+        {ownerShot && <Reveal className="why-photo"><Image src={ownerShot.src} alt={ownerShot.alt ?? ownerShot.caption} fill sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>}
         <Reveal className="why-head">
           <p className="eyebrow">For owners</p>
           <h3 className="h2">Why owners choose Recharge</h3>
@@ -32,7 +32,7 @@ export function WhyChoose({ owners, guests, ownerShot, guestShot }: { owners: Re
         <Link className="btn btn-primary" href="/owners">Let us run your property <ArrowRight size={18} /></Link>
       </div>
       <div className="why-col guests">
-        {guestShot && <Reveal className="why-photo"><Image src={guestShot.src} alt={guestShot.caption} fill sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>}
+        {guestShot && <Reveal className="why-photo"><Image src={guestShot.src} alt={guestShot.alt ?? guestShot.caption} fill sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>}
         <Reveal className="why-head">
           <p className="eyebrow">For guests</p>
           <h3 className="h2">Why guests choose Recharge</h3>
