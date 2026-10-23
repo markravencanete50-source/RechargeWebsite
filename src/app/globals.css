@@ -1962,3 +1962,10 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .ab-cta .lead { max-width: 54ch; }
 
 @media (prefers-reduced-motion: reduce) { .gr-card, .ab-guest img { transition: none; } .gr-card:hover { transform: none; } }
+
+/* The header runs the full width of the screen: the logo sits in the left corner, the menu in the middle, the actions on the right. */
+.header .header-bar { max-width: none; padding: 0 clamp(16px, 3vw, 48px); display: grid; grid-template-columns: auto 1fr auto; gap: 24px; }
+.header .header-logo { justify-self: start; }
+.header .header-nav { justify-self: center; }
+.header .header-actions { justify-self: end; }
+@media (max-width: 980px) { .header .header-bar { grid-template-columns: auto 1fr; } }
