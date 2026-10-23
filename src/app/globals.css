@@ -1261,7 +1261,7 @@ a.card:hover .ic, .tool:hover .ic, .row-item:hover .row-ic { transform: rotate(-
    contents) so the calculator can sit between them; the order stays the same on a computer. The calculator's date row can
    shrink, so the guest counter is never cut off, and the facts it repeated are left to the top of the page. */
 @media (max-width: 900px) {
-  .prop { display: flex; flex-direction: column; gap: 8px; }
+  .prop { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
   .prop-main { display: contents; }
   .prop-main > * { order: 2; }
   .prop-main > .prop-facts { order: 0; }
@@ -1961,13 +1961,13 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .spec-body { display: grid; gap: clamp(28px, 4vw, 44px); }
 .spec-body .eyebrow { margin-bottom: 14px; }
 .spec-body .lead { margin-top: 18px; }
-.facts { margin: 0; display: grid; }
-.fact { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
-.fact dt { display: grid; gap: 2px; font-size: clamp(17px, 1.5vw, 20px); font-weight: 600; letter-spacing: -0.015em; }
-.fact dt span { font-size: 14px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
-.fact dd { margin: 0; color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.fact dd strong { font-size: clamp(24px, 2.4vw, 30px); font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
-.fact i { position: absolute; left: 0; bottom: -1px; height: 2px; background: var(--moss); }
+.factsheet { margin: 0; display: grid; }
+.factsheet-row { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.factsheet-row dt { display: grid; gap: 2px; font-size: clamp(17px, 1.5vw, 20px); font-weight: 600; letter-spacing: -0.015em; }
+.factsheet-row dt span { font-size: 14px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.factsheet-row dd { margin: 0; color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.factsheet-row dd strong { font-size: clamp(24px, 2.4vw, 30px); font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
+.factsheet-row i { position: absolute; left: 0; bottom: -1px; height: 2px; background: var(--moss); }
 @media (max-width: 900px) { .spec { grid-template-columns: 1fr; } .spec-media { position: relative; top: 0; aspect-ratio: 16 / 10; } }
 
 /* ---- Owners: numbers instead of icon tiles, a comparison table instead of plan cards ---- */
@@ -2097,3 +2097,39 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .area-filter .tab:hover { color: var(--forest); }
 .area-filter .tab-glide[aria-current="page"] { color: var(--forest); }
 .area-filter .tab-pill { inset: auto 0 -1px 0; height: 2px; border-radius: 0; background: var(--forest); }
+
+/* ---- Property page: no icon tiles or pills; words, numbers and rules ---- */
+.prop-place { gap: 4px 0; }
+.prop-place > span + span::before { content: "·"; margin: 0 10px; }
+.prop-tags { margin: -12px 0 22px; font-size: 14px; font-weight: 600; color: var(--moss); }
+.prop-facts { gap: 6px 0; font-size: clamp(17px, 1.5vw, 19px); }
+.prop-facts li + li::before { content: "·"; margin: 0 12px; color: var(--muted); font-weight: 400; }
+
+.sleep-list { border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; }
+.sleep-list li { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name sleeps" "beds sleeps"; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.sleep-list li + li { border-top: 0; }
+.sleep-list em { padding: 0; border-radius: 0; background: none; color: var(--moss); font-size: 14px; font-weight: 600; }
+.sleep-list { grid-template-columns: 1fr; gap: 0; }
+@media (max-width: 560px) { .sleep-list { grid-template-columns: 1fr; gap: 0; } .sleep-list li { padding: 12px 0; } }
+@media (max-width: 560px) { .prop-facts li + li::before { content: none; } .prop-facts { gap: 4px 16px; } .prop-place > span + span::before { content: none; } .prop-place { flex-direction: column; align-items: flex-start; } }
+
+.amenities, .amenities.top { gap: 0 28px; }
+.amenities li, .amenities.top li { min-height: 0; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.amenity-groups .amenities { gap: 0; }
+
+.places { gap: 0; border-top: 1px solid var(--line); }
+.places li, .places li:hover { grid-template-columns: minmax(0, 1fr) auto; padding: 12px 0; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: none; }
+.places em { font-weight: 600; color: var(--moss); }
+@media (max-width: 560px) { .places li { grid-template-columns: minmax(0, 1fr) auto; } .places em { grid-column: auto; } }
+.nearby { gap: 0 28px; }
+.nearby li { padding: 12px 0; border-bottom: 1px solid var(--line); }
+
+.know { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 36px; }
+.know h3, .sheet-body h3 { margin: 0 0 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--moss); }
+.sheet-body h3 { margin-top: 20px; }
+.rules { gap: 0; }
+.rules li { display: block; padding: 11px 0; border-bottom: 1px solid var(--line); }
+@media (max-width: 860px) { .know { grid-template-columns: 1fr; gap: 20px; } }
+
+.book-card .facts { gap: 0; margin-top: 18px; border-top: 1px solid var(--line); }
+.book-card .facts li { display: block; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 15px; }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Clock, ExternalLink, MapPin } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { Place } from "@/content/listing";
@@ -48,7 +48,7 @@ export function NearbyMap({ area, town, places, photos }: { area: string; town: 
       <div className="map-frame">
         <iframe title={`Map of ${query}`} src={src} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
       </div>
-      <p className="map-note"><MapPin size={15} /> {area}. The exact address is sent after you book.</p>
+      <p className="map-note">{area}. The exact address is sent after you book.</p>
 
       {withPhoto.length > 0 && (
         <div className="place-scroll" role="list">
@@ -62,7 +62,7 @@ export function NearbyMap({ area, town, places, photos }: { area: string; town: 
                     {photo && <Image src={bare(photo.src)} alt={p.name} fill sizes="240px" />}
                   </span>
                   <strong>{p.name}</strong>
-                  {p.time && <em><Clock size={13} /> {p.time}</em>}
+                  {p.time && <em>{p.time}</em>}
                 </button>
                 {photo?.credit && <a className="place-credit" href={photo.page} target="_blank" rel="noopener">Photo: {photo.credit}</a>}
               </div>
@@ -76,7 +76,6 @@ export function NearbyMap({ area, town, places, photos }: { area: string; town: 
           {plain.map((p) => (
             <li key={p.name + p.time} className={focus === p.name ? "active" : undefined}>
               <button type="button" onClick={() => select(p.name)} aria-pressed={focus === p.name}>
-                <MapPin size={16} />
                 <strong>{p.name}</strong>
                 {p.time && <em>{p.time}</em>}
               </button>
