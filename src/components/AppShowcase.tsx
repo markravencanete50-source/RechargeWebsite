@@ -1,43 +1,42 @@
 "use client";
 
-import { BadgeCheck, CalendarCheck, Camera, ClipboardCheck, FileText, Hammer, Inbox, LayoutGrid, MessageSquareText, ShieldCheck, Wrench, Zap } from "lucide-react";
 import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
-import { useId, useState, type ReactNode } from "react";
+import { useId, useState } from "react";
 import { PhoneFrame } from "./PhoneFrame";
 
-type View = { id: string; label: string; screen: string; alt: string; points: { icon: ReactNode; title: string; text: string }[] };
+type View = { id: string; label: string; screen: string; alt: string; points: { title: string; text: string }[] };
 
 const views: View[] = [
   {
     id: "owners", label: "Owners", screen: "/app/owner.webp", alt: "Recharge app: owner home with properties, approvals, messages and earnings",
     points: [
-      { icon: <LayoutGrid size={20} />, title: "Your portfolio", text: "Every property and how it is performing, on one screen." },
-      { icon: <FileText size={20} />, title: "Statements and payouts", text: "What was earned, what was spent and what is being paid out." },
-      { icon: <BadgeCheck size={20} />, title: "Approvals", text: "Approve repair quotes from your phone in a tap." },
+      { title: "Your portfolio", text: "Every property and how it is performing, on one screen." },
+      { title: "Statements and payouts", text: "What was earned, what was spent and what is being paid out." },
+      { title: "Approvals", text: "Approve repair quotes from your phone in a tap." },
     ],
   },
   {
     id: "guests", label: "Guest support", screen: "/app/stays.webp", alt: "Recharge app: the stays team home with the guest inbox",
     points: [
-      { icon: <Inbox size={20} />, title: "One guest inbox", text: "Every conversation in one place, with the guest's stay and history." },
-      { icon: <Zap size={20} />, title: "Quick, consistent replies", text: "Saved replies answer common questions in seconds." },
-      { icon: <MessageSquareText size={20} />, title: "Issues followed up", text: "A guest problem becomes a job with an owner and a status." },
+      { title: "One guest inbox", text: "Every conversation in one place, with the guest's stay and history." },
+      { title: "Quick, consistent replies", text: "Saved replies answer common questions in seconds." },
+      { title: "Issues followed up", text: "A guest problem becomes a job with an owner and a status." },
     ],
   },
   {
     id: "cleaners", label: "Cleaners", screen: "/app/cleaner.webp", alt: "Recharge app: a cleaner's home with the clean calendar",
     points: [
-      { icon: <CalendarCheck size={20} />, title: "Schedule from bookings", text: "Cleans are created from each booking and assigned automatically." },
-      { icon: <ClipboardCheck size={20} />, title: "A checklist per home", text: "Every room ticked off on the phone, to the same standard." },
-      { icon: <Camera size={20} />, title: "Photo proof", text: "Photos upload even on a weak signal and finish when it returns." },
+      { title: "Schedule from bookings", text: "Cleans are created from each booking and assigned automatically." },
+      { title: "A checklist per home", text: "Every room ticked off on the phone, to the same standard." },
+      { title: "Photo proof", text: "Photos upload even on a weak signal and finish when it returns." },
     ],
   },
   {
     id: "maintenance", label: "Maintenance", screen: "/app/ready.webp", alt: "Recharge app: the maintenance team home with repairs and inspections",
     points: [
-      { icon: <Wrench size={20} />, title: "Every repair tracked", text: "Reported by a guest, cleaner or owner, each one gets an owner and a status." },
-      { icon: <ShieldCheck size={20} />, title: "Safety checks on schedule", text: "Smoke and CO alarms, fire blankets and key safes checked per home." },
-      { icon: <Hammer size={20} />, title: "Contractors managed", text: "Jobs referred, followed and costed through to the end." },
+      { title: "Every repair tracked", text: "Reported by a guest, cleaner or owner, each one gets an owner and a status." },
+      { title: "Safety checks on schedule", text: "Smoke and CO alarms, fire blankets and key safes checked per home." },
+      { title: "Contractors managed", text: "Jobs referred, followed and costed through to the end." },
     ],
   },
 ];
@@ -87,9 +86,9 @@ export function AppShowcase() {
               exit={reduce ? undefined : { opacity: 0, y: -10 }}
               transition={{ duration: 0.35 }}
             >
-              {view.points.map((p) => (
+              {view.points.map((p, i) => (
                 <li key={p.title}>
-                  <span className="ic">{p.icon}</span>
+                  <span className="benefit-n">{String(i + 1).padStart(2, "0")}</span>
                   <div><strong>{p.title}</strong><p>{p.text}</p></div>
                 </li>
               ))}
