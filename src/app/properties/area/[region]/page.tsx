@@ -1,3 +1,4 @@
+import { AreaIndex } from "@/components/AreaIndex";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -45,7 +46,6 @@ export async function generateMetadata({ params }: PageProps<"/properties/area/[
 
 export default async function AreaPage({ params }: PageProps<"/properties/area/[region]">) {
   const catalog = await getCatalog();
-  const { regions } = catalog;
   const d = areaData(catalog, (await params).region);
   if (!d) notFound();
   const name = d.region.name;
@@ -95,10 +95,8 @@ export default async function AreaPage({ params }: PageProps<"/properties/area/[
       </section>
       <section className="section">
         <div className="wrap">
-          <h2 className="h3" style={{ marginBottom: 16 }}>Other areas</h2>
-          <div className="link-cloud">
-            {regions.filter((r) => r.name !== name).map((r) => <Link key={r.name} href={`/properties/area/${regionSlug(r.name)}`}>{r.name} <span>{r.count}</span></Link>)}
-          </div>
+          <h2 className="h3" style={{ marginBottom: 20 }}>Other areas</h2>
+          <AreaIndex exclude={name} />
         </div>
       </section>
     </>

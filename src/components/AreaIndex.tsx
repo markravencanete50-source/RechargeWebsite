@@ -4,11 +4,11 @@ import { regionSlug } from "@/content/home-utils";
 import { getCatalog } from "@/content/catalog";
 
 // Every area as an index, like the contents page of a guide.
-export async function AreaIndex({ limit }: { limit?: number }) {
+export async function AreaIndex({ limit, exclude }: { limit?: number; exclude?: string }) {
   const { regions } = await getCatalog();
   return (
     <ul className="area-index">
-      {regions.slice(0, limit).map((r) => (
+      {regions.filter((r) => r.name !== exclude).slice(0, limit).map((r) => (
         <li key={r.name}>
           <Link href={`/properties/area/${regionSlug(r.name)}`}>
             <span>{r.name}</span>
