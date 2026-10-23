@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Mail, Phone } from "lucide-react";
+import { ArrowRight, Mail, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqSection } from "@/components/FaqSection";
@@ -50,17 +50,6 @@ export default async function GuaranteedRentPage() {
         eyebrow="Guaranteed rent"
         title={<>Paid on time,<br />every month</>}
         lead="A fixed rent for your property, whether it is booked or not. We pay the bills, look after repairs and run the home as serviced accommodation."
-        aside={
-          <div className="hero-card">
-            <strong>Free guaranteed rent proposal</strong>
-            <ul className="checks single">
-              <li><Check size={18} /> A fixed monthly rent for your property</li>
-              <li><Check size={18} /> No obligation to go ahead</li>
-              <li><Check size={18} /> A reply from a real person</li>
-            </ul>
-            <a className="btn btn-mint" href="#proposal">Get your proposal <ArrowRight size={18} /></a>
-          </div>
-        }
       >
         <div className="hero-actions">
           <a className="btn btn-mint" href="#proposal">Get your free proposal <ArrowRight size={18} /></a>
