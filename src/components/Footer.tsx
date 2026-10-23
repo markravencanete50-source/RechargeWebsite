@@ -33,6 +33,8 @@ export async function Footer() {
               <li><Link href="/support/report-a-problem">Report a problem</Link></li>
               <li><Link href="/faq">FAQ</Link></li>
               <li><Link href="/about">About us</Link></li>
+              <li><Link href="/about/where-we-work">Where we work</Link></li>
+              <li><Link href="/about/contact">Contact us</Link></li>
             </ul>
           </div>
           <div>
