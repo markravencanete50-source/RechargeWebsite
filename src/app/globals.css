@@ -1871,16 +1871,6 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .ab-story p { margin: 0; }
 .ab-story .hero-actions { margin-top: 8px; }
 
-.ab-guests { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.ab-guest { position: relative; aspect-ratio: 4 / 5; border-radius: 30px; overflow: hidden; background: var(--forest); color: var(--cream); isolation: isolate; }
-.ab-guest img { object-fit: cover; transition: transform 1.2s var(--ease); }
-.ab-guest:hover img { transform: scale(1.05); }
-.ab-guest::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgb(11 31 26 / 0.86)); z-index: 0; }
-.ab-guest-copy { position: absolute; inset: auto 0 0; z-index: 1; display: grid; gap: 8px; padding: clamp(20px, 2.4vw, 30px); }
-.ab-guest-copy .eyebrow { color: var(--mint); margin: 0; }
-.ab-guest-copy strong { font-size: clamp(22px, 2.2vw, 30px); line-height: 1.12; letter-spacing: -0.025em; }
-.ab-guest-copy span:not(.eyebrow) { color: rgb(239 233 219 / 0.86); font-size: 15px; }
-@media (max-width: 860px) { .ab-guests { grid-template-columns: 1fr; } .ab-guest { aspect-ratio: 4 / 3; } }
 
 .ab-partners { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 6vw, 80px); align-items: center; }
 .ab-partners-copy { display: grid; gap: 18px; justify-items: start; }
@@ -1888,10 +1878,6 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 @media (max-width: 860px) { .ab-partners { grid-template-columns: 1fr; } }
 
 .ab-intro .split-head { position: static; }
-.ab-cta { display: flex; justify-content: space-between; align-items: center; gap: 32px 56px; flex-wrap: wrap; padding: clamp(32px, 5vw, 72px); border-radius: 36px; background: var(--forest); color: var(--cream); }
-.ab-cta .h2 { margin-bottom: 14px; }
-.ab-cta .eyebrow { margin-bottom: 14px; }
-.ab-cta .lead { max-width: 54ch; }
 
 
 /* The header runs the full width of the screen: the logo sits in the left corner, the menu in the middle, the actions on the right. */
@@ -2086,3 +2072,20 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .tool strong { margin-bottom: 0; }
 .tool p { margin: 0; }
 .tool-for { display: block; padding: 0; border-radius: 0; background: none; color: var(--moss); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+
+/* ---- About: guest photos with the words beneath, and a plain owner line ---- */
+.ab-guests { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 36px); }
+.ab-guest { display: grid; gap: 8px; align-content: start; }
+.ab-guest-photo { position: relative; aspect-ratio: 4 / 3; border-radius: 24px; overflow: hidden; background: var(--sand); margin-bottom: 10px; }
+.ab-guest-photo img { object-fit: cover; transition: transform 1.2s var(--ease); }
+.ab-guest:hover .ab-guest-photo img { transform: scale(1.04); }
+.ab-guest-label { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--moss); }
+.ab-guest h3 { margin: 0; font-size: clamp(20px, 1.9vw, 24px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+.ab-guest p:last-child { margin: 0; color: var(--muted); max-width: 40ch; }
+@media (max-width: 860px) { .ab-guests { grid-template-columns: 1fr; gap: 36px; } }
+@media (prefers-reduced-motion: reduce) { .ab-guest-photo img { transition: none; } }
+
+.ab-cta { display: flex; justify-content: space-between; align-items: end; gap: 28px 56px; flex-wrap: wrap; padding-top: clamp(28px, 4vw, 44px); border-top: 2px solid var(--forest); }
+.ab-cta .eyebrow { margin-bottom: 14px; }
+.ab-cta .h2 { margin-bottom: 14px; }
+.ab-cta .lead { max-width: 54ch; }
