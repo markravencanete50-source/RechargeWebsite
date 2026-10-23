@@ -27,8 +27,10 @@ export async function Footer() {
             <ul>
               <li><Link href="/properties">Properties</Link></li>
               <li><Link href="/stay">Stays</Link></li>
+              <li><Link href="/stay/book-direct">Book direct and save</Link></li>
+              <li><Link href="/stay/check-in">Check-in and house rules</Link></li>
               <li><Link href="/support">24/7 support</Link></li>
-              <li><Link href="/support#report">Report a problem</Link></li>
+              <li><Link href="/support/report-a-problem">Report a problem</Link></li>
               <li><Link href="/faq">FAQ</Link></li>
               <li><Link href="/about">About us</Link></li>
             </ul>
@@ -38,9 +40,10 @@ export async function Footer() {
             <ul>
               <li><a href={site.ownerLogin}>Owner login</a></li>
               <li><Link href="/guaranteed-rent">Guaranteed rent</Link></li>
-              <li><Link href="/owners">Full management</Link></li>
+              <li><Link href="/owners/full-management">Full management</Link></li>
               <li><Link href="/app">The Recharge app</Link></li>
               <li><Link href="/app#tools">App tools</Link></li>
+              <li><Link href="/owners/earnings-calculator">Earnings calculator</Link></li>
               <li><Link href="/owners#estimate">Free estimate</Link></li>
               <li><Link href="/owners/furnishing-calculator">Furnishing calculator</Link></li>
             </ul>

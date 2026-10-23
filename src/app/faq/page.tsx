@@ -1,5 +1,6 @@
 import { ArrowRight, Phone } from "lucide-react";
 import type { Metadata } from "next";
+import { SubNav } from "@/components/SubNav";
 import Link from "next/link";
 import { FaqExplorer } from "@/components/FaqExplorer";
 import { JsonLd } from "@/components/JsonLd";
@@ -37,6 +38,7 @@ export default async function FaqPage() {
       <PageHero photo={showcase.business} eyebrow="FAQ" title="Questions and answers" lead={`${all.length} straight answers for guests, owners and neighbours. Search below, or call ${site.phone.display} at any hour.`}>
         <nav className="link-cloud faq-nav" aria-label="Topics">{groups.map((g) => <a key={g.id} href={`#${g.id}`}>{g.t}</a>)}</nav>
       </PageHero>
+      <SubNav section="/support" current="/faq" />
 
       <section className="section proof-band">
         <div className="wrap">

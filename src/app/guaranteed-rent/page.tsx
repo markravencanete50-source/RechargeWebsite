@@ -11,6 +11,7 @@ import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
 import { RentVsBookings } from "@/components/RentVsBookings";
 import { Steps } from "@/components/Steps";
+import { SubNav } from "@/components/SubNav";
 import { getCatalog } from "@/content/catalog";
 import { benefits, guaranteedFaqs, landlords, rentSteps, wePay, youKeep } from "@/content/guaranteed";
 import { showcase } from "@/content/showcase";
@@ -56,6 +57,7 @@ export default async function GuaranteedRentPage() {
           <a className="btn btn-line-light" href="#how">How it works</a>
         </div>
       </PhotoHero>
+      <SubNav section="/owners" current="/guaranteed-rent" />
 
       <section className="section proof-band">
         <div className="wrap">
@@ -120,7 +122,7 @@ export default async function GuaranteedRentPage() {
             <Reveal delay={0.08}><p className="lead">Guaranteed rent is one of two ways to work with us. Choose the one that suits you, and change your mind at renewal.</p></Reveal>
           </div>
           <OwnerPlans />
-          <p className="gr-note">Not sure which is better for your property? <Link className="text-link" href="/owners#calculator">Try the earnings calculator <ArrowRight size={16} /></Link></p>
+          <p className="gr-note">Not sure which is better for your property? <Link className="text-link" href="/owners/earnings-calculator">Try the earnings calculator <ArrowRight size={16} /></Link></p>
         </div>
       </section>
 
@@ -168,7 +170,7 @@ export default async function GuaranteedRentPage() {
           <h2 className="h3" style={{ marginBottom: 16 }}>Keep reading</h2>
           <div className="next-links">
             <Link href="/owners"><strong>All owner options <ArrowRight size={16} /></strong><span>Compare guaranteed rent with full management.</span></Link>
-            <Link href="/owners#statement"><strong>Example statement <ArrowRight size={16} /></strong><span>See where every pound goes each month.</span></Link>
+            <Link href="/owners/example-statement"><strong>Example statement <ArrowRight size={16} /></strong><span>See where every pound goes each month.</span></Link>
             <Link href="/about"><strong>About Recharge <ArrowRight size={16} /></strong><span>Who we are and how we work.</span></Link>
           </div>
         </div>

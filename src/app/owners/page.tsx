@@ -1,20 +1,17 @@
-import { OwnerCalculator } from "@/components/OwnerCalculator";
-import { rateTable } from "@/content/estimate";
 import { ArrowRight, UserRound } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
 import { OwnerEnquiry } from "@/components/OwnerEnquiry";
-import { SampleStatement } from "@/components/SampleStatement";
 import { OwnerPortal } from "@/components/OwnerPortal";
 import { OwnerPlans } from "@/components/OwnerPlans";
 import { PhotoHero } from "@/components/PhotoHero";
 import { Proof } from "@/components/Proof";
 import { Reveal } from "@/components/Reveal";
-import { RowList } from "@/components/RowList";
 import { ReasonList } from "@/components/WhyChoose";
 import { Steps } from "@/components/Steps";
+import { ChildIndex, SubNav } from "@/components/SubNav";
 import { ownerFaqs } from "@/content/faqs";
 import { getCatalog } from "@/content/catalog";
 import { showcase } from "@/content/showcase";
@@ -64,6 +61,7 @@ export default async function OwnersPage() {
           <a className="btn btn-line-light" href="#portal">See the owner portal</a>
         </div>
       </PhotoHero>
+      <SubNav section="/owners" current="/owners" />
 
       <section className="section proof-band">
         <div className="wrap">
@@ -71,17 +69,13 @@ export default async function OwnersPage() {
         </div>
       </section>
 
-      <section className="section" id="calculator" style={{ paddingTop: 0, scrollMarginTop: 80 }}>
+      <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap">
-          <Reveal className="section-head">
-            <div><p className="eyebrow">Earnings calculator</p><h2 className="h2">What could your property earn?</h2></div>
-            <p className="lead">The same calculator our owners use in the Recharge app, with nightly rates from the {homes.length} homes we run today.</p>
-          </Reveal>
-          <OwnerCalculator table={rateTable()} />
-          <Reveal className="note-line">
-            <p><strong>Furnishing it yourself?</strong> Get a room-by-room list of everything a guest-ready home needs, from bed linen to the fire blanket.</p>
-            <Link className="text-link" href="/owners/furnishing-calculator">Furnishing calculator <ArrowRight size={16} /></Link>
-          </Reveal>
+          <div className="head-row">
+            <Reveal><p className="eyebrow">For owners</p><h2 className="h2">Everything for owners</h2></Reveal>
+            <Reveal delay={0.08}><p className="lead">The two ways to work with us, and the tools to work out what your property could earn.</p></Reveal>
+          </div>
+          <ChildIndex section="/owners" />
         </div>
       </section>
 
@@ -115,34 +109,6 @@ export default async function OwnersPage() {
           </div>
           <OwnerPortal />
           <p className="portal-login">Already an owner with us? <a className="btn btn-primary" href={site.ownerLogin}><UserRound size={18} /> Owner login</a></p>
-        </div>
-      </section>
-
-      <section className="section paper" id="statement" style={{ scrollMarginTop: 80 }}>
-        <div className="wrap">
-          <div className="head-row">
-            <Reveal><p className="eyebrow">Your monthly statement</p><h2 className="h2">Every pound, accounted for.</h2></Reveal>
-            <Reveal delay={0.08}><p className="lead">This is how a statement from the Recharge app reads. Tap any line to follow the money from the booking to your account.</p></Reveal>
-          </div>
-          <SampleStatement />
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="wrap split-sticky">
-          <Reveal className="split-head">
-            <p className="eyebrow">What we handle</p>
-            <h2 className="h2">You own it. We run it.</h2>
-            <p className="lead">One team covers everything a short let needs, from the first inspection to the monthly statement.</p>
-          </Reveal>
-          <RowList items={[
-            { title: "Setup and licensing", text: "Inspection, furnishing if you need it, photos, listings and help with your short-term let licence." },
-            { title: "Pricing and listings", text: "Prices reviewed every day and listings checked so each one stays ready to book." },
-            { title: "Guests, day and night", text: "Every message answered, with a real person on hand 24/7." },
-            { title: "Cleaning and laundry", text: "Every clean checked with photos. Fresh linen and towels for every stay." },
-            { title: "Repairs and safety checks", text: "Faults quoted and fixed. You approve costs before work starts." },
-            { title: "Statements and payouts", text: "Clear monthly statements, paid from cleared funds." },
-          ]} />
         </div>
       </section>
 

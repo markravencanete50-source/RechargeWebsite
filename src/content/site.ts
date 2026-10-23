@@ -32,11 +32,11 @@ export const nav: NavItem[] = [
     href: "/stay", label: "Stays",
     children: [
       { href: "/stay", label: "Staying with us", text: "Whole homes across Scotland" },
-      { href: "/stay#book-direct", label: "Book direct and save", text: "A better rate than the booking sites" },
-      { href: "/stay#trips", label: "Trips we suit", text: "Families, contractors, work and long stays" },
-      { href: "/stay#good-to-know", label: "Check-in and house rules", text: "Times, ID checks and the rules" },
-      { href: "/stay#every-home", label: "What our homes have", text: "Kitchen, wifi, linen and more" },
-      { href: "/stay#questions", label: "Guest questions", text: "Answers before you book" },
+      { href: "/stay/book-direct", label: "Book direct and save", text: "A better rate than the booking sites" },
+      { href: "/stay/trips", label: "Trips we suit", text: "Families, contractors, work and long stays" },
+      { href: "/stay/check-in", label: "Check-in and house rules", text: "Times, ID checks and the rules" },
+      { href: "/stay/amenities", label: "What our homes have", text: "Kitchen, wifi, linen and more" },
+      { href: "/faq#guests", label: "Guest questions", text: "Answers before you book" },
     ],
   },
   {
@@ -44,8 +44,9 @@ export const nav: NavItem[] = [
     children: [
       { href: "/owners", label: "For owners", text: "Two ways to work with us" },
       { href: "/guaranteed-rent", label: "Guaranteed rent", text: "A fixed rent, paid every month" },
-      { href: "/owners#calculator", label: "Earnings calculator", text: "What could your property earn?" },
-      { href: "/owners#statement", label: "Example statement", text: "See where every pound goes" },
+      { href: "/owners/full-management", label: "Full management", text: "We run it, you keep the earnings" },
+      { href: "/owners/earnings-calculator", label: "Earnings calculator", text: "What could your property earn?" },
+      { href: "/owners/example-statement", label: "Example statement", text: "See where every pound goes" },
       { href: "/owners/furnishing-calculator", label: "Furnishing calculator", text: "Everything a home needs, room by room" },
     ],
   },
@@ -54,7 +55,7 @@ export const nav: NavItem[] = [
     href: "/support", label: "Support",
     children: [
       { href: "/support", label: "24/7 support", text: "A real person, day and night" },
-      { href: "/support#report", label: "Report a problem", text: "For guests and neighbours" },
+      { href: "/support/report-a-problem", label: "Report a problem", text: "For guests and neighbours" },
       { href: "/faq", label: "Questions and answers", text: "Guests, owners and the app" },
     ],
   },
