@@ -52,7 +52,7 @@ export default async function CollectionPage({ params }: Props) {
     <>
       <JsonLd data={ld} />
       <PageHero photo={shot} eyebrow="Properties" title={c.title} lead={c.lead} />
-      <SubNav section="/properties" current={path} />
+      <SubNav section="/properties" current="/properties" />
 
       <section className="section proof-band">
         <div className="wrap">

@@ -1,4 +1,4 @@
-// Collections of homes for the Properties menu, each picked from the listings by a simple rule, so a home joins or leaves a
+// Collections of homes, each a filtered view of All homes picked from the listings by a simple rule, so a home joins or leaves a
 // collection as soon as its listing changes.
 import type { Faq } from "./faqs";
 import { tags, type Home } from "./home-utils";

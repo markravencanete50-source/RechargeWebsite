@@ -47,7 +47,7 @@ export default async function AreasPage() {
     <>
       <JsonLd data={ld} />
       <PageHero photo={showcase.homeHero[0]} eyebrow="Properties" title="Browse by area" lead={`${homes.length} homes in ${regions.length} areas of Scotland. Choose an area to see every home in it.`} />
-      <SubNav section="/properties" current={path} />
+      <SubNav section="/properties" current="/properties" />
 
       <section className="section proof-band">
         <div className="wrap">

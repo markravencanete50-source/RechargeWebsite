@@ -72,7 +72,7 @@ export default async function AreaPage({ params }: PageProps<"/properties/area/[
     <>
       <JsonLd data={ld} />
       <PageHero photo={photo} eyebrow={`Properties in ${name}`} title={`Places to stay in ${name}`} lead={`${plural(d.list.length, "serviced home")} in ${d.towns.slice(0, 5).join(", ")}${d.towns.length > 5 ? " and more" : ""}. Book direct with Recharge and save ${catalog.direct}.`} />
-      <SubNav section="/properties" current="/properties/areas" />
+      <SubNav section="/properties" current="/properties" />
       <section className="section" style={{ paddingTop: 48 }}>
         <div className="wrap">
           <Proof items={[

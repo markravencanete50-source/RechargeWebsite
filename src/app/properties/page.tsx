@@ -4,7 +4,8 @@ import { AreaIndex } from "@/components/AreaIndex";
 import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
-import { SubNav } from "@/components/SubNav";
+import { Reveal } from "@/components/Reveal";
+import { ChildIndex, SubNav } from "@/components/SubNav";
 import { PropertyResults } from "@/components/PropertyResults";
 import { propertiesFaqs } from "@/content/faqs";
 import { cardOf, getCatalog } from "@/content/catalog";
@@ -44,7 +45,16 @@ export default async function PropertiesPage() {
           <AreaIndex />
         </div>
       </section>
-      <FaqSection items={propertiesFaqs} title="Finding a home" eyebrow="Questions" />
+      <section className="section">
+        <div className="wrap">
+          <div className="head-row">
+            <Reveal><p className="eyebrow">Before you book</p><h2 className="h2">What to know about our homes</h2></Reveal>
+            <Reveal delay={0.08}><p className="lead">How to choose the right size, what the prices mean, and how to get there.</p></Reveal>
+          </div>
+          <ChildIndex section="/properties" />
+        </div>
+      </section>
+      <FaqSection items={propertiesFaqs} title="Finding a home" eyebrow="Questions" tone="paper" />
     </>
   );
 }
