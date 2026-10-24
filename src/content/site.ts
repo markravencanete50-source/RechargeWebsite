@@ -30,14 +30,10 @@ export const nav: NavItem[] = [
   {
     href: "/properties", label: "Properties",
     children: [
-      { href: "/properties", label: "All homes", text: "Search by area, dates and guests" },
-      { href: "/properties/areas", label: "Browse by area", text: "Every area, with photos and prices" },
-      { href: "/properties/collection/one-bedroom", label: "1-bedroom homes", text: "For one or two" },
-      { href: "/properties/collection/two-bedroom", label: "2-bedroom homes", text: "Families, couples and small crews" },
-      { href: "/properties/collection/three-bedrooms-plus", label: "3 bedrooms or more", text: "Houses and large flats" },
-      { href: "/properties/collection/large-groups", label: "Homes for groups", text: "Sleeps six or more" },
-      { href: "/properties/collection/free-parking", label: "Free parking", text: "Parking at no charge" },
-      { href: "/properties/collection/city-centre", label: "City centre", text: "Close to shops, food and transport" },
+      { href: "/properties", label: "All homes", text: "Every home, with search by area, dates and guests" },
+      { href: "/properties/choosing-a-home", label: "Choosing a home", text: "Sizes, beds and what each listing tells you" },
+      { href: "/properties/prices", label: "How our prices work", text: "What a night costs and how to pay less" },
+      { href: "/properties/parking-and-transport", label: "Parking and getting there", text: "Parking, stations and airports" },
     ],
   },
   {
