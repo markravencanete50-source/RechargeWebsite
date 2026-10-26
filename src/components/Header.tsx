@@ -17,6 +17,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [group, setGroup] = useState<string | null>(null);
+  // The menu a link was just chosen from stays shut until the pointer leaves it.
+  const [shut, setShut] = useState<string | null>(null);
   const bar = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const { scrollYProgress } = useScroll();
@@ -37,7 +39,8 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // A dropdown closes on Escape, on a click elsewhere, and when the page changes.
+  // One dropdown at a time. It opens on hover, on a click of its arrow, or when the keyboard moves into it, and closes on
+  // Escape, on a click elsewhere, when the pointer moves to another menu, when focus leaves it, and when the page changes.
   useEffect(() => { queueMicrotask(() => setGroup(null)); }, [pathname]);
   useEffect(() => {
     if (!group) return;
@@ -66,14 +69,23 @@ export function Header() {
         </Link>
         <nav className="header-nav" aria-label="Main" ref={bar}>
           {nav.map((item) => item.children ? (
-            <div key={item.href} className="nav-group" data-open={group === item.label || undefined}>
+            <div
+              key={item.href}
+              className="nav-group"
+              data-open={group === item.label || undefined}
+              data-shut={shut === item.label || undefined}
+              onPointerEnter={(e) => e.pointerType === "mouse" && setGroup((g) => (g === item.label ? g : null))}
+              onPointerLeave={() => setShut(null)}
+              onFocus={(e) => (e.target as HTMLElement).matches(":focus-visible") && setGroup(item.label)}
+              onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setGroup((g) => (g === item.label ? null : g))}
+            >
               {link(item)}
               <button type="button" className="nav-more" aria-label={`${item.label} menu`} aria-expanded={group === item.label} onClick={() => setGroup((g) => (g === item.label ? null : item.label))}>
                 <ChevronDown size={14} />
               </button>
               <div className="nav-menu">
                 {item.children.map((c) => (
-                  <Link key={c.href} href={c.href} onClick={() => setGroup(null)}>
+                  <Link key={c.href} href={c.href} onClick={() => { setGroup(null); setShut(item.label); }}>
                     <strong>{c.label}</strong>
                     {c.text && <span>{c.text}</span>}
                   </Link>
