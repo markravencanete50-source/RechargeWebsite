@@ -1824,10 +1824,15 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .nav-group > a { position: relative; }
 .nav-more { margin-left: -8px; width: 28px; height: 36px; display: grid; place-items: center; border: 0; background: none; color: var(--forest); cursor: pointer; border-radius: 999px; opacity: 0.7; }
 .nav-more svg { transition: rotate 200ms var(--ease); }
-.nav-group:hover .nav-more svg, .nav-group[data-open] .nav-more svg { rotate: 180deg; }
+.nav-group:hover:not([data-shut]) .nav-more svg, .nav-group[data-open] .nav-more svg { rotate: 180deg; }
 .nav-menu { position: absolute; top: calc(100% + 6px); left: 0; z-index: 70; min-width: 300px; display: grid; gap: 2px; padding: 8px; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow-3); opacity: 0; visibility: hidden; translate: 0 6px; transition: opacity 180ms, translate 220ms var(--ease), visibility 0s linear 220ms; }
 .nav-menu::before { content: ""; position: absolute; inset: -12px 0 auto; height: 12px; }
-.nav-group:hover .nav-menu, .nav-group:focus-within .nav-menu, .nav-group[data-open] .nav-menu { opacity: 1; visibility: visible; translate: 0 0; transition-delay: 0s; }
+.nav-group:hover .nav-menu, .nav-group[data-open] .nav-menu { opacity: 1; visibility: visible; translate: 0 0; transition-delay: 0s; }
+/* Only one menu at a time: the one under the pointer wins over one opened by a click or the keyboard, which closes at once. A menu
+   a link was just chosen from stays shut until the pointer leaves it. */
+.header-nav:has(.nav-group:hover) .nav-group:not(:hover) .nav-menu,
+.nav-group[data-shut] .nav-menu { opacity: 0; visibility: hidden; translate: 0 6px; transition: none; }
+.header-nav:has(.nav-group:hover) .nav-group:not(:hover) .nav-more svg { rotate: 0deg; }
 .header-nav .nav-menu a { display: grid; gap: 1px; padding: 10px 14px; border-radius: 14px; font-size: 15px; }
 .header-nav .nav-menu a strong { font-weight: 600; }
 .header-nav .nav-menu a span { font-size: 13px; font-weight: 400; color: var(--muted); }
