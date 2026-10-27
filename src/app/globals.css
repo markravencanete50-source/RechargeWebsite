@@ -2349,9 +2349,22 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 @media (prefers-reduced-motion: reduce) { .dest-photo img { transition: none; } }
 
 /* ---- Owner onboarding: a price under a package item, and the 15-point condition check as a numbered list ---- */
-.pkg-price { display: block; margin-top: 8px; font-size: 14px; font-weight: 600; color: var(--forest); }
+.pkg-list summary { padding: 18px 0; }
+.pkg-head { display: grid; gap: 2px; }
+.pkg-head strong { font-size: 18px; font-weight: 600; }
+.pkg-head em { font-style: normal; font-size: 14px; font-weight: 500; color: var(--moss); }
 .cond-list { list-style: none; counter-reset: cond; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 28px; border-top: 1px solid var(--line); }
 .cond-list li { counter-increment: cond; display: flex; gap: 14px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); font-weight: 500; }
 .cond-list li::before { content: counter(cond, decimal-leading-zero); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--moss); font-variant-numeric: tabular-nums; }
 @media (max-width: 900px) { .cond-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 560px) { .cond-list { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) {
+  .cond-list { gap: 0 16px; }
+  .cond-list li { gap: 8px; padding: 11px 0; font-size: 14px; line-height: 1.35; }
+  .cond-list li::before { font-size: 11px; }
+  .pkg-head strong { font-size: 16px; }
+  /* Short numbered steps: a narrow number column and tighter rows, so eight steps fit in about two screens. */
+  .compact-rows .row-item { grid-template-columns: 28px minmax(0, 1fr); gap: 2px 12px; padding: 14px 0; }
+  .compact-rows .row-num { padding-top: 3px; font-size: 12px; }
+  .compact-rows .row-title { font-size: 17px; }
+  .compact-rows .row-item p { font-size: 15px; line-height: 1.45; }
+}

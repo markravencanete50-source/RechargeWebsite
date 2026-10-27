@@ -1,4 +1,4 @@
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Plus } from "lucide-react";
 import type { Metadata } from "next";
 import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
@@ -35,7 +35,7 @@ export default function OnboardingPage() {
             <p className="lead" style={{ marginTop: 18 }}>Eight steps, each one ticked off in the app as it is done.</p>
             <a className="btn btn-primary" href="#estimate" style={{ marginTop: 24 }}>Get your free estimate <ArrowRight size={18} /></a>
           </Reveal>
-          <RowList items={stages} />
+          <div className="compact-rows"><RowList items={stages} /></div>
         </div>
       </section>
 
@@ -44,11 +44,18 @@ export default function OnboardingPage() {
           <Reveal className="split-head">
             <p className="eyebrow">Your onboarding package</p>
             <h2 className="h2">You choose who does each part</h2>
-            <p className="lead" style={{ marginTop: 18 }}>Do it yourself, or ask us to. You only pay for what you ask us to do.</p>
+            <p className="lead" style={{ marginTop: 18 }}>Do it yourself, or ask us to. You only pay for what you ask us to do. Open any part to see what it involves.</p>
             <p className="estimate-sub" style={{ marginTop: 24 }}>Every onboarding includes:</p>
             <ul className="checks single">{included.map((i) => <li key={i}><Check size={18} /> {i}</li>)}</ul>
           </Reveal>
-          <RowList items={packageItems.map((p) => ({ title: p.title, text: <>{p.text}{p.price && <span className="pkg-price">{p.price}</span>}</> }))} />
+          <Reveal className="faq pkg-list">
+            {packageItems.map((p) => (
+              <details key={p.title}>
+                <summary><span className="pkg-head"><strong>{p.title}</strong>{p.price && <em>{p.price}</em>}</span><span className="plus"><Plus size={18} /></span></summary>
+                <p>{p.text}</p>
+              </details>
+            ))}
+          </Reveal>
         </div>
       </section>
 

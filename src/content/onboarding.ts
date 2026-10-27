@@ -5,15 +5,16 @@ import type { Faq } from "./faqs";
 
 export type Stage = { title: string; text: string };
 
-// The eight stages of the business plan's onboarding framework, in the owner's words.
+// The eight stages of the business plan's onboarding framework, in the owner's words: one line each, with the detail in the
+// questions below.
 export const stages: Stage[] = [
-  { title: "Tell us about your property", text: "Fill in the free estimate form. A member of the team will be in touch with your estimate by email, usually within 48 hours. Create an account in the Recharge app to follow it as it happens." },
-  { title: "We prepare your estimate", text: "We look at how our own homes within 30 miles perform, compare similar short lets nearby, and check events and contractor work in the area over the next 12 months. Then we set a low, medium and high nightly rate." },
-  { title: "You review it in the app", text: "Our directors, Alex and Rachel, explain who we are, how we work and what it costs. Your estimate shows the low, medium and high rate, with occupancy you can change. Then choose to go ahead, keep reviewing, or not go ahead." },
-  { title: "Build your onboarding package", text: "For each part of getting ready, choose whether you do it yourself or we do it. Where we charge, you see the price before you choose, and anything we quote waits for your approval." },
-  { title: "Sign the agreement", text: "Your details fill in the agreement, and you sign it in the app. A copy is kept with your property's documents in the app." },
-  { title: "Pay the onboarding fee", text: "A one-off invoice to set the property up, sent once the agreement is signed. Nothing is charged before then. Once it is paid, the work you asked us to do begins." },
-  { title: "We get it ready for guests", text: "Inspection, furnishing, broadband, safety certificates, licensing, a final readiness inspection, photography, housekeeping, pricing and listings. Each step shows in the app as it is done." },
+  { title: "Tell us about your property", text: "Fill in the free form. Your estimate comes by email, usually within 48 hours." },
+  { title: "We prepare your estimate", text: "From our own homes nearby, similar short lets and local events for the year ahead." },
+  { title: "You review it in the app", text: "See a low, medium and high rate, then go ahead, keep reviewing or stop." },
+  { title: "Build your onboarding package", text: "Choose what you do yourself and what we do for you." },
+  { title: "Sign the agreement", text: "Your details fill it in, and you sign it in the app." },
+  { title: "Pay the onboarding fee", text: "One invoice after you sign. Nothing is charged before then." },
+  { title: "We get it ready for guests", text: "Inspection, set-up, certificates, licence, photos and listings." },
   { title: "Live", text: "Your listings go live and the first guests can book." },
 ];
 
@@ -53,11 +54,11 @@ export const conditionChecks = [
 ];
 
 export const onboardingFaqs: Faq[] = [
-  { q: "How long does the estimate take?", a: "A member of the team will be in touch with your estimate by email, usually within 48 hours of your form." },
-  { q: "Is the estimate free?", a: "Yes. There is no charge and no obligation to go ahead." },
+  { q: "How long does the estimate take?", a: "A member of the team will be in touch with your free estimate by email, usually within 48 hours of your form. There is no obligation to go ahead." },
+  { q: "How is my estimate worked out?", a: "We look at how our own homes within 30 miles perform, compare similar short lets nearby, and check events and contractor work in the area over the next 12 months. The estimate gives a low, medium and high nightly rate, with occupancy you can change." },
+  { q: "What happens when my estimate is ready?", a: "You get an email, and the estimate is waiting in the Recharge app. Our directors, Alex and Rachel, explain who we are, how we work and what it costs. Then you choose to go ahead, keep reviewing, or not go ahead." },
   { q: "What if I need more time to decide?", a: "Choose Still reviewing and pick a date. We check in with you then, and nothing moves on until you decide." },
   { q: "Do I have to use Recharge for everything?", a: "No. For each part of the onboarding package you choose whether you do it or we do it. You only pay for what you ask us to do." },
-  { q: "When do I pay the onboarding fee?", a: "Once the agreement is signed. Nothing is charged before then." },
   { q: "How do I follow my onboarding?", a: "In the Recharge app. Every step shows there as it is done, and each property has its own chat with the team. You also get updates by email." },
   { q: "I already work with Recharge. How do I add another property?", a: "Sign in to the Recharge app and choose New property. You fill in the same details, and the estimate comes to your account." },
 ];
