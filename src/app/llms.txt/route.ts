@@ -19,6 +19,7 @@ export async function GET() {
     `- [Properties](${abs("/properties")}): search all ${homes.length} homes by area, dates, guests, bedrooms, bathrooms and price.`,
     `- [Stays](${abs("/stay")}): how booking and staying with Recharge works.`,
     `- [Owners](${abs("/owners")}): guaranteed rent or full management, and the free performance estimate.`,
+    `- [Owner onboarding](${abs("/owners/onboarding")}): the steps from a free estimate to the first guest, and what each part of set-up costs.`,
     `- [The Recharge app](${abs("/app")}): every tool the app has, by team.`,
     `- [Support](${abs("/support")}): 24/7 help for guests and owners.`,
     `- [FAQ](${abs("/faq")}): answers for guests, owners and about the app.`,

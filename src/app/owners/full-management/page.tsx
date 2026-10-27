@@ -101,11 +101,12 @@ export default async function FullManagementPage() {
             <h2 className="h2">From first enquiry to first guest</h2>
           </Reveal>
           <Steps items={[
-            ["Tell us about your property", "Fill in the free estimate form. We come back with a performance estimate."],
-            ["Agree and sign", "Read the agreement and sign it inside the app."],
-            ["We get it ready", "Inspection, furnishing, licensing, photos and listings, all tracked in your portal."],
+            ["Tell us about your property", "Fill in the free estimate form. Your estimate comes by email, usually within 48 hours."],
+            ["Review and choose", "See your estimate in the app, then choose what you do yourself and what we do for you."],
+            ["Sign and get ready", "Sign the agreement in the app. We inspect, photograph and list the property, and do the parts of set-up you asked us to."],
             ["Guests arrive", "We run every stay. You follow along and get paid from cleared funds."],
           ]} />
+          <Link className="text-link" href="/owners/onboarding" style={{ marginTop: 28, display: "inline-flex" }}>See every step of onboarding <ArrowRight size={16} /></Link>
         </div>
       </section>
 
@@ -115,7 +116,7 @@ export default async function FullManagementPage() {
             <div className="section-head" style={{ marginBottom: 0 }}>
               <p className="eyebrow">Free performance estimate</p>
               <h2 className="h2">What could your property earn?</h2>
-              <p className="lead">Tell us about your property and a member of the team will be in touch with a free performance estimate. There is no obligation.</p>
+              <p className="lead">Tell us about your property. A member of the team will be in touch with your free performance estimate by email, usually within 48 hours. There is no obligation.</p>
             </div>
             <div className="contact-lines">
               <a href={site.phone.href}>{site.phone.display}</a>

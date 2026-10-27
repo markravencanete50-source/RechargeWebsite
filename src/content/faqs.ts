@@ -34,7 +34,7 @@ export const ownerFaqs: Faq[] = [
   { q: "How do I see what is happening at my property?", a: "Through the Recharge client portal. You see bookings, performance, cleans, repairs, statements and payouts, and you approve costs from your phone." },
   { q: "How are owner statements worked out?", a: "Booking income is matched to the platform payouts and the money received in the bank. Statements are issued from cleared funds, so the figures are real money." },
   { q: "Can you furnish my property?", a: "Yes. Our Recharge Ready team quotes the furnishing item by item. You accept or reject the quote in the app. If you prefer to furnish it yourself, our calculator gives you a room-by-room checklist." },
-  { q: "How do I get started?", a: "Fill in the free performance estimate form. A member of the team comes back with an estimate, then books an inspection if you want to go ahead." },
+  { q: "How do I get started?", a: "Fill in the free performance estimate form. A member of the team will be in touch with your estimate by email, usually within 48 hours. You review it in the Recharge app, choose what you would like us to do, and sign the agreement there." },
   { q: "Is the performance estimate free?", a: "Yes. There is no charge and no obligation to go ahead." },
   { q: "Which areas do you cover?", a: `We run homes in ${regions.length} areas of Scotland today, including ${regions.slice(0, 5).map((r) => r.name).join(", ")}. If your property is somewhere else in Scotland, send us the details and we will tell you if we can help.` },
   { q: "Will I know when guests are staying?", a: "Yes. Every booking appears in the calendar in your client portal, along with how each property is performing." },

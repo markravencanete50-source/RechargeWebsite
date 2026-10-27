@@ -2347,3 +2347,11 @@ body:has(.adm) .header, body:has(.adm) .footer, body:has(.adm) .skip { display: 
 .dest-strip span:not(.dest-photo) { font-size: 14px; color: var(--muted); }
 @media (max-width: 860px) { .dest-strip { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 62%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-right: calc(var(--gutter) * -1); padding-right: var(--gutter); } .dest-strip::-webkit-scrollbar { display: none; } .dest-strip li { scroll-snap-align: start; } }
 @media (prefers-reduced-motion: reduce) { .dest-photo img { transition: none; } }
+
+/* ---- Owner onboarding: a price under a package item, and the 15-point condition check as a numbered list ---- */
+.pkg-price { display: block; margin-top: 8px; font-size: 14px; font-weight: 600; color: var(--forest); }
+.cond-list { list-style: none; counter-reset: cond; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 28px; border-top: 1px solid var(--line); }
+.cond-list li { counter-increment: cond; display: flex; gap: 14px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); font-weight: 500; }
+.cond-list li::before { content: counter(cond, decimal-leading-zero); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--moss); font-variant-numeric: tabular-nums; }
+@media (max-width: 900px) { .cond-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .cond-list { grid-template-columns: minmax(0, 1fr); } }

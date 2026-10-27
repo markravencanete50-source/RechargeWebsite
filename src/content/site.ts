@@ -22,6 +22,14 @@ export const site = {
   enquiry: { formUrl: "https://app.rechargegroup.co.uk/enquiry", api: process.env.NEXT_PUBLIC_ENQUIRY_API ?? "" },
 } as const;
 
+// "Create your account" in the Recharge app, with the owner's email filled in: the same link as the app's own form gives after an
+// enquiry (appSignUpLink in the app's lib/client-onboarding.ts). An account with the same email takes over the enquiry's property.
+export const appSignUp = (email = "") => {
+  const params = new URLSearchParams({ signup: "1" });
+  if (email.trim()) params.set("email", email.trim().toLowerCase());
+  return `${new URL(site.ownerLogin).origin}/workspace?${params}`;
+};
+
 export type NavLink = { href: string; label: string; text?: string };
 export type NavItem = NavLink & { children?: NavLink[] };
 
@@ -53,6 +61,7 @@ export const nav: NavItem[] = [
       { href: "/owners", label: "For owners", text: "Two ways to work with us" },
       { href: "/guaranteed-rent", label: "Guaranteed rent", text: "A fixed rent, paid every month" },
       { href: "/owners/full-management", label: "Full management", text: "We run it, you keep the earnings" },
+      { href: "/owners/onboarding", label: "Onboarding", text: "From your enquiry to your first guest" },
       { href: "/owners/earnings-calculator", label: "Earnings calculator", text: "What could your property earn?" },
       { href: "/owners/example-statement", label: "Example statement", text: "See where every pound goes" },
       { href: "/owners/furnishing-calculator", label: "Furnishing calculator", text: "Everything a home needs, room by room" },
