@@ -8,7 +8,7 @@ export const principles = [
   },
   {
     title: "Transparency", text: "Owners see every booking, cost and payout in their own portal. We ask before we spend, and we show our working.",
-    proof: ["Each stay matched to the platform payout and the bank before it reaches a statement", "Nothing spent on repairs or furnishing until the owner approves the quote", "The earnings calculator uses the same sums as our own estimates"],
+    proof: ["Each stay matched to the platform payout and the bank before it reaches a statement", "Repairs over the owner's limit, and all furnishing, wait for the owner to approve the quote", "The earnings calculator uses the same sums as our own estimates"],
   },
   {
     title: "Results", text: "Prices are set from the market, not from habit. We review them every day and learn from every stay.",

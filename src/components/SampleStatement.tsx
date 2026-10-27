@@ -18,7 +18,7 @@ const STAYS: Stay[] = [
   { id: "s4", dates: "18 to 25 Oct", nights: 7, channel: "Airbnb", income: 672, paid: "19 Oct" },
   { id: "s5", dates: "26 to 30 Oct", nights: 4, channel: "Booking.com", income: 500, due: "15 Nov" },
 ];
-const REPAIR = { id: "r1", text: "New bathroom extractor fan", amount: 85, quoted: "8 Oct", approved: "9 Oct", done: "11 Oct" };
+const REPAIR = { id: "r1", text: "New bathroom extractor fan", amount: 145, quoted: "8 Oct", approved: "9 Oct", done: "11 Oct" };
 const SUPPLIES = 24;
 
 const gbp = (n: number) => `£${n.toLocaleString("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -90,13 +90,13 @@ export function SampleStatement() {
             <li><div><span><strong>Cleaning and laundry</strong><small>{cleared.length} cleans, each finished with photo evidence</small></span><em>−{gbp(cleaning)}</em></div></li>
             <li className={open === REPAIR.id ? "open" : ""}>
               <button type="button" aria-expanded={open === REPAIR.id} onClick={() => toggle(REPAIR.id)}>
-                <span><strong>Repair: {REPAIR.text.toLowerCase()}</strong><small>Approved by you in the app</small></span>
+                <span><strong>Repair: {REPAIR.text.toLowerCase()}</strong><small>Over your £100 repair limit, so approved by you in the app</small></span>
                 <em>−{gbp(REPAIR.amount)}</em>
                 <ChevronDown size={16} />
               </button>
               {open === REPAIR.id && trail([
                 { done: true, text: `Reported during a clean, quoted on ${REPAIR.quoted}` },
-                { done: true, text: `You approved the quote in the app on ${REPAIR.approved}` },
+                { done: true, text: `Over your repair limit, so you approved the quote in the app on ${REPAIR.approved}` },
                 { done: true, text: `Fitted on ${REPAIR.done}, with photos of the finished work` },
               ])}
             </li>
@@ -122,7 +122,7 @@ export function SampleStatement() {
         <ul className="checks single">
           <li><Check size={18} /> You are paid from money that has arrived, not from bookings that might be cancelled or paid late.</li>
           <li><Check size={18} /> Every booking is matched to the platform payout and the bank before it reaches your statement.</li>
-          <li><Check size={18} /> Nothing is spent on repairs or furnishing until you approve the quote in the app.</li>
+          <li><Check size={18} /> Repairs under the limit you set go ahead, and you see them here. Anything over it, and all furnishing, waits for your approval in the app.</li>
           <li><Check size={18} /> Your statement is in your client portal, line by line, every month.</li>
         </ul>
         <a className="btn btn-primary" href="/owners#estimate">Get your free estimate <ArrowRight size={18} /></a>

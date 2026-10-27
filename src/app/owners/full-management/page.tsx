@@ -31,7 +31,7 @@ export default async function FullManagementPage() {
     { q: "What does full management include?", a: "Listings, daily pricing, guest messages, check-in, cleaning, laundry, repairs and monthly statements. You can see all of it in the Recharge app." },
     { q: "How is the management fee worked out?", a: "It is a percentage of the booking income. Your estimate sets out the rate before you sign, and the earnings calculator lets you try it with your own figures." },
     { q: "When am I paid?", a: "Once a month, from cleared funds. A stay goes on your statement when the platform's payout has reached the bank, never before." },
-    { q: "Do I have to approve repairs?", a: "Yes. Nothing is spent on repairs or furnishing until you approve the quote in the app. You see photos of the finished work." },
+    { q: "Do I have to approve repairs?", a: "Only the ones over your limit. When your property is set up, you choose how much a repair can cost before we ask you: always ask, up to £100, £250, £500 or another amount. Repairs under it go ahead so guests are not left waiting, and we tell you after. Anything over it comes to you to approve in the app first. Furnishing is always quoted for your approval, and you see photos of the finished work." },
     { q: "Do I need a short-term let licence?", a: "In Scotland, short lets need a licence from the local council. We help you through the application and track your licence, renewals and deadlines in the app." },
     { q: "How do I see what is happening at my property?", a: "Through the Recharge client portal. You see bookings, performance, cleans, repairs, statements and payouts, and you approve costs from your phone." },
   ];
@@ -60,7 +60,7 @@ export default async function FullManagementPage() {
             { title: "Pricing and listings", text: "Prices reviewed every day and listings checked so each one stays ready to book." },
             { title: "Guests, day and night", text: "Every message answered, with a real person on hand 24/7." },
             { title: "Cleaning and laundry", text: "Every clean checked with photos. Fresh linen and towels for every stay." },
-            { title: "Repairs and safety checks", text: "Faults quoted and fixed. You approve costs before work starts." },
+            { title: "Repairs and safety checks", text: "Faults fixed quickly. Anything over your repair limit waits for your approval." },
             { title: "Statements and payouts", text: "Clear monthly statements, paid from cleared funds." },
           ]} />
         </div>
@@ -78,7 +78,7 @@ export default async function FullManagementPage() {
             { title: "Booking income", text: "What guests paid for the stays that finished and were paid out that month." },
             { title: "Platform fees", text: `Airbnb and Booking.com keep a fee, about ${PLATFORM_FEE}% in our sums. Stays booked direct on our website have none.` },
             { title: "Our management fee", text: "A percentage of the booking income, agreed before you sign." },
-            { title: "Cleaning and running costs", text: "Cleans, laundry and guest supplies, line by line. Repairs only once you have approved them." },
+            { title: "Cleaning and running costs", text: "Cleans, laundry and guest supplies, line by line. Each repair with its photos and invoice." },
             { title: "Paid to you", text: "From cleared funds, once a month, with the statement in your client portal." },
           ]} />
         </div>

@@ -26,7 +26,7 @@ export default function ExampleStatementPage() {
     { q: "Why is a finished stay sometimes on next month's statement?", a: "Because we pay from cleared funds. A stay goes on your statement once the platform's payout has reached the bank, never before." },
     { q: "Where do I find my statements?", a: "In your client portal in the Recharge app, every month, line by line." },
     { q: "Can I see where a figure came from?", a: "Yes. Every stay is matched to the platform payout and the money received in the bank. Our accounts team can show you how any figure was reached." },
-    { q: "Do repairs come off without asking me?", a: "No. A repair only appears on your statement after you have approved the quote in the app." },
+    { q: "Do repairs come off without asking me?", a: "Only small ones, up to the repair limit you chose when your property was set up. We tell you about each one, and it shows on your statement with its photos. Anything over the limit is quoted first and waits for your approval in the app." },
   ];
   return (
     <>
@@ -52,7 +52,7 @@ export default function ExampleStatementPage() {
             { title: "Platform fees", text: `What Airbnb, Booking.com and the others kept, about ${PLATFORM_FEE}% in our example. Direct bookings have none.` },
             { title: "Recharge management", text: "Our fee, as a percentage of the booking income." },
             { title: "Cleaning and laundry", text: "One line for the month, with the number of cleans. Every clean is finished with photo evidence." },
-            { title: "Repairs", text: "Only the ones you approved in the app, each with the date it was quoted, approved and done." },
+            { title: "Repairs", text: "Each one with its dates and photos. Repairs over your limit appear only once you have approved them." },
             { title: "Guest supplies", text: "Toilet roll, soap, tea and coffee." },
             { title: "Waiting for next month", text: "Stays that have finished but whose payout has not arrived yet. They move to the next statement once the money has cleared." },
           ]} />

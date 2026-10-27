@@ -14,7 +14,7 @@ const longStay = count((h) => parseListing(h.description, h.houseRules).longStay
 export const ownerReasons: Reason[] = [
   { icon: LayoutDashboard, title: "You see everything", text: "Your own client portal shows bookings, performance, statements and repairs as they happen." },
   { icon: HandCoins, title: "Paid from cleared funds", text: "Income is matched to platform payouts and bank receipts before your statement is issued." },
-  { icon: ClipboardCheck, title: "You approve every cost", text: "Repairs and furnishing are quoted first. Nothing is spent until you say yes in the app." },
+  { icon: ClipboardCheck, title: "You set the repair limit", text: "Choose how much a repair can cost before we ask you. Anything over it, and all furnishing, is quoted first and waits for your yes in the app." },
   { icon: Users, title: "One team, end to end", text: "Our own guest support, cleaning, maintenance and accounts teams work from the same app." },
   { icon: BadgeCheck, title: "Licensing kept in order", text: "Short-term let applications, renewals and deadlines are tracked for every property." },
   { icon: ShieldCheck, title: "A proven operation", text: `We run ${homes.length} homes across ${regions.length} areas of Scotland, with ${reviewTotal.toLocaleString("en-GB")} guest reviews so far.` },
