@@ -93,6 +93,6 @@ export const journey: { title: string; text: string; tool: string }[] = [
   { title: "Questions answered", text: "Guest messages arrive in one inbox with a live response timer.", tool: "Guest communication centre" },
   { title: "Checkout triggers a clean", text: "The departure creates a clean, a cleaner is assigned and photos prove the finish.", tool: "Clean calendar" },
   { title: "A problem is reported", text: "A broken item or low stock is raised from the clean, not lost in a message.", tool: "Restock requests" },
-  { title: "Repair approved", text: "Maintenance quotes the job and the owner approves it from their phone.", tool: "Maintenance approvals" },
+  { title: "Repair approved", text: "Under the owner's limit, the repair goes ahead. Over it, maintenance quotes the job and the owner approves it from their phone.", tool: "Maintenance approvals" },
   { title: "The owner is paid", text: "Income is matched to payouts and the statement is issued from cleared funds.", tool: "Owner statements" },
 ];

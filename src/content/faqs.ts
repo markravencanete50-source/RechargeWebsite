@@ -44,7 +44,7 @@ export const appFaqs: Faq[] = [
   { q: "Who uses the Recharge app?", a: "Owners, our guest support team, cleaners, the maintenance team and our accounts team. Each person sees only the homes and jobs they look after." },
   { q: "What can owners do in the app?", a: "See bookings and performance, read statements, approve repair and furnishing quotes, follow onboarding, and see photographed post that arrives at the property." },
   { q: "How does the app keep cleaning standards high?", a: "Every clean is created from a booking, assigned to a cleaner and finished with photo evidence. Quality is tracked by cleaner and by property." },
-  { q: "How are repairs handled?", a: "A problem raised by a guest, cleaner or owner becomes a job. Maintenance quotes it, the owner approves it in the app, and the work is tracked to completion with photos." },
+  { q: "How are repairs handled?", a: "A problem raised by a guest, cleaner or owner becomes a job. Repairs under the owner's limit go ahead straight away. Anything over it is quoted and approved by the owner in the app. The work is tracked to completion with photos." },
   { q: `How many tools are in the app?`, a: `${toolCount} tools across five teams: owners, bookings and guests, cleaning, maintenance and accounts.` },
   { q: "Do owners see all of those tools?", a: "No. The tools are for our own teams. Owners see their client portal: bookings, performance, statements, approvals, onboarding and post." },
   { q: "How do guest messages get answered quickly?", a: "Every guest message lands in one inbox with a live response timer, so no message waits unnoticed. Anything urgent is escalated." },
